@@ -1,0 +1,24 @@
+{
+  "name": "api-compassolisa",
+  "version": "1.0.0",
+  "description": "A compasso entrou em um novo ramo de mercado, a compassolisa um seguimento carros para alugar de luxo e semi luxo.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FtxDante/api-compassolisa.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FtxDante/api-compassolisa/issues"
+  },
+  "homepage": "https://github.com/FtxDante/api-compassolisa#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^6.0.11"
+  }
+}
