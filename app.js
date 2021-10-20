@@ -1,8 +1,7 @@
 const express = require('express');
 const router = require('./routes');
 require('./infra/database/mongo');
-require('./app/schema/testeModels'); // Apenas para teste, apague quando entender o funcionamento.
-
+require('./app/schema/carSchema');
 class App {
 
   constructor() {
