@@ -1,7 +1,7 @@
 const express = require('express');
 const router = require('./routes');
 require('./infra/database/mongo');
-require('./app/schema/carSchema');
+
 class App {
 
   constructor() {
