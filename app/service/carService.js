@@ -9,6 +9,15 @@ class CarService {
             return error;
         }
     }
+
+    async updateACar(id){
+        try {
+            const result = await CarRepository.updateACar(id);
+            return result;
+        } catch(error){
+            return error;
+        }
+    }
 }
 
 module.exports = new CarService();
