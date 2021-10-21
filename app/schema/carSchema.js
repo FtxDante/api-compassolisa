@@ -10,8 +10,10 @@ const CarSchema = mongoose.Schema({
         required: true
     },
     ano: {
-        type: Date,
+        type: Number,
         required: true,
+        min: 1950,
+        max: 2022
     },
     acessorios:{
         type: [Object],
