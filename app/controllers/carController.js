@@ -5,6 +5,11 @@ class CarController {
         const result = await carService.create(req.body);
         return res.status(201).json(result);
     }
+
+    static async getAllCars(req, res){
+        const result = await carService.find(req, res);
+        return res.status(201).json(result);
+    }
 }
 
 module.exports = CarController;
