@@ -8,7 +8,7 @@ class Database {
     connect() {
         mongoose.Promise = global.Promise;
         console.log('MongoDB is running')
-        return mongoose.connect('mongodb://localhost/compassolisa')
+        return mongoose.connect('mongodb:mongodb+srv://usr-compassolisa:LtAfwPDuMYONyAzp@compassolisa-cluster.foj5w.mongodb.net/compassolisaDB?retryWrites=true&w=majority')
     }
 }
 
