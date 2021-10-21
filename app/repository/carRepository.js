@@ -2,11 +2,10 @@ const CarSchema = require('../schema/carSchema');
 
 class CarRepository {
     async create(carData) {
-
         return await CarSchema.create(carData);
     }
 
-    async find(where = {}, page = null, limit = null,){
+    async findAll(where = {}, page = null, limit = null,){
 
         return await CarSchema.find(where)
             .skip(page * limit)
@@ -19,8 +18,9 @@ class CarRepository {
 
             if(page > 0) page -= 1;
 
-            const data = await this.find(where, Number(page), Number(limit));
-            const dataTotal = await this.find(where);
+            const data = await this.findAll(where, Number(page), Number(limit));
+
+            const dataTotal = await this.findAll(where);
 
             const paginationFormated = {
                 veiculos: data,
@@ -31,7 +31,7 @@ class CarRepository {
             }
             return paginationFormated;
         }catch(error){
-            return error;
+            return error
         }
         
     }
