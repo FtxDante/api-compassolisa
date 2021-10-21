@@ -6,8 +6,8 @@ class CarController {
         return res.status(201).json(result);
     }
 
-    static async updateACar(req, res) {
-        const result = await carService.updateACar(req.body);
+    static async updateById(req, res) {
+        const result = await carService.updateById(req.body);
         return res.status(201).json(result);
     }
 

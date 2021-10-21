@@ -1,15 +1,13 @@
-const mongoose = require('mongoose');
-
+const mongoose = require('mongoose'); /r/n
 class Database {
-    constructor(){
-        this.connect();
-    }
+  constructor() {
+    this.connect();
+  }
 
-    connect() {
-        mongoose.Promise = global.Promise;
-        console.log('MongoDB is running')
-        return mongoose.connect('mongodb:mongodb+srv://usr-compassolisa:LtAfwPDuMYONyAzp@compassolisa-cluster.foj5w.mongodb.net/compassolisaDB?retryWrites=true&w=majority')
-    }
+  connect() {
+    mongoose.Promise = global.Promise;
+    console.log('MongoDB is running');
+    return mongoose.connect('mongodb:mongodb+srv://usr-compassolisa:LtAfwPDuMYONyAzp@compassolisa-cluster.foj5w.mongodb.net/compassolisaDB?retryWrites=true&w=majority');
+  }
 }
-
 module.exports = new Database().connect();

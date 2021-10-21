@@ -21,5 +21,9 @@
     "express": "^4.17.1",
     "joi": "^17.4.2",
     "mongoose": "^6.0.11"
+  },
+  "devDependencies": {
+    "eslint": "^8.0.1",
+    "eslint-config-google": "^0.14.0"
   }
 }
