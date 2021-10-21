@@ -12,7 +12,7 @@ class App {
 
   middlewares() {
     this.server.use(express.json());
-  }
+   } 
 
   routes() {
     router(this.server)
