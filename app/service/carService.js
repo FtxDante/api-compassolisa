@@ -10,7 +10,7 @@ class CarService {
     }
   }
 
-  async updateById(id){
+  async updateById(req, res){
     try {
       const result = await CarRepository.updateById(id);
       return result;

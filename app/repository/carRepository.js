@@ -7,9 +7,9 @@ class CarRepository {
 
     async updateACar(req, res){
         const {id} = req.params;
-        const filter = { _id: req.id };
+        const where = { _id: req.id };
         const update = req.body;
-        return await CarSchema.findOneAndUpdate(filter, update);
+        return await CarSchema.findOneAndUpdate(where, update);
     }
 }
 
