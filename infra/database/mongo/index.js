@@ -1,4 +1,5 @@
-const mongoose = require('mongoose'); /r/n
+/* eslint-disable require-jsdoc */
+const mongoose = require('mongoose');
 class Database {
   constructor() {
     this.connect();

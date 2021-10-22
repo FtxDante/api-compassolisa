@@ -1,20 +1,21 @@
-const CarRepository = require('../repository/carRepository')
+/* eslint-disable require-jsdoc */
+const CarRepository = require('../repository/carRepository');
 
 class CarService {
-  async create(dataCar){
-    try{
+  async create(dataCar) {
+    try {
       const result = await CarRepository.create(dataCar);
       return result;
-    }catch(error){
+    } catch (error) {
       return error;
     }
   }
 
-  async updateById(req, res){
+  async updateById(req, res) {
     try {
       const result = await CarRepository.updateById(id);
       return result;
-    } catch(error){
+    } catch (error) {
       return error;
     }
   }
