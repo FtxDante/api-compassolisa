@@ -10,6 +10,8 @@ class Database {
     this.connect();
   }
 
+
+
     connect() {
         mongoose.Promise = global.Promise;
         console.log('MongoDB is running')
