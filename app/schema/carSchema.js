@@ -2,6 +2,7 @@ const mongoose = require('mongoose');
 
 // eslint-disable-next-line new-cap
 const CarSchema = mongoose.Schema({
+
   modelo: {
     type: String,
     required: true,

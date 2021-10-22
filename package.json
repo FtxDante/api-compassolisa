@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node server.js"
+    "start": "node server.js",
+    "rundev": "nodemon server.js"
   },
   "repository": {
     "type": "git",
@@ -23,8 +24,10 @@
     "mongoose": "^6.0.11"
   },
   "devDependencies": {
+
     "eslint": "^8.0.1",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-jsdoc": "^36.1.1"
+    "nodemon": "^2.0.14"
   }
 }

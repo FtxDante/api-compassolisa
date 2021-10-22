@@ -2,14 +2,7 @@
 const CarRepository = require('../repository/carRepository');
 
 class CarService {
-  async create(dataCar) {
-    try {
-      const result = await CarRepository.create(dataCar);
-      return result;
-    } catch (error) {
-      return error;
-    }
-  }
+
 
   async updateOneCar(req, res) {
     try {
@@ -18,6 +11,32 @@ class CarService {
       return error;
     }
   }
+
+    async create(dataCar){
+        try{
+            const {modelo, cor, ano, acessorios,quantidadePassageiros} = await CarRepository.create(dataCar);
+
+            return {
+                modelo: modelo,
+                cor: cor,
+                ano: ano,
+                acessorios: acessorios,
+                quantidadePassageiros: quantidadePassageiros
+            };
+        }catch(error){
+            return error;
+        }
+    }
+
+    async findAll(req, res){
+        try{
+           return await CarRepository.pagination(req)
+        }catch(error){
+            return res.status(400).json({message: error.message});
+        }
+    }
+
+
 }
 
 module.exports = new CarService();
