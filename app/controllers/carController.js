@@ -7,14 +7,18 @@ class CarController {
   }
 
   static async deleteOne(req, res) {
-    const id = req.params.id;
+    const {id} = req.params;
 
-    const error = await carService.deleteOne({id: id});
+    try {
+      const result = await carService.deleteOne({id});
 
-    if (error) {
-      return res.status(404).json();
-    } else {
-      return res.status(204).json();
+      if (result instanceof Error) {
+        throw error;
+      }
+
+      return res.status(204).end();
+    } catch (error) {
+      return res.status(404).end();
     }
   }
 }
