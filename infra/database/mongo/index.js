@@ -10,7 +10,7 @@ class Database {
     connect() {
         mongoose.Promise = global.Promise;
         console.log('MongoDB is running')
-        return mongoose.connect(`mongodb:mongodb+srv://${config.user}:${config.pass}@compassolisa-cluster.foj5w.mongodb.net/${config.name}?retryWrites=true&w=majority`)
+        return mongoose.connect(`mongodb:mongodb+srv://${config.user}:${config.pass}@${config.host}/${config.name}?retryWrites=true&w=majority`)
     }
 }
 
