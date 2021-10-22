@@ -1,0 +1,18 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs":true,
+        "es2021": true
+    },
+    "plugins": [
+        "jsdoc"
+    ],
+    "extends": [
+        "google",
+        "plugin:jsdoc/recommended"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 12
+    }
+
+}

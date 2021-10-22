@@ -1,6 +1,17 @@
-const CarRepository = require('../repository/carRepository')
+/* eslint-disable require-jsdoc */
+const CarRepository = require('../repository/carRepository');
 
 class CarService {
+
+
+  async updateOneCar(req, res) {
+    try {
+      await CarRepository.updateOneCar(req, res);
+    } catch (error) {
+      return error;
+    }
+  }
+
     async create(dataCar){
         try{
             const {modelo, cor, ano, acessorios,quantidadePassageiros} = await CarRepository.create(dataCar);
@@ -19,12 +30,12 @@ class CarService {
 
     async findAll(req, res){
         try{
-            const result = await CarRepository.pagination(req)
-            return result;
+           return await CarRepository.pagination(req)
         }catch(error){
             return res.status(400).json({message: error.message});
         }
     }
+
 
 }
 
