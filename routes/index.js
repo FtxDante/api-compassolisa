@@ -1,8 +1,10 @@
 const {Router} = require('express');
-const test = require('./carRoutes');
+const cars = require('./carRoutes');
+const peoples = require('./peopleRoutes');
 module.exports = (server) => {
   server.use((req, res, next) =>{
-    test(server, new Router());
+    cars(server, new Router());
+    peoples(server, new Router());
     next();
   });
 };
