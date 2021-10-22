@@ -5,9 +5,8 @@ class CarRepository {
     return await CarSchema.create(carData);
   }
 
-
-  async deleteOne(id) {
-    return await CarSchema.deleteOne(id);
+  async deleteOne(id) {    
+    return await CarSchema.findByIdAndRemove(id);
   }
 }
 

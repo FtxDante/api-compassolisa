@@ -12,6 +12,7 @@ class CarService {
 
   async deleteOne(id) {
     try {
+      
       const {deletedCount} = await CarRepository.deleteOne(id);
 
       if (deletedCount == 0) {
