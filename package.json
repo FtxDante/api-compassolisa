@@ -24,6 +24,7 @@
   },
   "devDependencies": {
     "eslint": "^8.0.1",
-    "eslint-config-google": "^0.14.0"
+    "eslint-config-google": "^0.14.0",
+    "eslint-plugin-jsdoc": "^36.1.1"
   }
 }
