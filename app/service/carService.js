@@ -1,3 +1,6 @@
+
+
+
 /* eslint-disable require-jsdoc */
 const CarRepository = require('../repository/carRepository');
 
@@ -36,7 +39,20 @@ class CarService {
         }
     }
 
+  async deleteOne(id) {
+    try {
+      
+      const {deletedCount} = await CarRepository.deleteOne(id);
 
+      if (deletedCount == 0) {
+        throw new Error('id not found');
+      } else {
+        return;
+      }
+    } catch (error) {
+      return error;
+    }
+  }
 }
 
 module.exports = new CarService();
