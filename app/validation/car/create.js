@@ -17,7 +17,8 @@ module.exports = async (req, res, next) =>{
             acessorios: Joi.array().items(Joi.object({
                 descricao: Joi.string()
                     .required()
-            }))
+            }).unknown(true))
+                .unique((a, b) => a.descricao === b.descricao)
                 .min(1)
                 .required(),
             

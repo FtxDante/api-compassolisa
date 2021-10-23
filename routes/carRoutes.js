@@ -4,6 +4,5 @@ const { createCarValidation, findCarValidation } = require('../app/validation/ca
 module.exports = (server, routes, prefix = '/api/v1') =>{
     routes.post('/car', createCarValidation , carController.createCar);
     routes.get('/car?', findCarValidation , carController.getAllCars);
-
     server.use(prefix, routes);
 }
