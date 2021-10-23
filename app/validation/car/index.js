@@ -1,7 +1,9 @@
-const createValidation = require('./create');
+const allRequiredCarValidation = require('./allRequired');
 const findValidation = require('./find');
+const deleteOne = require('./deleteOne')
 
 module.exports = {
-    createCarValidation: createValidation,
-    findCarValidation: findValidation
+    allRequiredCarValidation: allRequiredCarValidation,
+    findCarValidation: findValidation,
+    deleteCarValidation: deleteOne
 }
