@@ -1,6 +1,6 @@
 const carController = require('../app/controllers/carController');
 
-const { allRequiredCarValidation, findCarValidation } = require('../app/validation/car');
+const { allRequiredCarValidation, findCarValidation ,deleteCarValidation } = require('../app/validation/car');
 
 module.exports = (server, routes, prefix = '/api/v1') =>{
     routes.post('/car', allRequiredCarValidation, carController.createCar);
