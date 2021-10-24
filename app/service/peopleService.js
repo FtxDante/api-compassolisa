@@ -18,7 +18,13 @@ class PeopleService{
 
         }
     }
-
+    async findAll(req, res){
+        try{
+           return await PeopleRepository.pagination(req)
+        }catch(error){
+            return res.status(400).json({message: error.message});
+        }
+    }
 }
 
 module.exports = new PeopleService;
