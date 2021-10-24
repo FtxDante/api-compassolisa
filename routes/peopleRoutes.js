@@ -1,9 +1,9 @@
 const PeopleController = require('../app/controllers/peopleController');
-const {CreatePeopleValidation} = require('../app/validation/people')
+const {CreatePeopleValidation} = require('../app/validation/people');
 
 module.exports = (server, routes, prefix = '/api/v1') =>{
-     routes.post('/people', CreatePeopleValidation, PeopleController.createPeople);
+  routes.post('/people', CreatePeopleValidation, PeopleController.createPeople);
 
 
-    server.use(prefix, routes);
-}
+  server.use(prefix, routes);
+};

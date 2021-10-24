@@ -1,12 +1,7 @@
-
-
-
 /* eslint-disable require-jsdoc */
 const CarRepository = require('../repository/carRepository');
 
 class CarService {
-
-
   async updateOneCar(req, res) {
     try {
       await CarRepository.updateOneCar(req, res);
@@ -15,33 +10,38 @@ class CarService {
     }
   }
 
-    async create(dataCar){
-        try{
-            const {modelo, cor, ano, acessorios,quantidadePassageiros} = await CarRepository.create(dataCar);
+  async create(dataCar) {
+    try {
+      const {
+        modelo,
+        cor,
+        ano,
+        acessorios,
+        quantidadePassageiros,
+      } = await CarRepository.create(dataCar);
 
-            return {
-                modelo: modelo,
-                cor: cor,
-                ano: ano,
-                acessorios: acessorios,
-                quantidadePassageiros: quantidadePassageiros
-            };
-        }catch(error){
-            return error;
-        }
+      return {
+        modelo: modelo,
+        cor: cor,
+        ano: ano,
+        acessorios: acessorios,
+        quantidadePassageiros: quantidadePassageiros,
+      };
+    } catch (error) {
+      return error;
     }
+  }
 
-    async findAll(req, res){
-        try{
-           return await CarRepository.pagination(req)
-        }catch(error){
-            return res.status(400).json({message: error.message});
-        }
+  async findAll(req, res) {
+    try {
+      return await CarRepository.pagination(req);
+    } catch (error) {
+      return res.status(400).json({message: error.message});
     }
+  }
 
   async deleteOne(id) {
     try {
-      
       const {deletedCount} = await CarRepository.deleteOne(id);
 
       if (deletedCount == 0) {

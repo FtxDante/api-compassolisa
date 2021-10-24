@@ -1,5 +1,5 @@
 /* eslint-disable require-jsdoc */
-const carService = require("../service/carService");
+const carService = require('../service/carService');
 class CarController {
   static async createCar(req, res) {
     const result = await carService.create(req.body);
