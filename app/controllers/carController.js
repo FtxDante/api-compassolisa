@@ -23,7 +23,7 @@ class CarController {
   }
 
   static async updateOneCar(req, res) {
-    await carService.updateOneCar(req, res);
+    await carService.updateOneCar(req);
     return res.status(201).end();
   }
 
