@@ -17,7 +17,15 @@ class PeopleService {
     } catch (error) {
       return error;
     }
-  };
-};
+  }
 
-module.exports = new PeopleService;
+  async getAllPeople(req, res) {
+    try {
+      return await PeopleRepository.pagination(req);
+    } catch (error) {
+      return error;
+    }
+  }
+}
+
+module.exports = new PeopleService();
