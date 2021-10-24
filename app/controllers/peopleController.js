@@ -1,4 +1,4 @@
-const peopleService = require("../service/peopleService");
+const peopleService = require('../service/peopleService');
 
 class PeopleController {
   static async createPeople(req, res) {
