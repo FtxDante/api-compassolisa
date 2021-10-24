@@ -1,44 +1,30 @@
-const peopleSchema = require('../schema/peopleSchema');
-
-class PeopleRepository {
-  async create(peopleData) {
-    return await peopleSchema.create(peopleData);
-  }
-  async findAll(where = {}, page = null, limit = null) {
-    return await peopleSchema .find(where) .skip(page * limit) .limit(limit);
+const Repository = require('./Repository');
+class PeopleRepository extends Repository {
+  constructor() {
+    super('PeopleSchema');
   }
 
-  async pagination(req, where = {}) {
-    try {
-      let {page = 0, limit = 100} = req.query;
+  async formatOfPagination(req) {
+    const {data, dataTotal, page, limit} = await this.pagination(req);
 
-      if (page > 0) page -= 1;
-
-      const data = await this.findAll(where, Number(page), Number(limit));
-
-      const dataTotal = await this.findAll(where);
-
-      const formatedData = data.map((person) => {
-        return {
-          id: person._id,
-          nome: person.nome,
-          cpf: person.cpf,
-          data_nascimento: person.data_nascimento,
-          email: person.email,
-          habilitado: person.habilitado,
-        };
-      });
+    const formatedData = await data.map((person) => {
       return {
-        pessoas: formatedData,
-        total: dataTotal.length,
-        limit: Number(limit),
-        offset: page + 1,
-        offsets: Math.ceil(dataTotal.length / limit),
+        id: person._id,
+        nome: person.nome,
+        cpf: person.cpf,
+        data_nascimento: person.data_nascimento,
+        email: person.email,
+        habilitado: person.habilitado,
       };
-    } catch (error) {
-      return error;
-    }
+    });
+
+    return {
+      pessoas: formatedData,
+      total: dataTotal.length,
+      limit: Number(limit),
+      offset: page + 1,
+      offsets: Math.ceil(dataTotal.length / limit),
+    };
   }
 }
-
 module.exports = new PeopleRepository();
