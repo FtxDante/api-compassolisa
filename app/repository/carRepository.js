@@ -10,11 +10,15 @@ class CarRepository {
     return await CarSchema.findByIdAndRemove(id);
   }
 
-  async updateOneCar(req, res) {
+  async updateOneCar(req) {
     // eslint-disable-next-line new-cap
-    const where = {id: req.id};
-    const update = req.body;
-    await CarSchema.updateOne(where, update);
+    try {
+      const where = {id: req.id};
+      const update = req.body;
+      await CarSchema.updateOne(where, update);
+    } catch (error) {
+      return error;
+    }
   }
 
   async create(carData) {

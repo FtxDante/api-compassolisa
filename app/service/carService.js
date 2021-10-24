@@ -2,9 +2,9 @@
 const CarRepository = require('../repository/carRepository');
 
 class CarService {
-  async updateOneCar(req, res) {
+  async updateOneCar(req) {
     try {
-      await CarRepository.updateOneCar(req, res);
+      await CarRepository.updateOneCar(req);
     } catch (error) {
       return error;
     }
