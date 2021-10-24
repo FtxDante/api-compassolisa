@@ -1,11 +1,12 @@
-const PeopleSchema = require("../schema/peopleSchema");
+const peopleSchema = require("../schema/peopleSchema");
 
 class PeopleRepository {
   async create(peopleData) {
-    return await PeopleSchema.create(peopleData);
+    return await peopleSchema.create(peopleData);
   }
   async findAll(where = {}, page = null, limit = null) {
-    return await PeopleSchema.find(where)
+    return await peopleSchema
+      .find(where)
       .skip(page * limit)
       .limit(limit);
   }
@@ -20,8 +21,18 @@ class PeopleRepository {
 
       const dataTotal = await this.findAll(where);
 
+      const formatedData = data.map((person) => {
+        return {
+          id: person._id,
+          nome: person.nome,
+          cpf: person.cpf,
+          data_nascimento: person.data_nascimento,
+          email: person.email,
+          habilitado: person.habilitado,
+        };
+      });
       return {
-        pessoas: data,
+        pessoas: formatedData,
         total: dataTotal.length,
         limit: Number(limit),
         offset: page + 1,
