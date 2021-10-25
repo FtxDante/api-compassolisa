@@ -34,6 +34,19 @@ class PeopleService {
       throw new Error('User already registered.');
     }
   }
+  async deleteOne(id) {
+    try {
+      const {deletedCount} = await PeopleRepository.deleteOne(id);
+
+      if (deletedCount == 0) {
+        throw new Error('id not found');
+      } else {
+        return;
+      }
+    } catch (error) {
+      return error;
+    }
+  }
 }
 
 
