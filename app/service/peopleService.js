@@ -25,6 +25,19 @@ class PeopleService {
       return res.status(400).json({message: error.message});
     }
   }
+  async deleteOne(id) {
+    try {
+      const {deletedCount} = await PeopleRepository.deleteOne(id);
+
+      if (deletedCount == 0) {
+        throw new Error('id not found');
+      } else {
+        return;
+      }
+    } catch (error) {
+      return error;
+    }
+  }
 }
 
 module.exports = new PeopleService();
