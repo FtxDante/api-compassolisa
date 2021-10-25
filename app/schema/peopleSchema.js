@@ -9,7 +9,7 @@ const peopleSchema = mongoose.Schema({
   },
 
   cpf: {
-    type: String,
+    type: Number,
     required: true,
   },
 
