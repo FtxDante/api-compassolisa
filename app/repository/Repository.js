@@ -13,8 +13,7 @@ class Repository {
     return await Schemas[this.schema].findByIdAndRemove(id);
   }
 
-  async updateOne(req, where = {id: req.params.id}) {
-    console.log(where);
+  async updateOne(req, where = {_id: req.params.id}) {
     const update = req.body;
     await Schemas[this.schema].updateOne(where, update);
   }
