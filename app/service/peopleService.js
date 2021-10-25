@@ -25,6 +25,13 @@ class PeopleService {
       return res.status(400).json({message: error.message});
     }
   }
+  async updateOnePerson(req) {
+    try {
+      return await PeopleRepository.updateOne(req);
+    } catch (error) {
+      return res.status(204).json({message: error.message});
+    }
+  }
 }
 
 module.exports = new PeopleService();
