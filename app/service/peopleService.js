@@ -26,11 +26,7 @@ class PeopleService {
     }
   }
   async updateOnePerson(req) {
-    try {
-      return await PeopleRepository.updateOne(req);
-    } catch (error) {
-      return res.status(204).json({message: error.message});
-    }
+    return await PeopleRepository.updateOne(req);
   }
 }
 

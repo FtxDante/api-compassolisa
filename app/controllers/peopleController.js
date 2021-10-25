@@ -11,8 +11,12 @@ class PeopleController {
   }
 
   static async updateOnePerson(req, res) {
-    await peopleService.updateOnePerson(req);
-    return res.status(201).end();
+    try {
+      await peopleService.updateOnePerson(req);
+      return res.status(201).end();
+    } catch (error) {
+      return res.status(400).json({message: error.message});
+    }
   }
 }
 
