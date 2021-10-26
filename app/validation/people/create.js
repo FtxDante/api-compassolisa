@@ -10,7 +10,6 @@ module.exports = async (req, res, next) =>{
 
       cpf: Joi.document()
           .cpf()
-          .max(11)
           .required(),
 
       data_nascimento: Joi.date()

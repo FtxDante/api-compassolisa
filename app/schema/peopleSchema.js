@@ -37,6 +37,14 @@ const peopleSchema = mongoose.Schema({
 });
 
 peopleSchema.pre('save', async function(next) {
+  if (!this.isModified('cpf')) {
+    return next();
+  }
+  this.cpf = this.cpf.replace(/[^0-9]/g, '')
+      .replace(/(\d{3})?(\d{3})?(\d{3})?(\d{2})/, '$1.$2.$3-$4');
+});
+
+peopleSchema.pre('save', async function(next) {
   if (!this.isModified('senha')) {
     return next();
   }
@@ -52,6 +60,7 @@ peopleSchema.pre('updateOne', async function(next) {
   }
   return next();
 });
+
 
 const People = mongoose.model('People', peopleSchema);
 
