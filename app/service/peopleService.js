@@ -25,6 +25,15 @@ class PeopleService {
       return res.status(400).json({message: error.message});
     }
   }
+  async searchUnique(req, res) {
+    const {email, cpf} = req.body;
+
+    const searchemail = await PeopleRepository.findOne({email: email});
+    const searchcpf = await PeopleRepository.findOne({cpf: cpf});
+    if (searchemail || searchcpf) {
+      throw new Error('User already registered.');
+    }
+  }
   async deleteOne(id) {
     try {
       const {deletedCount} = await PeopleRepository.deleteOne(id);
@@ -39,5 +48,6 @@ class PeopleService {
     }
   }
 }
+
 
 module.exports = new PeopleService();

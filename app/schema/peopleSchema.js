@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 // eslint-disable-next-line new-cap
 const peopleSchema = mongoose.Schema({
@@ -34,6 +35,32 @@ const peopleSchema = mongoose.Schema({
     required: true,
   },
 });
+
+peopleSchema.pre('save', async function(next) {
+  if (!this.isModified('cpf')) {
+    return next();
+  }
+  this.cpf = this.cpf.replace(/[^0-9]/g, '')
+      .replace(/(\d{3})?(\d{3})?(\d{3})?(\d{2})/, '$1.$2.$3-$4');
+});
+
+peopleSchema.pre('save', async function(next) {
+  if (!this.isModified('senha')) {
+    return next();
+  }
+  const salt = await bcrypt.genSalt(10);
+  this.senha = await bcrypt.hash(this.senha, salt);
+});
+
+peopleSchema.pre('updateOne', async function(next) {
+  const data = this.getUpdate();
+  if (data.senha) {
+    const salt = await bcrypt.genSalt(10);
+    data.senha = await bcrypt.hash(data.senha, salt);
+  }
+  return next();
+});
+
 
 const People = mongoose.model('People', peopleSchema);
 
