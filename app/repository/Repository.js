@@ -29,7 +29,12 @@ class Repository {
     return await Schemas[this.schema]
         .findOne(where);
   }
-
+  createWhere(params) {
+    const paramsQuery =params;
+    delete paramsQuery.page;
+    delete paramsQuery.limit;
+    return paramsQuery;
+  }
   async pagination(req, where = {}) {
     try {
       let {page = 0, limit = 100} = req.query;
