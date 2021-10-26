@@ -10,7 +10,7 @@ const peopleSchema = mongoose.Schema({
   },
 
   cpf: {
-    type: Number,
+    type: String,
     required: true,
   },
 
@@ -36,13 +36,21 @@ const peopleSchema = mongoose.Schema({
   },
 });
 
-// eslint-disable-next-line arrow-parens
 peopleSchema.pre('save', async function(next) {
   if (!this.isModified('senha')) {
     return next();
   }
   const salt = await bcrypt.genSalt(10);
   this.senha = await bcrypt.hash(this.senha, salt);
+});
+
+peopleSchema.pre('updateOne', async function(next) {
+  const data = this.getUpdate();
+  if (data.senha) {
+    const salt = await bcrypt.genSalt(10);
+    data.senha = await bcrypt.hash(data.senha, salt);
+  }
+  return next();
 });
 
 const People = mongoose.model('People', peopleSchema);
