@@ -1,7 +1,9 @@
-const CreateValidation = require('./create');
+const AllRequireValidation = require('./AllRequireValidation');
+const IdValidation = require('./idValidation');
 const DeletePeopleValidation = require('./deleteOne');
 
 module.exports = {
-  CreatePeopleValidation: CreateValidation,
+  AllRequireValidation: AllRequireValidation,
+  IdValidation: IdValidation,
   DeletePeopleValidation: DeletePeopleValidation,
 };

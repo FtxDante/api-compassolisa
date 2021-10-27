@@ -1,10 +1,10 @@
-const PeopleRepository = require('../repository/peopleRepository');
+const PeopleRepository = require("../repository/peopleRepository");
 
 class PeopleService {
   async createPeople(peopleData) {
     try {
       // eslint-disable-next-line camelcase
-      const {nome, cpf, data_nascimento, email, habilitado} =
+      const { nome, cpf, data_nascimento, email, habilitado } =
         await PeopleRepository.create(peopleData);
 
       return {
@@ -22,24 +22,27 @@ class PeopleService {
     try {
       return await PeopleRepository.formatOfPagination(req);
     } catch (error) {
-      return res.status(400).json({message: error.message});
+      return res.status(400).json({ message: error.message });
     }
   }
+  async updateOnePerson(req) {
+    return await PeopleRepository.updateOne(req);
+  }
   async searchUnique(req, res) {
-    const {email, cpf} = req.body;
+    const { email, cpf } = req.body;
 
-    const searchemail = await PeopleRepository.findOne({email: email});
-    const searchcpf = await PeopleRepository.findOne({cpf: cpf});
+    const searchemail = await PeopleRepository.findOne({ email: email });
+    const searchcpf = await PeopleRepository.findOne({ cpf: cpf });
     if (searchemail || searchcpf) {
-      throw new Error('User already registered.');
+      throw new Error("User already registered.");
     }
   }
   async deleteOne(id) {
     try {
-      const {deletedCount} = await PeopleRepository.deleteOne(id);
+      const { deletedCount } = await PeopleRepository.deleteOne(id);
 
       if (deletedCount == 0) {
-        throw new Error('id not found');
+        throw new Error("id not found");
       } else {
         return;
       }
@@ -48,6 +51,5 @@ class PeopleService {
     }
   }
 }
-
 
 module.exports = new PeopleService();
