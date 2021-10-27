@@ -47,6 +47,18 @@ class PeopleService {
       return error;
     }
   }
+
+  createWhere(params) {
+    try {
+      const where ={...params};
+      delete where.id;
+      delete where.page;
+      delete where.limit;
+      return where;
+    } catch (error) {
+
+    }
+  }
 }
 
 

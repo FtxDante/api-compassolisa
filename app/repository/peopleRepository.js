@@ -1,11 +1,12 @@
 const Repository = require('./Repository');
+const peopleRepository = require('../service/peopleService');
 class PeopleRepository extends Repository {
   constructor() {
     super('PeopleSchema');
   }
 
   async formatOfPagination(req) {
-    const searchParams= this.createWhere(req.query);
+    const searchParams= peopleRepository.createWhere(req.query);
     const {
       data,
       dataTotal,
