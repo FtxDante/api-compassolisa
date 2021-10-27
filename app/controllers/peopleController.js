@@ -1,4 +1,4 @@
-const peopleService = require("../service/peopleService");
+const peopleService = require('../service/peopleService');
 
 class PeopleController {
   static async createPeople(req, res) {
@@ -7,7 +7,7 @@ class PeopleController {
       const result = await peopleService.createPeople(req.body);
       return res.status(201).json(result);
     } catch (error) {
-      return res.status(400).json({ message: error.message });
+      return res.status(400).json({message: error.message});
     }
   }
   static async getAllPeople(req, res) {
@@ -20,7 +20,7 @@ class PeopleController {
       await peopleService.updateOnePerson(req);
       return res.status(201).end();
     } catch (error) {
-      return res.status(400).json({ message: error.message });
+      return res.status(400).json({message: error.message});
     }
   }
   static async deleteOne(req, res) {

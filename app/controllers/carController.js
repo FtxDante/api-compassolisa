@@ -31,6 +31,12 @@ class CarController {
     const result = await carService.findAll(req, res);
     return res.status(201).json(result);
   }
+
+  static async getOneCar(req, res) {
+    const {id} = req.params;
+    const result = await carService.findById(id);
+    return res.status(200).json(result);
+  }
 }
 
 module.exports = CarController;

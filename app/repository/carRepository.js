@@ -16,6 +16,5 @@ class CarRepository extends Repository {
       offsets: Math.ceil(dataTotal.length / limit),
     };
   }
-};
+}
 module.exports = new CarRepository();
-
