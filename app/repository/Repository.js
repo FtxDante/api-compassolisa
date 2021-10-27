@@ -31,11 +31,11 @@ class Repository {
   }
   createWhere(params) {
     try {
-      const paramsQuery ={...params};
-      delete paramsQuery.id;
-      delete paramsQuery.page;
-      delete paramsQuery.limit;
-      return paramsQuery;
+      const where ={...params};
+      delete where.id;
+      delete where.page;
+      delete where.limit;
+      return where;
     } catch (error) {
 
     }
