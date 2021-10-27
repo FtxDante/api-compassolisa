@@ -5,7 +5,7 @@ class PeopleRepository extends Repository {
   }
 
   async formatOfPagination(req) {
-    const paramsQuery= this.createWhere(req.query);
+    const searchParams= this.createWhere(req.query);
 
 
     const {
@@ -13,7 +13,7 @@ class PeopleRepository extends Repository {
       dataTotal,
       page,
       limit,
-    } = await this.pagination(req, paramsQuery);
+    } = await this.pagination(req, searchParams);
 
     const formatedData = await data.map((person) => {
       return {

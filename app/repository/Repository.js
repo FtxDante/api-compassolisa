@@ -30,10 +30,15 @@ class Repository {
         .findOne(where);
   }
   createWhere(params) {
-    const paramsQuery =params;
-    delete paramsQuery.page;
-    delete paramsQuery.limit;
-    return paramsQuery;
+    try {
+      const paramsQuery =params;
+      delete paramsQuery.id;
+      delete paramsQuery.page;
+      delete paramsQuery.limit;
+      return paramsQuery;
+    } catch (error) {
+
+    }
   }
   async pagination(req, where = {}) {
     try {
