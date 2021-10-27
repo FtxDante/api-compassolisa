@@ -50,6 +50,7 @@ class PeopleService {
 
   createWhere(params) {
     const where ={...params};
+    delete where._id;
     delete where.id;
     delete where.page;
     delete where.limit;
