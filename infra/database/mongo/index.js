@@ -1,8 +1,8 @@
 /* eslint-disable require-jsdoc */
 const mongoose = require('mongoose');
 
-const config = require('./config')
-require('dotenv').config()
+const config = require('./config');
+require('dotenv').config();
 
 
 class Database {
@@ -11,12 +11,11 @@ class Database {
   }
 
 
-
-    connect() {
-        mongoose.Promise = global.Promise;
-        console.log('MongoDB is running')
-        return mongoose.connect(`mongodb:mongodb+srv://${config.user}:${config.pass}@${config.host}/${config.name}?retryWrites=true&w=majority`)
-    }
+  connect() {
+    mongoose.Promise = global.Promise;
+    console.log('MongoDB is running');
+    return mongoose.connect(`mongodb:mongodb+srv://${config.user}:${config.pass}@${config.host}/${config.name}?retryWrites=true&w=majority`);
+  }
 }
 
 
