@@ -18,13 +18,16 @@ class PeopleService {
       return error;
     }
   }
+
   async findAll(req, res) {
     try {
-      return await PeopleRepository.formatOfPagination(req);
+      const searchParams = this.createWhere(req.query);
+      return await PeopleRepository.formatOfPagination(req, searchParams);
     } catch (error) {
       return res.status(400).json({message: error.message});
     }
   }
+
   async searchUnique(req, res) {
     const {email, cpf} = req.body;
 
@@ -34,6 +37,7 @@ class PeopleService {
       throw new Error('User already registered.');
     }
   }
+
   async deleteOne(id) {
     try {
       const {deletedCount} = await PeopleRepository.deleteOne(id);
@@ -49,7 +53,7 @@ class PeopleService {
   }
 
   createWhere(params) {
-    const where ={...params};
+    const where = {...params};
     delete where._id;
     delete where.id;
     delete where.page;
