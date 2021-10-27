@@ -5,7 +5,7 @@ class PeopleRepository extends Repository {
   }
 
   async formatOfPagination(req) {
-    const paramsQuery= this.screateWhere(req.query);
+    const paramsQuery= this.createWhere(req.query);
 
 
     const {
