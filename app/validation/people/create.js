@@ -31,8 +31,8 @@ module.exports = async (req, res, next) =>{
 
     });
 
+    const {error} = await peopleSchema.validate(req.body, {abortEarl: false});
 
-    const {error} = await peopleSchema.validate(req.body, {abortEarl: true});
     if (error) throw error;
     return next();
   } catch (error) {

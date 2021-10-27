@@ -4,8 +4,13 @@ class PeopleRepository extends Repository {
     super('PeopleSchema');
   }
 
-  async formatOfPagination(req) {
-    const {data, dataTotal, page, limit} = await this.pagination(req);
+  async formatOfPagination(req, where = {}) {
+    const {
+      data,
+      dataTotal,
+      page,
+      limit,
+    } = await this.pagination(req, where);
 
     const formatedData = await data.map((person) => {
       return {

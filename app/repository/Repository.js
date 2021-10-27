@@ -29,7 +29,6 @@ class Repository {
     return await Schemas[this.schema]
         .findOne(where);
   }
-
   async pagination(req, where = {}) {
     try {
       let {page = 0, limit = 100} = req.query;

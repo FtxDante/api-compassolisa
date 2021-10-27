@@ -26,7 +26,7 @@ module.exports = async (req, res, next) =>{
           .min(2)
           .required(),
     });
-    const {error} = await carSchema.validate(req.body, {abortEarl: true});
+    const {error} = await carSchema.validate(req.body, {abortEarl: false});
     if (error) throw error;
     return next();
   } catch (error) {
