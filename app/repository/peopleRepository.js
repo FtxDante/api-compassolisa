@@ -6,8 +6,6 @@ class PeopleRepository extends Repository {
 
   async formatOfPagination(req) {
     const searchParams= this.createWhere(req.query);
-
-
     const {
       data,
       dataTotal,
