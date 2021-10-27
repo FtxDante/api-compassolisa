@@ -14,7 +14,6 @@ class Repository {
   }
 
   async updateOne(req, where = {_id: req.params.id}) {
-    console.log(where);
     const update = req.body;
     await Schemas[this.schema].updateOne(where, update);
   }
@@ -24,6 +23,11 @@ class Repository {
         .find(where)
         .skip(page * limit)
         .limit(limit);
+  }
+
+  async findOne(where) {
+    return await Schemas[this.schema]
+        .findOne(where);
   }
 
   async pagination(req, where = {}) {
