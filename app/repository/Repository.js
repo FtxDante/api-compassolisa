@@ -31,7 +31,7 @@ class Repository {
   }
   createWhere(params) {
     try {
-      const paramsQuery =params;
+      const paramsQuery ={...params};
       delete paramsQuery.id;
       delete paramsQuery.page;
       delete paramsQuery.limit;
