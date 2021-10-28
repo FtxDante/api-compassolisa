@@ -18,7 +18,14 @@ module.exports = async (req, res, next) =>{
             }
           }),
       data_nascimento: Joi.date()
-          .required(),
+          .required()
+          .custom( (value, helper) => {
+            if ( (Date.now() - new Date(value) ) / 31556925974 > 18) {
+              return true;
+            } else {
+              return helper.message('Must be at least 18 years old');
+            }
+          }),
       email: Joi.string()
           .email()
           .required(),
