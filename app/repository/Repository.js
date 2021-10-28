@@ -26,9 +26,13 @@ class Repository {
   }
 
   async findOne(where) {
-    return await Schemas[this.schema]
-        .findOne(where);
+    return await Schemas[this.schema].findOne(where);
   }
+
+  async findById(id) {
+    return await Schemas[this.schema].findById(id);
+  }
+
   async pagination(req, where = {}) {
     try {
       let {page = 0, limit = 100} = req.query;
@@ -43,6 +47,6 @@ class Repository {
       return error;
     }
   }
-};
+}
 
 module.exports = Repository;
