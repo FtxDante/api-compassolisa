@@ -5,7 +5,7 @@ const {
 
 module.exports = (server, routes, prefix = '/api/v1') => {
   routes.post('/authenticate', authDataValidation,
-      AuthController.authenticate);
+      AuthController.signIn);
 
   server.use(prefix, routes);
 };

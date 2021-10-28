@@ -1,11 +1,8 @@
-
 const Joi = require('joi');
 
 module.exports = async (req, res, next) =>{
   try {
     const authSchema = Joi.object({
-
-
       email: Joi.string()
           .email()
           .required(),
@@ -13,7 +10,6 @@ module.exports = async (req, res, next) =>{
       senha: Joi.string()
           .min(6)
           .required(),
-
     });
 
     const {error} = authSchema.validate(req.body, {abortEarl: true});

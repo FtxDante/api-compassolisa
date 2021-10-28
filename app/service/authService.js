@@ -1,24 +1,29 @@
 /* eslint-disable require-jsdoc */
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 
 const PeopleRepository = require('../repository/peopleRepository');
-
 class AuthService {
-  async findUser(req, res) {
+  async authenticate(req) {
     try {
-      const user =await PeopleRepository.findOne(req);
+      const user =await this.verifyCredentials(req.body);
       return await this.generateToken(user);
-      // const token =await this.generateToken(user);
-
-      // return {
-      //   token: token,
-      //   email: user.email,
-      //   habilitado: user.habilitado,
-      // };
     } catch (error) {
-      return res.status(400).json({message: error.message});
+      throw error;
     }
+  }
+
+  async verifyCredentials({
+    email, senha,
+  }) {
+    const userByEmail =await PeopleRepository.findOne({
+      email: email,
+    });
+    if (!userByEmail || !bcrypt.compareSync( senha, userByEmail.senha)) {
+      throw new Error('Email or password is invalid');
+    }
+    return userByEmail;
   }
 
   async generateToken(user) {
@@ -27,7 +32,7 @@ class AuthService {
           {email: user.email, habilitado: user.habilitado}, process.env.SECRET,
           {expiresIn: '10h'});
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 }
