@@ -37,9 +37,12 @@ class CarService {
 
   async findById(id) {
     try {
-      return await CarRepository.findById(id);
+      const car = await CarRepository.findById(id);
+      if (car == null) {
+        throw new Error('id not found');
+      } return car;
     } catch (error) {
-      return error;
+      throw error;
     }
   }
 
