@@ -31,10 +31,11 @@ class PeopleService {
   async findById(id) {
     try {
       const person = await PeopleRepository.findById(id);
-      person.senha = undefined;
       if (person == null) {
         throw new Error('id not found');
-      } return person;
+      }
+      person.senha = undefined;
+      return person;
     } catch (error) {
       throw error;
     }
