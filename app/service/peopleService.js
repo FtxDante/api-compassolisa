@@ -30,9 +30,13 @@ class PeopleService {
 
   async findById(id) {
     try {
-      return await PeopleRepository.findById(id);
+      const person = await PeopleRepository.findById(id);
+      person.senha = undefined;
+      if (person == null) {
+        throw new Error('id not found');
+      } return person;
     } catch (error) {
-      return res.status(400).json({message: error.message});
+      throw error;
     }
   }
 

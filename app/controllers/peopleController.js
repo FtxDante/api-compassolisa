@@ -16,9 +16,13 @@ class PeopleController {
   }
 
   static async getOnePerson(req, res) {
-    const {id} = req.params;
-    const result = await peopleService.findById(id);
-    return res.status(200).json(result);
+    try {
+      const {id} = req.params;
+      const result = await peopleService.findById(id);
+      return res.status(200).json(result);
+    } catch (error) {
+      return res.status(404).json({message: error.message});
+    }
   }
 
   static async updateOnePerson(req, res) {

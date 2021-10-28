@@ -33,7 +33,6 @@
     "eslint-plugin-jsdoc": "^36.1.1",
     "eslint-plugin-prettier": "^4.0.0",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.14",
-    "prettier": "^2.4.1"
+    "nodemon": "^2.0.14"
   }
 }
