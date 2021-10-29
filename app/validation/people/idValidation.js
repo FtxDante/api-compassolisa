@@ -9,7 +9,7 @@ module.exports = async (req, res, next) =>{
           .regex(/^[0-9a-fA-F]{24}$/),
     });
 
-    const {error} = await idParam.validate(req.params, {abortEarly: true});
+    const {error} = await idParam.validate(req.params, {abortEarly: false});
     if (error) throw error;
     return next();
   } catch (error) {
