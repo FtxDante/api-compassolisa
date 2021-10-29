@@ -2,7 +2,6 @@ const PeopleController = require('../app/controllers/peopleController');
 const {
   AllRequireValidation,
   IdValidation,
-  DeletePeopleValidation,
 } = require('../app/validation/people');
 
 module.exports = (server, routes, prefix = '/api/v1') => {
@@ -17,7 +16,7 @@ module.exports = (server, routes, prefix = '/api/v1') => {
   );
   routes.delete(
       '/people/:id',
-      DeletePeopleValidation,
+      IdValidation,
       PeopleController.deleteOne,
   );
 

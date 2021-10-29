@@ -1,7 +1,6 @@
 
 const Joi = require('joi');
 
-// [a-fA-F0-9]
 module.exports = async (req, res, next) =>{
   try {
     // eslint-disable-next-line new-cap
@@ -16,15 +15,4 @@ module.exports = async (req, res, next) =>{
   } catch (error) {
     return res.status(400).json({message: error.message});
   }
-/*  try {
-    const aaa. = Joi.object({
-    const isValid = mongoose.Types.ObjectId.isValid(req.params.id);
-
-    if (!isValid) {
-      throw new Error('Invalid id');
-    }
-    return next();
-  } catch (error) {
-    return res.status(400).json({message: error.message});
-  }*/
 };
