@@ -42,6 +42,7 @@ class PeopleService {
   }
 
   async updateOnePerson(req) {
+    await this.searchUnique(req);
     return await PeopleRepository.updateOne(req);
   }
 
