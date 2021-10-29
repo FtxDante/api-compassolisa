@@ -29,7 +29,7 @@ class CarController {
 
   static async getAllCars(req, res) {
     const result = await carService.findAll(req, res);
-    return res.status(201).json(result);
+    return res.status(200).json(result);
   }
 
   static async getOneCar(req, res) {
