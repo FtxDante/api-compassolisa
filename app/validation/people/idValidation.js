@@ -1,8 +1,23 @@
-const mongoose = require('mongoose');
 
+const Joi = require('joi');
 
+// [a-fA-F0-9]
 module.exports = async (req, res, next) =>{
   try {
+    // eslint-disable-next-line new-cap
+    const idParam = new Joi.object({
+      id: Joi.string()
+          .regex(/^[0-9a-fA-F]{24}$/),
+    });
+
+    const {error} = await idParam.validate(req.params, {abortEarly: true});
+    if (error) throw error;
+    return next();
+  } catch (error) {
+    return res.status(400).json({message: error.message});
+  }
+/*  try {
+    const aaa. = Joi.object({
     const isValid = mongoose.Types.ObjectId.isValid(req.params.id);
 
     if (!isValid) {
@@ -11,5 +26,5 @@ module.exports = async (req, res, next) =>{
     return next();
   } catch (error) {
     return res.status(400).json({message: error.message});
-  }
+  }*/
 };
