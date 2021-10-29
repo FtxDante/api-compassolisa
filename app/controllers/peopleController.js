@@ -12,7 +12,7 @@ class PeopleController {
   }
   static async getAllPeople(req, res) {
     const result = await peopleService.findAll(req, res);
-    return res.status(201).json(result);
+    return res.status(200).json(result);
   }
 
   static async getOnePerson(req, res) {
