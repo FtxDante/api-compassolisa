@@ -2,8 +2,12 @@
 const carService = require('../service/carService');
 class CarController {
   static async createCar(req, res) {
-    const result = await carService.create(req.body);
-    return res.status(201).json(result);
+    try {
+      const result = await carService.create(req.body);
+      return res.status(201).json(result);
+    } catch (error) {
+      return res.status(404).json({message: error.message});
+    }
   }
 
   static async deleteOne(req, res) {
@@ -18,18 +22,26 @@ class CarController {
 
       return res.status(204).end();
     } catch (error) {
-      return res.status(404).end();
+      return res.status(404).json({message: error.message});
     }
   }
 
   static async updateOneCar(req, res) {
-    await carService.updateOneCar(req);
-    return res.status(201).end();
+    try {
+      await carService.updateOneCar(req);
+      return res.status(201).end();
+    } catch (error) {
+      return res.status(404).json({message: error.message});
+    }
   }
 
   static async getAllCars(req, res) {
-    const result = await carService.findAll(req, res);
-    return res.status(200).json(result);
+    try {
+      const result = await carService.findAll(req, res);
+      return res.status(200).json(result);
+    } catch (error) {
+      return res.status(404).json({message: error.message});
+    }
   }
 
   static async getOneCar(req, res) {

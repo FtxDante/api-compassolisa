@@ -11,8 +11,12 @@ class PeopleController {
     }
   }
   static async getAllPeople(req, res) {
-    const result = await peopleService.findAll(req, res);
-    return res.status(200).json(result);
+    try {
+      const result = await peopleService.findAll(req, res);
+      return res.status(200).json(result);
+    } catch (error) {
+      return res.status(404).json({message: error.message});
+    }
   }
 
   static async getOnePerson(req, res) {
@@ -45,7 +49,7 @@ class PeopleController {
 
       return res.status(204).end();
     } catch (error) {
-      return res.status(404).end();
+      return res.status(404).json({message: error.message});
     }
   }
 }

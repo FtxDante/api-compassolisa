@@ -1,5 +1,5 @@
 const {validator} = require('cpf-cnpj-validator');
-
+const {errosName} = require('../../errors');
 const Joi = require('joi').extend(validator);
 
 module.exports = async (req, res, next) =>{
@@ -14,7 +14,7 @@ module.exports = async (req, res, next) =>{
             const cpf2 = value.replace(/[^0-9]/g, '')
                 .replace(/(\d{3})?(\d{3})?(\d{3})?(\d{2})/, '$1.$2.$3-$4');
             if (cpf2 !== value) {
-              return helper.message('Invalid CPF');
+              return helper.message(errosName.invalidCpf);
             }
           }),
       data_nascimento: Joi.date()
@@ -23,7 +23,7 @@ module.exports = async (req, res, next) =>{
             if ( (Date.now() - new Date(value) ) / 31556925974 > 18) {
               return true;
             } else {
-              return helper.message('Must be at least 18 years old');
+              return helper.message(errosName.minor);
             }
           }),
       email: Joi.string()
@@ -38,7 +38,7 @@ module.exports = async (req, res, next) =>{
 
     });
 
-    const {error} = await peopleSchema.validate(req.body, {abortEarl: true});
+    const {error} = await peopleSchema.validate(req.body, {abortEarly: false});
     if (error) throw error;
     return next();
   } catch (error) {
