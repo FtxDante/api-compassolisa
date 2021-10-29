@@ -8,6 +8,7 @@ const {
 module.exports = (server, routes, prefix = '/api/v1') => {
   routes.post('/people', AllRequireValidation, PeopleController.createPeople);
   routes.get('/people?', PeopleController.getAllPeople);
+  routes.get('/people/:id', IdValidation, PeopleController.getOnePerson);
   routes.put(
       '/people/:id',
       IdValidation,
