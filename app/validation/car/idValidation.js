@@ -11,7 +11,7 @@ module.exports = async (req, res, next) =>{
 
     });
 
-    const {error} = await idParam.validate(req.params, {abortEarly: true});
+    const {error} = await idParam.validate(req.params, {abortEarly: false});
     if (error) throw error;
     return next();
   } catch (error) {
