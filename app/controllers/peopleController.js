@@ -26,12 +26,17 @@ class PeopleController {
   }
 
   static async updateOnePerson(req, res) {
+    const {id} = req.params;
     try {
-      const updateOnePerson = await peopleService.updateOnePerson(req);
-      if (updateOnePerson != 0) {
-        const {id} = req.params;
-        const result = await peopleService.findById(id);
-        return res.status(200).json(result);
+      const registeredId = await peopleService.findById(id);
+      if (!registeredId) {
+        throw error;
+      } else {
+        const updateOnePerson = await peopleService.updateOnePerson(req);
+        if (updateOnePerson != 0) {
+          const result = await peopleService.findById(id);
+          return res.status(200).json(result);
+        }
       }
     } catch (error) {
       return res.status(404).json({message: error.message});

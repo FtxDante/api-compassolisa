@@ -30,7 +30,11 @@ class CarController {
         throw error;
       } else {
         const updatedCar = await carService.updateOneCar(req);
-        return res.status(200).json(updatedCar);
+        if (updatedCar != 0) {
+          const {id} = req.params;
+          const result = await carService.findById(id);
+          return res.status(200).json(result);
+        }
       }
     } catch (error) {
       return res.status(404).json({message: error.message});
