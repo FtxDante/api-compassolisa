@@ -30,7 +30,11 @@ class CarService {
   async findAll(req, res) {
     const where = filter(req);
     try {
-      return await CarRepository.formatOfPagination(req, where);
+      const cars = await CarRepository.formatOfPagination(req, where);
+      if (cars.total === 0) {
+        throw new Error('no car was found with this parameters, please verify');
+      }
+      return cars;
     } catch (error) {
       return res.status(400).json({message: error.message});
     }
