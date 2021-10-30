@@ -3,7 +3,7 @@ const InvalidId = require('./InvalidId');
 const NotFound = require('./NotFound');
 const UserRegistered = require('./UserRegistered');
 const errosName = require('./errosName.json');
-const HandleErrors = require('./HandlerErrors');
+const HandleErrors = require('./HandleErrors');
 
 module.exports = {
   AuthInvalid: AuthInvalid,
@@ -11,5 +11,5 @@ module.exports = {
   NotFound: NotFound,
   UserRegistered: UserRegistered,
   errosName: errosName,
-  HandleErrors: HandleErrors,
+  handleErrors: HandleErrors,
 };

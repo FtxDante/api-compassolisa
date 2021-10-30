@@ -1,19 +1,10 @@
 /* eslint-disable require-jsdoc */
 const CarRepository = require('../repository/carRepository');
-const {UserRegistered, NotFound} = require('../errors');
+const {NotFound} = require('../errors');
 
 class CarService {
   async updateOneCar(req) {
     await CarRepository.updateOne(req);
-  }
-
-  async searchUnique(req, res) {
-    const {id} = req.params;
-
-    const carFound = await CarRepository.findOne({id: id});
-    if (carFound) {
-      throw new UserRegistered();
-    }
   }
 
   async create(dataCar) {
@@ -29,7 +20,7 @@ class CarService {
     };
   }
 
-  async findAll(req, res) {
+  async findAll(req) {
     return await CarRepository.formatOfPagination(req);
   }
 
@@ -41,12 +32,10 @@ class CarService {
   }
 
   async deleteOne(id) {
-    const {deletedCount} = await CarRepository.deleteOne(id);
+    const wasDeleted = await CarRepository.deleteOne(id);
 
-    if (deletedCount == 0) {
+    if (!wasDeleted) {
       throw new NotFound('id');
-    } else {
-      return;
     }
   }
 }

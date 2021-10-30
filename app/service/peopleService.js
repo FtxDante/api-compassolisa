@@ -46,13 +46,13 @@ class PeopleService {
   }
 
   async deleteOne(id) {
-    const {deletedCount} = await PeopleRepository.deleteOne(id);
+    const wasDeleted = await PeopleRepository.deleteOne(id);
 
-    if (deletedCount == 0) {
+    if (!wasDeleted) {
       throw new NotFound('id');
-    } else {
-      return;
     }
+
+    return;
   }
 
   createWhere(params) {
