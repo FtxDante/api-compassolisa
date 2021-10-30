@@ -28,7 +28,11 @@ class PeopleController {
   static async updateOnePerson(req, res) {
     try {
       const updateOnePerson = await peopleService.updateOnePerson(req);
-      return res.status(200).json(updateOnePerson);
+      if (updateOnePerson != 0) {
+        const {id} = req.params;
+        const result = await peopleService.findById(id);
+        return res.status(200).json(result);
+      }
     } catch (error) {
       return res.status(404).json({message: error.message});
     }
