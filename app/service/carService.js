@@ -28,8 +28,9 @@ class CarService {
   }
 
   async findAll(req, res) {
+    const where = filter(req);
     try {
-      return await CarRepository.formatOfPagination(req);
+      return await CarRepository.formatOfPagination(req, where);
     } catch (error) {
       return res.status(400).json({message: error.message});
     }
@@ -59,6 +60,19 @@ class CarService {
       return error;
     }
   }
+}
+
+function filter(req) {
+  const params = {...req.query};
+
+  const value = params.acessorios;
+  if (params.acessorios) {
+    params.acessorios = {descricao: value};
+  }
+
+  const where = params;
+  console.log(where);
+  return where;
 }
 
 module.exports = new CarService();
