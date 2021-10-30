@@ -42,10 +42,16 @@ class PeopleService {
   }
 
   async updateOnePerson(req) {
-    await this.searchUnique(req);
-    return await PeopleRepository.updateOne(req);
+    const {email, cpf} = req.body;
+    const searchemail = await PeopleRepository.findOne({email: email});
+    const searchcpf = await PeopleRepository.findOne({cpf: cpf});
+    if (searchemail || searchcpf) {
+      return await PeopleRepository.updateOne(req);
+    } else {
+      throw error;
+    }
   }
-
+  
   async searchUnique(req, res) {
     const {email, cpf} = req.body;
 
