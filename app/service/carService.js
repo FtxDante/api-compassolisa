@@ -2,9 +2,11 @@
 const CarRepository = require('../repository/carRepository');
 
 class CarService {
-  async updateOneCar(req) {
+  async updateOneCar(req, res) {
+    const {id} = req.params;
+    await this.findById(id);
     try {
-      await CarRepository.updateOne(req);
+      return await CarRepository.updateOne(req);
     } catch (error) {
       return error;
     }

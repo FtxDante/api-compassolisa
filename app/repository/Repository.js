@@ -15,7 +15,7 @@ class Repository {
 
   async updateOne(req, where = {_id: req.params.id}) {
     const update = req.body;
-    await Schemas[this.schema].updateOne(where, update);
+    return await Schemas[this.schema].updateOne(where, update);
   }
 
   async findAll(where = {}, page = null, limit = null) {

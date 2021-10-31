@@ -24,18 +24,8 @@ class CarController {
 
   static async updateOneCar(req, res) {
     try {
-      const {id} = req.params;
-      const registeredId = await carService.findById(id);
-      if (!registeredId) {
-        throw error;
-      } else {
-        const updatedCar = await carService.updateOneCar(req);
-        if (updatedCar != 0) {
-          const {id} = req.params;
-          const result = await carService.findById(id);
-          return res.status(200).json(result);
-        }
-      }
+      const result = await carService.updateOneCar(req, res);
+      return res.status(200).json(result);
     } catch (error) {
       return res.status(404).json({message: error.message});
     }
