@@ -42,6 +42,8 @@ class PeopleService {
   }
 
   async updateOnePerson(req) {
+    const {id} = req.params;
+    await this.findById(id);
     await this.searchUnique(req);
     return await PeopleRepository.updateOne(req);
   }

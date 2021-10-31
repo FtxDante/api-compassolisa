@@ -23,8 +23,12 @@ class CarController {
   }
 
   static async updateOneCar(req, res) {
-    await carService.updateOneCar(req);
-    return res.status(201).end();
+    try {
+      const result = await carService.updateOneCar(req, res);
+      return res.status(200).json(result);
+    } catch (error) {
+      return res.status(404).json({message: error.message});
+    }
   }
 
   static async getAllCars(req, res) {

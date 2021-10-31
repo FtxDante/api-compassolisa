@@ -6,6 +6,7 @@ module.exports = async (req, res, next) =>{
   try {
     const peopleSchema = Joi.object({
       nome: Joi.string()
+          .trim()
           .required(),
       cpf: Joi.document()
           .cpf()
