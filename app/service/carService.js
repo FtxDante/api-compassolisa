@@ -5,11 +5,7 @@ class CarService {
   async updateOneCar(req, res) {
     const {id} = req.params;
     await this.findById(id);
-    try {
-      return await CarRepository.updateOne(req);
-    } catch (error) {
-      return error;
-    }
+    return await CarRepository.updateOne(req);
   }
 
   async create(dataCar) {
