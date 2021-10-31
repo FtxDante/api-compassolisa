@@ -2,7 +2,8 @@ const PeopleRepository = require('../repository/peopleRepository');
 const {UserRegistered, NotFound} = require('../errors');
 
 class PeopleService {
-  async createPeople(peopleData) {
+  async createPeople(peopleData, req) {
+    await this.searchUnique(req);
     // eslint-disable-next-line camelcase
     const {nome, cpf, data_nascimento, email, habilitado} =
       await PeopleRepository.create(peopleData);

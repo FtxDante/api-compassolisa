@@ -3,8 +3,7 @@ const {handleErrors} = require('../errors');
 class PeopleController {
   static async createPeople(req, res) {
     try {
-      await peopleService.searchUnique(req, res);
-      const result = await peopleService.createPeople(req.body);
+      const result = await peopleService.createPeople(req.body, req);
       return res.status(201).json(result);
     } catch (error) {
       const status = handleErrors.getStatusToError(error);
