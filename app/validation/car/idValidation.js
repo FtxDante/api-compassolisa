@@ -6,8 +6,7 @@ module.exports = async (req, res, next) =>{
     // eslint-disable-next-line new-cap
     const idParam = new Joi.object({
       id: Joi.string()
-          .regex(/^[0-9a-fA-F]{24}$/)
-          .label('invalid id format'),
+          .regex(/^[0-9a-fA-F]{24}$/),
 
     });
 
