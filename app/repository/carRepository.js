@@ -5,8 +5,8 @@ class CarRepository extends Repository {
     super('CarSchema');
   }
 
-  async formatOfPagination(req) {
-    const {data, dataTotal, page, limit} = await this.pagination(req);
+  async formatOfPagination(req, where = {}) {
+    const {data, dataTotal, page, limit} = await this.pagination(req, where);
 
     return {
       veiculos: data,
