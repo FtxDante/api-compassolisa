@@ -1,36 +1,35 @@
-const Schemas = require('../schema');
-
 class Repository {
   constructor(schema) {
     this.schema = schema;
   }
 
   async create(data) {
-    return await Schemas[this.schema].create(data);
+    return await this.schema.create(data);
   }
 
   async deleteOne(id) {
-    return await Schemas[this.schema].findByIdAndRemove(id);
+    return await this.schema.findByIdAndRemove(id);
   }
 
   async updateOne(req, where = {_id: req.params.id}, getNew = {new: true}) {
     const update = req.body;
-    return await Schemas[this.schema].findOneAndUpdate(where, update, getNew);
+    return await this.schema.findOneAndUpdate(where, update, getNew);
+
   }
 
   async findAll(where = {}, page = null, limit = null) {
-    return await Schemas[this.schema]
+    return await this.schema
         .find(where)
         .skip(page * limit)
         .limit(limit);
   }
 
   async findOne(where) {
-    return await Schemas[this.schema].findOne(where);
+    return await this.schema.findOne(where);
   }
 
   async findById(id) {
-    return await Schemas[this.schema].findById(id);
+    return await this.schema.findById(id);
   }
 
   async pagination(req, where = {}) {

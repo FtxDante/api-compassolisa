@@ -1,7 +1,8 @@
+const {PeopleSchema} = require('../schema');
 const Repository = require('./Repository');
 class PeopleRepository extends Repository {
   constructor() {
-    super('PeopleSchema');
+    super(PeopleSchema);
   }
 
   async formatOfPagination(req, where = {}) {
