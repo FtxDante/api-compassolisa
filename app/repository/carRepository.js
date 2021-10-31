@@ -1,8 +1,9 @@
+const {CarSchema} = require('../schema');
 const Repository = require('./Repository');
 
 class CarRepository extends Repository {
   constructor() {
-    super('CarSchema');
+    super(CarSchema);
   }
 
   async formatOfPagination(req, where = {}) {
