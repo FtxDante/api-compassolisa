@@ -31,7 +31,7 @@ class PeopleService {
   async findById(id) {
     try {
       const person = await PeopleRepository.findById(id);
-      if (person == null) {
+      if (person === null) {
         throw new Error('id not found');
       }
       person.senha = undefined;
