@@ -4,9 +4,11 @@ module.exports = async (req, res, next) =>{
   try {
     const carSchema = Joi.object({
       modelo: Joi.string()
+          .trim()
           .required(),
 
       cor: Joi.string()
+          .trim()
           .required(),
 
       ano: Joi.number()
@@ -16,6 +18,7 @@ module.exports = async (req, res, next) =>{
 
       acessorios: Joi.array().items(Joi.object({
         descricao: Joi.string()
+            .trim()
             .required(),
       }).unknown(true))
           .unique((a, b) => a.descricao === b.descricao)
