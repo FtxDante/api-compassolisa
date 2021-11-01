@@ -1,5 +1,6 @@
 /* eslint-disable require-jsdoc */
 const AuthService = require('../service/authService');
+
 class AuthController {
   static async signIn(req, res) {
     try {

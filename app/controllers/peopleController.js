@@ -7,9 +7,10 @@ class PeopleController {
       const result = await peopleService.createPeople(req.body);
       return res.status(201).json(result);
     } catch (error) {
-      return res.status(400).json({message: error.message});
+      return res.status(400).json({ message: error.message });
     }
   }
+
   static async getAllPeople(req, res) {
     const result = await peopleService.findAll(req, res);
     return res.status(200).json(result);
@@ -17,11 +18,11 @@ class PeopleController {
 
   static async getOnePerson(req, res) {
     try {
-      const {id} = req.params;
+      const { id } = req.params;
       const result = await peopleService.findById(id);
       return res.status(200).json(result);
     } catch (error) {
-      return res.status(404).json({message: error.message});
+      return res.status(404).json({ message: error.message });
     }
   }
 
@@ -30,12 +31,12 @@ class PeopleController {
       const result = await peopleService.updateOnePerson(req);
       return res.status(200).json(result);
     } catch (error) {
-      return res.status(404).json({message: error.message});
+      return res.status(404).json({ message: error.message });
     }
   }
 
   static async deleteOne(req, res) {
-    const id = req.params.id;
+    const { id } = req.params;
 
     try {
       const result = await peopleService.deleteOne(id);

@@ -4,15 +4,14 @@ class PeopleService {
   async createPeople(peopleData) {
     try {
       // eslint-disable-next-line camelcase
-      const {nome, cpf, data_nascimento, email, habilitado} =
-        await PeopleRepository.create(peopleData);
+      const { nome, cpf, data_nascimento, email, habilitado } = await PeopleRepository.create(peopleData);
 
       return {
-        nome: nome,
-        cpf: cpf,
-        data_nascimento: data_nascimento,
-        email: email,
-        habilitado: habilitado,
+        nome,
+        cpf,
+        data_nascimento,
+        email,
+        habilitado
       };
     } catch (error) {
       return error;
@@ -24,7 +23,7 @@ class PeopleService {
       const searchParams = this.createWhere(req.query);
       return await PeopleRepository.formatOfPagination(req, searchParams);
     } catch (error) {
-      return res.status(400).json({message: error.message});
+      return res.status(400).json({ message: error.message });
     }
   }
 
@@ -42,17 +41,17 @@ class PeopleService {
   }
 
   async updateOnePerson(req) {
-    const {id} = req.params;
+    const { id } = req.params;
     await this.findById(id);
     await this.searchUnique(req);
     return await PeopleRepository.updateOne(req);
   }
 
   async searchUnique(req, res) {
-    const {email, cpf} = req.body;
+    const { email, cpf } = req.body;
 
-    const searchemail = await PeopleRepository.findOne({email: email});
-    const searchcpf = await PeopleRepository.findOne({cpf: cpf});
+    const searchemail = await PeopleRepository.findOne({ email });
+    const searchcpf = await PeopleRepository.findOne({ cpf });
     if (searchemail || searchcpf) {
       throw new Error('User already registered.');
     }
@@ -60,7 +59,7 @@ class PeopleService {
 
   async deleteOne(id) {
     try {
-      const {deletedCount} = await PeopleRepository.deleteOne(id);
+      const { deletedCount } = await PeopleRepository.deleteOne(id);
 
       if (deletedCount == 0) {
         throw new Error('id not found');
@@ -73,7 +72,7 @@ class PeopleService {
   }
 
   createWhere(params) {
-    const where = {...params};
+    const where = { ...params };
     delete where.senha;
     delete where._id;
     delete where.id;

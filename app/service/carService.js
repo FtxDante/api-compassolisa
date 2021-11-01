@@ -3,22 +3,21 @@ const CarRepository = require('../repository/carRepository');
 
 class CarService {
   async updateOneCar(req, res) {
-    const {id} = req.params;
+    const { id } = req.params;
     await this.findById(id);
     return await CarRepository.updateOne(req);
   }
 
   async create(dataCar) {
     try {
-      const {modelo, cor, ano, acessorios, quantidadePassageiros} =
-        await CarRepository.create(dataCar);
+      const { modelo, cor, ano, acessorios, quantidadePassageiros } = await CarRepository.create(dataCar);
 
       return {
-        modelo: modelo,
-        cor: cor,
-        ano: ano,
-        acessorios: acessorios,
-        quantidadePassageiros: quantidadePassageiros,
+        modelo,
+        cor,
+        ano,
+        acessorios,
+        quantidadePassageiros
       };
     } catch (error) {
       return error;
@@ -31,7 +30,7 @@ class CarService {
       const cars = await CarRepository.formatOfPagination(req, where);
       return cars;
     } catch (error) {
-      return res.status(400).json({message: error.message});
+      return res.status(400).json({ message: error.message });
     }
   }
 
@@ -40,7 +39,8 @@ class CarService {
       const car = await CarRepository.findById(id);
       if (car === null) {
         throw new Error('id not found');
-      } return car;
+      }
+      return car;
     } catch (error) {
       throw error;
     }
@@ -48,7 +48,7 @@ class CarService {
 
   async deleteOne(id) {
     try {
-      const {deletedCount} = await CarRepository.deleteOne(id);
+      const { deletedCount } = await CarRepository.deleteOne(id);
 
       if (deletedCount == 0) {
         throw new Error('id not found');
@@ -62,11 +62,11 @@ class CarService {
 }
 
 function filter(req) {
-  const params = {...req.query};
+  const params = { ...req.query };
 
   const value = params.acessorios;
   if (params.acessorios) {
-    params.acessorios = {descricao: value};
+    params.acessorios = { descricao: value };
   }
 
   const where = params;
