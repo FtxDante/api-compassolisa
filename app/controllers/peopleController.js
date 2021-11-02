@@ -33,13 +33,14 @@ class PeopleController {
 
   static async updateOnePerson(req, res) {
     try {
-      await peopleService.updateOnePerson(req);
-      return res.status(201).end();
+      const result = await peopleService.updateOnePerson(req);
+      return res.status(200).json(result);
     } catch (error) {
       const status = handleErrors.getStatusToError(error);
       return res.status(status).json({message: error.message});
     }
   }
+
   static async deleteOne(req, res) {
     const id = req.params.id;
 

@@ -17,14 +17,14 @@ class PeopleService {
     };
   }
 
-  async findAll(req, res) {
+  async findAll(req) {
     const searchParams = this.createWhere(req.query);
     return await PeopleRepository.formatOfPagination(req, searchParams);
   }
 
   async findById(id) {
     const person = await PeopleRepository.findById(id);
-    if (person == null) {
+    if (!person) {
       throw new NotFound('id');
     }
     person.senha = undefined;
@@ -32,11 +32,13 @@ class PeopleService {
   }
 
   async updateOnePerson(req) {
+    const {id} = req.params;
+    await this.findById(id);
     await this.searchUnique(req);
     return await PeopleRepository.updateOne(req);
   }
 
-  async searchUnique(req, res) {
+  async searchUnique(req) {
     const {email, cpf} = req.body;
 
     const searchemail = await PeopleRepository.findOne({email: email});
