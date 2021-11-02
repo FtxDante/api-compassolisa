@@ -7,7 +7,6 @@ module.exports = async (req, res, next) =>{
     const idParam = new Joi.object({
       id: Joi.string()
           .regex(/^[0-9a-fA-F]{24}$/),
-
     });
 
     const {error} = await idParam.validate(req.params, {abortEarly: false});
