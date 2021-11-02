@@ -1,0 +1,5 @@
+{
+    "minor": "must be at last 18 years old",
+    "invalidCpf": "invalid CPF",
+    "invalidId": "invalid ID"
+}
