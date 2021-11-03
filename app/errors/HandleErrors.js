@@ -1,7 +1,7 @@
 class HandleErrors {
   getStatusToError(error) {
     let status = 500;
-    if (error.idError === '001' || error.idError === '003') {
+    if (error.idError === '001' || error.idError === '003'|| error.idError === '005') {
       status = 400;
     } else if (error.idError === '004') {
       status = 401;

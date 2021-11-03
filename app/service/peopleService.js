@@ -1,5 +1,5 @@
 const PeopleRepository = require('../repository/peopleRepository');
-const { UserRegistered, NotFound } = require('../errors');
+const { CpfInUse, EmailInUse, NotFound } = require('../errors');
 
 class PeopleService {
   async createPeople(peopleData, req) {
@@ -42,8 +42,12 @@ class PeopleService {
 
     const searchemail = await PeopleRepository.findOne({ email });
     const searchcpf = await PeopleRepository.findOne({ cpf });
-    if (searchemail || searchcpf) {
-      throw new UserRegistered();
+    if (searchemail) {
+      throw new EmailInUse(email);
+    }
+
+    if(searchcpf){
+      throw new CpfInUse(cpf);
     }
   }
 
