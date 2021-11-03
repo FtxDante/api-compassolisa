@@ -1,5 +1,6 @@
 /* eslint-disable require-jsdoc */
 const CarRepository = require('../repository/carRepository');
+const { NotFound } = require('../errors');
 
 class CarService {
   async updateOneCar(req, res) {
@@ -9,54 +10,36 @@ class CarService {
   }
 
   async create(dataCar) {
-    try {
-      const { modelo, cor, ano, acessorios, quantidadePassageiros } = await CarRepository.create(dataCar);
+    const { modelo, cor, ano, acessorios, quantidadePassageiros } = await CarRepository.create(dataCar);
 
-      return {
-        modelo,
-        cor,
-        ano,
-        acessorios,
-        quantidadePassageiros
-      };
-    } catch (error) {
-      return error;
-    }
+    return {
+      modelo,
+      cor,
+      ano,
+      acessorios,
+      quantidadePassageiros
+    };
   }
 
   async findAll(req, res) {
     const where = await filter(req);
-    try {
-      const cars = await CarRepository.formatOfPagination(req, where);
-      return cars;
-    } catch (error) {
-      return res.status(400).json({ message: error.message });
-    }
+    const cars = await CarRepository.formatOfPagination(req, where);
+    return cars;
   }
 
   async findById(id) {
-    try {
-      const car = await CarRepository.findById(id);
-      if (car === null) {
-        throw new Error('id not found');
-      }
-      return car;
-    } catch (error) {
-      throw error;
+    const car = await CarRepository.findById(id);
+    if (car === null) {
+      throw new NotFound('id');
     }
+    return car;
   }
 
   async deleteOne(id) {
-    try {
-      const { deletedCount } = await CarRepository.deleteOne(id);
+    const wasDeleted = await CarRepository.deleteOne(id);
 
-      if (deletedCount == 0) {
-        throw new Error('id not found');
-      } else {
-        return;
-      }
-    } catch (error) {
-      return error;
+    if (!wasDeleted) {
+      throw new NotFound('id');
     }
   }
 }

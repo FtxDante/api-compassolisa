@@ -1,3 +1,4 @@
+const { handleErrors } = require('../errors');
 /* eslint-disable require-jsdoc */
 const AuthService = require('../service/authService');
 
@@ -9,7 +10,8 @@ class AuthController {
 
       return res.status(200).end();
     } catch (error) {
-      return res.status(401).json(error.message);
+      const status = handleErrors.getStatusToError(error);
+      return res.status(status).json({ message: error.message });
     }
   }
 }
