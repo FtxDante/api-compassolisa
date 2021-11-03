@@ -7,7 +7,6 @@
 ### Como baixar e configurar
 
 - Requisitos: NPM e Node.js
-- Rodar `npm install` para instalar todas as dependências
 - Porta padrão: 3000
 - Colocar seus dados referentes ao banco de dados em um arquivo .env, seguindo o exemplo que consta no arquivo .env.example.
 
@@ -19,7 +18,12 @@
    git clone https://github.com/FtxDante/api-compassolisa.git
    ```
 
-2. Após clonar e instalar as dependências:
+2. Instalar as dependências:
+
+   ```
+   npm install
+   ```
+ 3. Após clonar e instalar as dependências:
 
    ```
    npm start
