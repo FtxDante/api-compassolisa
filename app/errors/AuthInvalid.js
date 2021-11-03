@@ -4,5 +4,5 @@ class AuthInvalid extends Error {
     this.name = 'AuthInvalid';
     this.idError = '004';
   }
-};
+}
 module.exports = AuthInvalid;

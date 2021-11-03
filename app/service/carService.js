@@ -1,24 +1,23 @@
 /* eslint-disable require-jsdoc */
 const CarRepository = require('../repository/carRepository');
-const {NotFound} = require('../errors');
+const { NotFound } = require('../errors');
 
 class CarService {
   async updateOneCar(req, res) {
-    const {id} = req.params;
+    const { id } = req.params;
     await this.findById(id);
     return await CarRepository.updateOne(req);
   }
 
   async create(dataCar) {
-    const {modelo, cor, ano, acessorios, quantidadePassageiros} =
-      await CarRepository.create(dataCar);
+    const { modelo, cor, ano, acessorios, quantidadePassageiros } = await CarRepository.create(dataCar);
 
     return {
-      modelo: modelo,
-      cor: cor,
-      ano: ano,
-      acessorios: acessorios,
-      quantidadePassageiros: quantidadePassageiros,
+      modelo,
+      cor,
+      ano,
+      acessorios,
+      quantidadePassageiros
     };
   }
 
@@ -31,8 +30,9 @@ class CarService {
   async findById(id) {
     const car = await CarRepository.findById(id);
     if (car === null) {
-      throw new Error('id not found');
-    } return car;
+      throw new NotFound('id');
+    }
+    return car;
   }
 
   async deleteOne(id) {
@@ -45,11 +45,11 @@ class CarService {
 }
 
 function filter(req) {
-  const params = {...req.query};
+  const params = { ...req.query };
 
   const value = params.acessorios;
   if (params.acessorios) {
-    params.acessorios = {descricao: value};
+    params.acessorios = { descricao: value };
   }
 
   const where = params;

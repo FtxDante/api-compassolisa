@@ -5,5 +5,5 @@ class InvalidId extends Error {
     this.idError = '001';
     this.errorStatus = 400;
   }
-};
+}
 module.exports = InvalidId;

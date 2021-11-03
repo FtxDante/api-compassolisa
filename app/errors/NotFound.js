@@ -6,6 +6,6 @@ class NotFound extends Error {
     this.idError = '002';
     this.errorStatus = 404;
   }
-};
+}
 
 module.exports = NotFound;

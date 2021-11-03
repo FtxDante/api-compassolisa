@@ -6,10 +6,10 @@ const errosName = require('./errosName.json');
 const HandleErrors = require('./HandleErrors');
 
 module.exports = {
-  AuthInvalid: AuthInvalid,
-  InvalidId: InvalidId,
-  NotFound: NotFound,
-  UserRegistered: UserRegistered,
-  errosName: errosName,
-  handleErrors: HandleErrors,
+  AuthInvalid,
+  InvalidId,
+  NotFound,
+  UserRegistered,
+  errosName,
+  handleErrors: HandleErrors
 };

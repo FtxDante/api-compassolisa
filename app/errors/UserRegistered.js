@@ -4,5 +4,5 @@ class UserRegistered extends Error {
     this.name = 'UserRegistered';
     this.idError = '003';
   }
-};
+}
 module.exports = UserRegistered;

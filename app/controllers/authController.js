@@ -1,6 +1,7 @@
-const {handleErrors} = require('../errors');
+const { handleErrors } = require('../errors');
 /* eslint-disable require-jsdoc */
 const AuthService = require('../service/authService');
+
 class AuthController {
   static async signIn(req, res) {
     try {
@@ -10,7 +11,7 @@ class AuthController {
       return res.status(200).end();
     } catch (error) {
       const status = handleErrors.getStatusToError(error);
-      return res.status(status).json({message: error.message});
+      return res.status(status).json({ message: error.message });
     }
   }
 }

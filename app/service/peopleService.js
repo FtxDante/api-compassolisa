@@ -1,19 +1,18 @@
 const PeopleRepository = require('../repository/peopleRepository');
-const {UserRegistered, NotFound} = require('../errors');
+const { UserRegistered, NotFound } = require('../errors');
 
 class PeopleService {
   async createPeople(peopleData, req) {
     await this.searchUnique(req);
     // eslint-disable-next-line camelcase
-    const {nome, cpf, data_nascimento, email, habilitado} =
-      await PeopleRepository.create(peopleData);
+    const { nome, cpf, data_nascimento, email, habilitado } = await PeopleRepository.create(peopleData);
 
     return {
-      nome: nome,
-      cpf: cpf,
-      data_nascimento: data_nascimento,
-      email: email,
-      habilitado: habilitado,
+      nome,
+      cpf,
+      data_nascimento,
+      email,
+      habilitado
     };
   }
 
@@ -32,17 +31,17 @@ class PeopleService {
   }
 
   async updateOnePerson(req) {
-    const {id} = req.params;
+    const { id } = req.params;
     await this.findById(id);
     await this.searchUnique(req);
     return await PeopleRepository.updateOne(req);
   }
 
   async searchUnique(req) {
-    const {email, cpf} = req.body;
+    const { email, cpf } = req.body;
 
-    const searchemail = await PeopleRepository.findOne({email: email});
-    const searchcpf = await PeopleRepository.findOne({cpf: cpf});
+    const searchemail = await PeopleRepository.findOne({ email });
+    const searchcpf = await PeopleRepository.findOne({ cpf });
     if (searchemail || searchcpf) {
       throw new UserRegistered();
     }
@@ -54,12 +53,10 @@ class PeopleService {
     if (!wasDeleted) {
       throw new NotFound('id');
     }
-
-    return;
   }
 
   createWhere(params) {
-    const where = {...params};
+    const where = { ...params };
     delete where.senha;
     delete where._id;
     delete where.id;

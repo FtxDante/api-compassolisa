@@ -3,7 +3,7 @@ const findValidation = require('./find');
 const idValidation = require('./idValidation');
 
 module.exports = {
-  allRequiredCarValidation: allRequiredCarValidation,
+  allRequiredCarValidation,
   findCarValidation: findValidation,
-  idValidation: idValidation,
+  idValidation
 };

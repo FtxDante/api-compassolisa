@@ -11,16 +11,16 @@ class Repository {
     return await this.schema.findByIdAndRemove(id);
   }
 
-  async updateOne(req, where = {_id: req.params.id}, getNew = {new: true}) {
+  async updateOne(req, where = { _id: req.params.id }, getNew = { new: true }) {
     const update = req.body;
     return await this.schema.findOneAndUpdate(where, update, getNew);
   }
 
   async findAll(where = {}, page = null, limit = null) {
     return await this.schema
-        .find(where)
-        .skip(page * limit)
-        .limit(limit);
+      .find(where)
+      .skip(page * limit)
+      .limit(limit);
   }
 
   async findOne(where) {
@@ -33,14 +33,14 @@ class Repository {
 
   async pagination(req, where = {}) {
     try {
-      let {page = 0, limit = 100} = req.query;
+      let { page = 0, limit = 100 } = req.query;
 
       if (page > 0) page -= 1;
 
       const data = await this.findAll(where, Number(page), Number(limit));
 
       const dataTotal = await this.findAll(where);
-      return {data, dataTotal, page, limit};
+      return { data, dataTotal, page, limit };
     } catch (error) {
       return error;
     }
