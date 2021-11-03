@@ -17,10 +17,14 @@ const CarSchema = mongoose.Schema(
       min: 1950,
       max: 2022
     },
-    acessorios: {
-      type: [Object],
-      required: true
-    },
+    acessorios: [
+      {
+        descricao: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
     quantidadePassageiros: {
       type: Number,
       required: true,
