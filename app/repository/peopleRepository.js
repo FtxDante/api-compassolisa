@@ -5,5 +5,5 @@ class PeopleRepository extends Repository {
   constructor() {
     super(PeopleSchema);
   }
-} 
+}
 module.exports = new PeopleRepository();

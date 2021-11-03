@@ -18,7 +18,8 @@ class PeopleService {
 
   async findAll(req) {
     const searchParams = this.createWhere(req.query);
-    return await PeopleRepository.pagination(req, searchParams);
+    const people = await PeopleRepository.pagination(req, searchParams);
+    return people;
   }
 
   async findById(id) {
@@ -34,7 +35,8 @@ class PeopleService {
     const { id } = req.params;
     await this.findById(id);
     await this.searchUnique(req);
-    return await PeopleRepository.updateOne(req);
+    const updateOnePerson = await PeopleRepository.updateOne(req);
+    return updateOnePerson;
   }
 
   async searchUnique(req) {
@@ -58,7 +60,6 @@ class PeopleService {
   createWhere(params) {
     const where = { ...params };
     delete where.senha;
-    delete where._id;
     delete where.id;
     delete where.page;
     delete where.limit;

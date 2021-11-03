@@ -1,12 +1,21 @@
-/* eslint-disable require-jsdoc */
 const CarRepository = require('../repository/carRepository');
 const { NotFound } = require('../errors');
 
+function filter(req) {
+  const params = { ...req.query };
+  const value = params.acessorios;
+  if (params.acessorios) {
+    params.acessorios = { descricao: value };
+  }
+  const where = params;
+  return where;
+}
 class CarService {
-  async updateOneCar(req, res) {
+  async updateOneCar(req) {
     const { id } = req.params;
     await this.findById(id);
-    return await CarRepository.updateOne(req);
+    const updateOneCar = await CarRepository.updateOne(req);
+    return updateOneCar;
   }
 
   async create(dataCar) {
@@ -21,9 +30,9 @@ class CarService {
     };
   }
 
-  async findAll(req, res) {
+  async findAll(req) {
     const where = await filter(req);
-    const cars = await CarRepository.formatOfPagination(req, where);
+    const cars = await CarRepository.pagination(req, where);
     return cars;
   }
 
@@ -42,18 +51,6 @@ class CarService {
       throw new NotFound('id');
     }
   }
-}
-
-function filter(req) {
-  const params = { ...req.query };
-
-  const value = params.acessorios;
-  if (params.acessorios) {
-    params.acessorios = { descricao: value };
-  }
-
-  const where = params;
-  return where;
 }
 
 module.exports = new CarService();

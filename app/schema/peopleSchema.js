@@ -39,15 +39,15 @@ const peopleSchema = mongoose.Schema(
   { collection: 'people' }
 );
 
-peopleSchema.pre('save', async function (next) {
+peopleSchema.pre('save', async function senha(next) {
   if (!this.isModified('senha')) {
-    return next();
+    next();
   }
   const salt = await bcrypt.genSalt(10);
   this.senha = await bcrypt.hash(this.senha, salt);
 });
 
-peopleSchema.pre('updateOne', async function (next) {
+peopleSchema.pre('updateOne', async function senhaUpdate(next) {
   const data = this.getUpdate();
   if (data.senha) {
     const salt = await bcrypt.genSalt(10);
@@ -55,6 +55,7 @@ peopleSchema.pre('updateOne', async function (next) {
   }
   return next();
 });
+
 peopleSchema.plugin(mongoosePaginate);
 const People = mongoose.model('People', peopleSchema);
 
