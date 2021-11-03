@@ -47,9 +47,18 @@ class CarController {
 
   static async getOneCar(req, res) {
     try {
-      const {id} = req.params;
-      const result = await carService.findById(id);
+      const result = await carService.findById(req);
       return res.status(200).json(result);
+    } catch (error) {
+      const status = handleErrors.getStatusToError(error);
+      return res.status(status).json({message: error.message});
+    }
+  }
+
+  static async updateCarInfo(req, res) {
+    try {
+      const result = await carService.updateAItem(req);
+      res.status(200).json(result);
     } catch (error) {
       const status = handleErrors.getStatusToError(error);
       return res.status(status).json({message: error.message});

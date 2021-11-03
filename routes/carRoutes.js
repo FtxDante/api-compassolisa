@@ -4,6 +4,7 @@ const {
   allRequiredCarValidation,
   findCarValidation,
   idValidation,
+  patch,
 } = require('../app/validation/car');
 
 module.exports = (server, routes, prefix = '/api/v1') => {
@@ -17,6 +18,7 @@ module.exports = (server, routes, prefix = '/api/v1') => {
   routes.get('/car?', findCarValidation, carController.getAllCars);
   routes.get('/car/:id', idValidation, carController.getOneCar);
   routes.delete('/car/:id', idValidation, carController.deleteOne);
+  routes.patch('/car/:id', patch, carController.updateCarInfo);
 
   server.use(prefix, routes);
 };

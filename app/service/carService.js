@@ -1,12 +1,17 @@
 /* eslint-disable require-jsdoc */
 const CarRepository = require('../repository/carRepository');
 const {NotFound} = require('../errors');
+const carRepository = require('../repository/carRepository');
 
 class CarService {
-  async updateOneCar(req, res) {
-    const {id} = req.params;
-    await this.findById(id);
+  async updateOneCar(req) {
+    await this.findById(req);
     return await CarRepository.updateOne(req);
+  }
+
+  async updateAItem(req) {
+    await this.findById(req);
+    return await carRepository.updateOne(req);
   }
 
   async create(dataCar) {
@@ -22,16 +27,17 @@ class CarService {
     };
   }
 
-  async findAll(req, res) {
-    const where = await filter(req);
+  async findAll(req) {
+    const where = await this.filter(req);
     const cars = await CarRepository.formatOfPagination(req, where);
     return cars;
   }
 
-  async findById(id) {
+  async findById(req) {
+    const {id} = req.params;
     const car = await CarRepository.findById(id);
-    if (car === null) {
-      throw new Error('id not found');
+    if (!car) {
+      throw new NotFound('id');
     } return car;
   }
 
@@ -42,18 +48,16 @@ class CarService {
       throw new NotFound('id');
     }
   }
-}
 
-function filter(req) {
-  const params = {...req.query};
-
-  const value = params.acessorios;
-  if (params.acessorios) {
-    params.acessorios = {descricao: value};
+  async filter(req) {
+    const params = {...req.query};
+    const value = params.acessorios;
+    if (params.acessorios) {
+      params.acessorios = {descricao: value};
+    }
+    const where = params;
+    return where;
   }
-
-  const where = params;
-  return where;
 }
 
 module.exports = new CarService();
