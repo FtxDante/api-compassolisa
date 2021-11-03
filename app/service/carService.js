@@ -19,9 +19,10 @@ class CarService {
   }
 
   async create(dataCar) {
-    const { modelo, cor, ano, acessorios, quantidadePassageiros } = await CarRepository.create(dataCar);
+    const { _id, modelo, cor, ano, acessorios, quantidadePassageiros } = await CarRepository.create(dataCar);
 
     return {
+      _id,
       modelo,
       cor,
       ano,
