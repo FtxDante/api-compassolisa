@@ -1,6 +1,6 @@
 const { validator } = require('cpf-cnpj-validator');
-const { errosName } = require('../../errors');
 const Joi = require('joi').extend(validator);
+const { errosName } = require('../../errors');
 
 module.exports = async (req, res, next) => {
   try {
@@ -15,6 +15,7 @@ module.exports = async (req, res, next) => {
           if (cpf2 !== value) {
             return helper.message(errosName.invalidCpf);
           }
+          return true;
         }),
 
       data_nascimento: Joi.date()

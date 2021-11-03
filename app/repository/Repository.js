@@ -4,46 +4,39 @@ class Repository {
   }
 
   async create(data) {
-    return await this.schema.create(data);
+    const create = await this.schema.create(data);
+    return create;
   }
 
   async deleteOne(id) {
-    return await this.schema.findByIdAndRemove(id);
+    const deleteOne = await this.schema.findByIdAndRemove(id);
+    return deleteOne;
   }
 
   async updateOne(req, where = { _id: req.params.id }, getNew = { new: true }) {
     const update = req.body;
-    return await this.schema.findOneAndUpdate(where, update, getNew);
-  }
-
-  async findAll(where = {}, page = null, limit = null) {
-    return await this.schema
-      .find(where)
-      .skip(page * limit)
-      .limit(limit);
+    const updateOne = await this.schema.findOneAndUpdate(where, update, getNew);
+    return updateOne;
   }
 
   async findOne(where) {
-    return await this.schema.findOne(where);
+    const findOne = await this.schema.findOne(where);
+    return findOne;
   }
 
   async findById(id) {
-    return await this.schema.findById(id);
+    const findById = await this.schema.findById(id);
+    return findById;
   }
 
   async pagination(req, where = {}) {
-    try {
-      let { page = 0, limit = 100 } = req.query;
+    // eslint-disable-next-line prefer-const
+    let { page = 0, limit = 100 } = req.query;
 
-      if (page > 0) page -= 1;
+    if (page > 0) page -= 1;
 
-      const data = await this.findAll(where, Number(page), Number(limit));
-
-      const dataTotal = await this.findAll(where);
-      return { data, dataTotal, page, limit };
-    } catch (error) {
-      return error;
-    }
+    const data = await this.schema.paginate({ where }, { page, limit });
+    return data;
   }
 }
 

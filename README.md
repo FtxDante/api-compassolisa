@@ -23,7 +23,7 @@
    ```
    npm install
    ```
- 3. Após clonar e instalar as dependências:
+3. Após clonar e instalar as dependências:
 
    ```
    npm start

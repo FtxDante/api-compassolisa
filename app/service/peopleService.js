@@ -18,7 +18,7 @@ class PeopleService {
 
   async findAll(req) {
     const searchParams = this.createWhere(req.query);
-    return await PeopleRepository.formatOfPagination(req, searchParams);
+    return await PeopleRepository.pagination(req, searchParams);
   }
 
   async findById(id) {

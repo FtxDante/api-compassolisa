@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 const bcrypt = require('bcryptjs');
 
 // eslint-disable-next-line new-cap
@@ -54,7 +55,7 @@ peopleSchema.pre('updateOne', async function (next) {
   }
   return next();
 });
-
+peopleSchema.plugin(mongoosePaginate);
 const People = mongoose.model('People', peopleSchema);
 
 module.exports = People;
