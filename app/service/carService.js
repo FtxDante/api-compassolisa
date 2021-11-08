@@ -5,7 +5,7 @@ class CarService {
   filter(req) {
     const params = { ...req.query };
     if (params.descricao) {
-      params.acessorios = { descricao: params.descricao };
+      params['acessorios.descricao'] = params.descricao;
       delete params.descricao;
     }
     return params;
@@ -34,7 +34,6 @@ class CarService {
   async findAll(req) {
     const where = this.filter(req);
     const cars = await CarRepository.pagination(req, where);
-    console.log(where);
     return cars;
   }
 
