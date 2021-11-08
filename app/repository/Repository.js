@@ -34,8 +34,7 @@ class Repository {
     let { page = 0, limit = 100 } = req.query;
 
     if (page > 0) page -= 1;
-
-    const data = await this.schema.paginate({ where }, { page, limit });
+    const data = await this.schema.paginate(where, { page, limit });
     return data;
   }
 }

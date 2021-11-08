@@ -1,16 +1,16 @@
 const CarRepository = require('../repository/carRepository');
 const { NotFound } = require('../errors');
 
-function filter(req) {
-  const params = { ...req.query };
-  const value = params.acessorios;
-  if (params.acessorios) {
-    params.acessorios = { descricao: value };
-  }
-  const where = params;
-  return where;
-}
 class CarService {
+  filter(req) {
+    const params = { ...req.query };
+    if (params.descricao) {
+      params.acessorios = { descricao: params.descricao };
+      delete params.descricao;
+    }
+    return params;
+  }
+
   async updateOneCar(req) {
     const { id } = req.params;
     await this.findById(id);
@@ -32,14 +32,15 @@ class CarService {
   }
 
   async findAll(req) {
-    const where = await filter(req);
+    const where = this.filter(req);
     const cars = await CarRepository.pagination(req, where);
+    console.log(where);
     return cars;
   }
 
   async findById(id) {
     const car = await CarRepository.findById(id);
-    if (car === null) {
+    if (!car) {
       throw new NotFound('id');
     }
     return car;

@@ -22,9 +22,9 @@ const carSchema = mongoose.Schema(
       {
         descricao: {
           type: String,
-          required: true,
-        },
-      },
+          required: true
+        }
+      }
     ],
     quantidadePassageiros: {
       type: Number,
