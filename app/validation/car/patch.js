@@ -22,7 +22,10 @@ module.exports = async (req, res, next) =>{
 
       quantidadePassageiros: Joi.number()
           .min(2),
-    });
+    })
+    .or('modelo', 'cor', 'ano', 'acessorios', 'quantidadePassageiros')
+    .required();
+    
     const {error} = await carSchema.validate(req.body, {abortEarly: false});
     if (error) throw error;
     return next();
