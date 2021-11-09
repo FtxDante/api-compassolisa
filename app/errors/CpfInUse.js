@@ -1,9 +1,8 @@
 class CpfInUse extends Error {
-    constructor(cpf) {
-      super(`CPF ${cpf} already in use`);
-      this.name = 'CpfRegistered';
-      this.idError = '005';
-    }
+  constructor(cpf) {
+    super();
+    this.description = 'Conflict';
+    this.name = `CPF ${cpf} already in use`;
   }
-  module.exports = CpfInUse;
-  
+}
+module.exports = CpfInUse;

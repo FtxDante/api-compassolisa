@@ -8,7 +8,7 @@ class PeopleController {
       return res.status(201).json(result);
     } catch (error) {
       const status = handleErrors.getStatusToError(error);
-      return res.status(status).json({ message: error.message });
+      return res.status(status).json(error);
     }
   }
 
