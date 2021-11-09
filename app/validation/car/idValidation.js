@@ -4,10 +4,13 @@ module.exports = async (req, res, next) => {
   try {
     // eslint-disable-next-line new-cap
     const idParam = new Joi.object({
-      id: Joi.string().regex(/^[0-9a-fA-F]{24}$/)
+      id: Joi.string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .error(new Error('Formato de id Invalido'))
     });
 
     const { error } = await idParam.validate(req.params, { abortEarly: false });
+    console.log(error);
     if (error) throw error;
     return next();
   } catch (error) {

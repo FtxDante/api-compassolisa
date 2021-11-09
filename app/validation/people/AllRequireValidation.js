@@ -10,6 +10,8 @@ module.exports = async (req, res, next) => {
       cpf: Joi.document()
         .cpf()
         .required()
+        .min(14)
+        .max(14)
         .custom((value, helper) => {
           const cpf2 = value.replace(/[^0-9]/g, '').replace(/(\d{3})?(\d{3})?(\d{3})?(\d{2})/, '$1.$2.$3-$4');
           if (cpf2 !== value) {
@@ -33,10 +35,18 @@ module.exports = async (req, res, next) => {
       habilitado: Joi.string().valid('sim', 'nao').required()
     });
 
-    const { error } = await peopleSchema.validate(req.body, { abortEarly: false });
-    if (error) throw error;
+    let { error } = await peopleSchema.validate(req.body, { abortEarly: false });
+    console.log(error);
+    if (error) {
+      error = error.details.map((details) => ({
+        description: details.context.label,
+        name: details.message
+      }));
+      throw error;
+    }
+
     return next();
   } catch (error) {
-    return res.status(400).json({ message: error.message });
+    return res.status(400).json(error);
   }
 };

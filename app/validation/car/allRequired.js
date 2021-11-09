@@ -21,10 +21,18 @@ module.exports = async (req, res, next) => {
 
       quantidadePassageiros: Joi.number().min(2).required()
     });
-    const { error } = await carSchema.validate(req.body, { abortEarly: false });
-    if (error) throw error;
+    let { error } = await carSchema.validate(req.body, { abortEarly: false });
+
+    if (error) {
+      error = error.details.map((details) => ({
+        description: details.context.label,
+        name: details.message
+      }));
+      throw error;
+    }
+
     return next();
   } catch (error) {
-    return res.status(400).json({ message: error.message });
+    return res.status(400).json(error);
   }
 };
