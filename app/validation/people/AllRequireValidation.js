@@ -12,11 +12,10 @@ module.exports = async (req, res, next) => {
         .required()
         .min(14)
         .max(14)
-        .custom((value, helper) => {
-          const cpf2 = value.replace(/[^0-9]/g, '').replace(/(\d{3})?(\d{3})?(\d{3})?(\d{2})/, '$1.$2.$3-$4');
-          if (cpf2 !== value) {
-            return helper.message(errosName.invalidCpf);
-          }
+        .regex(/[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}/)
+        .messages({
+          'document.cpf': `CPF ${req.body.cpf} is invalid `,
+          'string.pattern.base': `CPF ${req.body.cpf} format is invalid `
         }),
 
       data_nascimento: Joi.date()
@@ -28,7 +27,12 @@ module.exports = async (req, res, next) => {
           return helper.message(errosName.minor);
         }),
 
-      email: Joi.string().email().required(),
+      email: Joi.string()
+        .email()
+        .required()
+        .messages({
+          'string.email': `Email ${req.body.email} is invalid `
+        }),
 
       senha: Joi.string().min(6).required(),
 
@@ -36,8 +40,8 @@ module.exports = async (req, res, next) => {
     });
 
     let { error } = await peopleSchema.validate(req.body, { abortEarly: false });
-    console.log(error);
     if (error) {
+      console.log(error);
       error = error.details.map((details) => ({
         description: details.context.label,
         name: details.message
