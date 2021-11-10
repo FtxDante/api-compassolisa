@@ -13,19 +13,12 @@ module.exports = async (req, res, next) =>{
           .min(1950)
           .max(2022),
 
-      acessorios: Joi.array().items(Joi.object({
-        descricao: Joi.string()
-            .trim(),
-      }).unknown(true))
-          .unique((a, b) => a.descricao === b.descricao)
-          .min(1),
-
       quantidadePassageiros: Joi.number()
           .min(2),
     })
-    .or('modelo', 'cor', 'ano', 'acessorios', 'quantidadePassageiros')
-    .required();
-    
+        .or('modelo', 'cor', 'ano', 'acessorios', 'quantidadePassageiros')
+        .required();
+
     const {error} = await carSchema.validate(req.body, {abortEarly: false});
     if (error) throw error;
     return next();
