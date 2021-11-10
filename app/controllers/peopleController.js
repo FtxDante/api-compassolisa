@@ -29,7 +29,7 @@ class PeopleController {
       return res.status(200).json(result);
     } catch (error) {
       const status = handleErrors.getStatusToError(error);
-      return res.status(status).jsonjson(error);
+      return res.status(status).json(error);
     }
   }
 
