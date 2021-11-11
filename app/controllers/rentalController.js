@@ -5,7 +5,7 @@ const rentalService = require('../service/rentalService');
 class RentalController {
   static async createRental(req, res) {
     try {
-      const result = await rentalService.create(req.body);
+      const result = await rentalService.create(req);
       return res.status(201).json(result);
     } catch (error) {
       const status = handleErrors.getStatusToError(error);

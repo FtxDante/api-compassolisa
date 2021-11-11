@@ -1,10 +1,10 @@
 const RentalRepository = require('../repository/rentalRepository');
-const { UserRegistered, NotFound } = require('../errors');
+const { UserRegistered } = require('../errors');
 
 class RentalService {
-  async create(rentalData, req) {
-    // eslint-disable-next-line camelcase
-    const { nome, cnpj, atividades, endereco } = await RentalRepository.create(rentalData);
+  async create(req) {
+    await this.searchUnique(req);
+    const { nome, cnpj, atividades, endereco } = await RentalRepository.create(req.body);
 
     return {
       nome,
@@ -12,6 +12,16 @@ class RentalService {
       atividades,
       endereco
     };
+  }
+
+  async searchUnique(req) {
+    const { cnpj } = req.body;
+
+    const searchCnpj = await RentalRepository.findOne({ cnpj });
+
+    if (searchCnpj) {
+      throw new UserRegistered();
+    }
   }
 }
 

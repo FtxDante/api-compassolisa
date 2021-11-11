@@ -27,7 +27,7 @@ const RentalSchema = mongoose.Schema(
       required: true
     }
   },
-  { collection: 'rents' }
+  { collection: 'rentals' }
 );
 
 const Rental = mongoose.model('Rental', RentalSchema);
