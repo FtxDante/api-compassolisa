@@ -1,0 +1,40 @@
+/* const axios = require('axios');
+
+describe('Teste de GET', () => {
+  describe('Get CARS', () => {
+    it('retornar status 200 e retornar id, modelo, cor, acessorios e quantidade de passageiros do veiculo ', async () => {
+      const res = await axios.get('http://localhost:3000/api/v1/car');
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBeTruthy();
+      res.data.veiculos.forEach((value) => {
+        expect(value).toHaveProperty('_id');
+        expect(value).toHaveProperty('modelo');
+        expect(value).toHaveProperty('cor');
+        expect(value).toHaveProperty('ano');
+        expect(value).toHaveProperty('acessorios');
+        expect(value).toHaveProperty('quantidadePassageiros');
+        expect(value.acessorios[0]).toHaveProperty('descricao');
+        expect(value.acessorios[0]).toHaveProperty('_id');
+      });
+    });
+  });
+
+  describe('Get PEOPLE', () => {
+    it('retornar status 200 e retornar id, nome, cpf, data de nascimento email e se é habilitado ou não', async () => {
+      const res = await axios.get('http://localhost:3000/api/v1/people');
+
+      expect(res.status).toBe(200);
+      expect(res.data).toBeTruthy();
+      res.data.pessoas.forEach((value) => {
+        expect(value).toHaveProperty('id');
+        expect(value).toHaveProperty('nome');
+        expect(value).toHaveProperty('cpf');
+        expect(value).toHaveProperty('data_nascimento');
+        expect(value).toHaveProperty('email');
+        expect(value).toHaveProperty('habilitado');
+      });
+    });
+  });
+});
+*/
