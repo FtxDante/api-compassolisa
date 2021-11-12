@@ -1,6 +1,6 @@
 const { validator } = require('cpf-cnpj-validator');
-const { errosName } = require('../../errors');
 const Joi = require('joi').extend(validator);
+const { errosName } = require('../../errors');
 
 module.exports = async (req, res, next) => {
   try {
