@@ -1,4 +1,3 @@
-/* eslint-disable require-jsdoc */
 const morgan = require('morgan');
 const express = require('express');
 const router = require('./routes');

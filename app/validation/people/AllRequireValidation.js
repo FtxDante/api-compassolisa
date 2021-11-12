@@ -1,5 +1,6 @@
-const { validator } = require('cpf-cnpj-validator');
-const Joi = require('joi').extend(validator);
+
+const Joi = require('joi');
+
 const { errosName } = require('../../errors');
 
 module.exports = async (req, res, next) => {
@@ -7,15 +8,13 @@ module.exports = async (req, res, next) => {
     const peopleSchema = Joi.object({
       nome: Joi.string().trim().required(),
 
-      cpf: Joi.document()
-        .cpf()
-        .required()
-        .custom((value, helper) => {
-          const cpf2 = value.replace(/[^0-9]/g, '').replace(/(\d{3})?(\d{3})?(\d{3})?(\d{2})/, '$1.$2.$3-$4');
-          if (cpf2 !== value) {
-            return helper.message(errosName.invalidCpf);
-          }
-        }),
+      cpf: Joi.required().custom((value, helper) => {
+        const cpf2 = value.replace(/[^0-9]/g, '').replace(/(\d{3})?(\d{3})?(\d{3})?(\d{2})/, '$1.$2.$3-$4');
+        if (cpf2 !== value) {
+          return helper.message(errosName.invalidCpf);
+        }
+        return true;
+      }),
 
       data_nascimento: Joi.date()
         .required()
