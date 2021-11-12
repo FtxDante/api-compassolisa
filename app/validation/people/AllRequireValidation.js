@@ -6,7 +6,6 @@ module.exports = async (req, res, next) => {
   try {
     const peopleSchema = Joi.object({
       nome: Joi.string().trim().required(),
-
       cpf: Joi.document()
         .cpf()
         .required()
@@ -17,7 +16,6 @@ module.exports = async (req, res, next) => {
           'document.cpf': `CPF ${req.body.cpf} is invalid `,
           'string.pattern.base': `CPF ${req.body.cpf} format is invalid `
         }),
-
       data_nascimento: Joi.date()
         .required()
         .custom((value, helper) => {
