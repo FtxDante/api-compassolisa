@@ -10,7 +10,7 @@ class CarController {
       return res.status(201).json(carSerializer(result));
     } catch (error) {
       const status = handleErrors.getStatusToError(error);
-      return res.status(status).json({ message: error.message });
+      return res.status(status).json(error);
     }
   }
 
@@ -23,7 +23,7 @@ class CarController {
       return res.status(204).end();
     } catch (error) {
       const status = handleErrors.getStatusToError(error);
-      return res.status(status).json({ message: error.message });
+      return res.status(status).json(error);
     }
   }
 
@@ -33,7 +33,7 @@ class CarController {
       return res.status(200).json(carSerializer(result));
     } catch (error) {
       const status = handleErrors.getStatusToError(error);
-      return res.status(status).json({ message: error.message });
+      return res.status(status).json(error);
     }
   }
 
@@ -43,7 +43,7 @@ class CarController {
       return res.status(200).json(carPaginateSerializer(result));
     } catch (error) {
       const status = handleErrors.getStatusToError(error);
-      return res.status(status).json({ message: error.message });
+      return res.status(status).json(error);
     }
   }
 
@@ -54,7 +54,7 @@ class CarController {
       return res.status(200).json(carSerializer(result));
     } catch (error) {
       const status = handleErrors.getStatusToError(error);
-      return res.status(status).json({ message: error.message });
+      return res.status(status).json(error);
     }
   }
 }
