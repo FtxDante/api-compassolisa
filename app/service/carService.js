@@ -52,6 +52,12 @@ class CarService {
       throw new NotFound('id');
     }
   }
+
+  async updateAcessory(req) {
+    const { id, idAcess } = req.params;
+    const updated = await CarRepository.updateOne(req, { _id: id, 'acessorios._id': idAcess });
+    return updated;
+  }
 }
 
 module.exports = new CarService();
