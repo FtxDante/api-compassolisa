@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 const supertest = require('supertest');
 const app = require('../../app');
 
@@ -25,12 +26,14 @@ describe('POST /car', () => {
     expect(body).toHaveProperty('ano');
     expect(body).toHaveProperty('acessorios');
     expect(body).toHaveProperty('quantidadePassageiros');
+    expect(body.acessorios[0]).toHaveProperty('_id');
     expect(body.acessorios[0]).toHaveProperty('descricao');
 
     expect(body.modelo).toBe(car.modelo);
     expect(body.cor).toBe(car.cor);
     expect(body.ano).toBe(car.ano);
-    expect(JSON.stringify(body.acessorios)).toBe(JSON.stringify(car.acessorios));
+    expect(JSON.stringify(body.acessorios._id)).toBe(JSON.stringify(car.acessorios._id));
+    expect(JSON.stringify(body.acessorios.descricao)).toBe(JSON.stringify(car.acessorios.descricao));
     expect(body.quantidadePassageiros).toBe(car.quantidadePassageiros);
   });
 
@@ -52,8 +55,9 @@ describe('POST /car', () => {
     const response = await request.post('/api/v1/car').send(car);
     const { body, status } = response;
     expect(status).toBe(400);
-    expect(body).toHaveProperty('message');
-    expect(body.message).toBe('"acessorios" must contain at least 1 items');
+    expect(body[0]).toHaveProperty('description');
+    expect(body[0]).toHaveProperty('name');
+    expect(body[0].name).toBe('"acessorios" must contain at least 1 items');
   });
   test('car yeat cant be lower than 1950', async () => {
     const car = {
@@ -70,8 +74,10 @@ describe('POST /car', () => {
     const response = await request.post('/api/v1/car').send(car);
     const { body, status } = response;
     expect(status).toBe(400);
-    expect(body).toHaveProperty('message');
-    expect(body.message).toBe('"ano" must be greater than or equal to 1950');
+    expect(body[0]).toHaveProperty('description');
+    expect(body[0]).toHaveProperty('name');
+    expect(body[0].description).toBe('ano');
+    expect(body[0].name).toBe('"ano" must be greater than or equal to 1950');
   });
 
   test('car yeat cant be greater than 2022', async () => {
@@ -89,8 +95,10 @@ describe('POST /car', () => {
     const response = await request.post('/api/v1/car').send(car);
     const { body, status } = response;
     expect(status).toBe(400);
-    expect(body).toHaveProperty('message');
-    expect(body.message).toBe('"ano" must be less than or equal to 2022');
+    expect(body[0]).toHaveProperty('description');
+    expect(body[0]).toHaveProperty('name');
+    expect(body[0].description).toBe('ano');
+    expect(body[0].name).toBe('"ano" must be less than or equal to 2022');
   });
   test('car yeat cant be greater than 2022', async () => {
     const car = {
@@ -110,7 +118,9 @@ describe('POST /car', () => {
     const response = await request.post('/api/v1/car').send(car);
     const { body, status } = response;
     expect(status).toBe(400);
-    expect(body).toHaveProperty('message');
-    expect(body.message).toBe('"acessorios[1]" contains a duplicate value');
+    expect(body[0]).toHaveProperty('description');
+    expect(body[0]).toHaveProperty('name');
+    expect(body[0].description).toBe('acessorios[1]');
+    expect(body[0].name).toBe('"acessorios[1]" contains a duplicate value');
   });
 });
