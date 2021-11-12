@@ -55,7 +55,16 @@ class CarService {
 
   async updateAcessory(req) {
     const { id, idAcess } = req.params;
-    const updated = await CarRepository.updateOne(req, { _id: id, 'acessorios._id': idAcess });
+    await this.findById(id);
+    const updated = await CarRepository.updateOneToAcessories(
+      { 'acessorios._id': idAcess, _id: id },
+      { $set: { 'acessorios.$.descricao': req.body.descricao } }
+    );
+
+    if (!updated) {
+      throw new NotFound('Acessory');
+    }
+
     return updated;
   }
 }
