@@ -1,5 +1,5 @@
-const allRequired = require('./allRequired');
+const AllRequiredValidation = require('./allRequired');
 
 module.exports = {
-  allRequired
+  AllRequiredValidation: AllRequiredValidation
 };
