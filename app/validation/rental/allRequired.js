@@ -1,4 +1,5 @@
-const Joi = require('joi');
+const { validator } = require('cpf-cnpj-validator');
+const Joi = require('joi').extend(validator);
 
 module.exports = async (req, res, next) => {
   try {
