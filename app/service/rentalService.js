@@ -7,27 +7,32 @@ class RentalService {
     if (params.cep) {
       params['endereco.cep'] = params.cep;
       delete params.cep;
-    } else if (params.logradouro) {
+    }
+    if (params.logradouro) {
       params['endereco.logradouro'] = params.logradouro;
       delete params.logradouro;
-    } else if (params.complemento) {
+    } 
+    if (params.complemento) {
       params['endereco.complemento'] = params.complemento;
       delete params.complemento;
-    } else if (params.bairro) {
+    } 
+    if (params.bairro) {
       params['endereco.bairro'] = params.bairro;
       delete params.bairro;
-    } else if (params.number) {
+    } 
+    if (params.number) {
       params['endereco.number'] = params.number;
       delete params.number;
-    } else if (params.localidade) {
+    } 
+    if (params.localidade) {
       params['endereco.localidade'] = params.localidade;
       delete params.localidade;
-    } else if (params.uf) {
+    } 
+    if (params.uf) {
       params['endereco.uf'] = params.uf;
       delete params.uf;
     } 
 
-    console.log(params);
     return params;
   }
 
@@ -37,7 +42,6 @@ class RentalService {
 
   async findAll(req) {
     const where = this.filter(req);
-    console.log(where);
     const rentals = await RentalRepository.pagination(req, where);
     return rentals;
   }
