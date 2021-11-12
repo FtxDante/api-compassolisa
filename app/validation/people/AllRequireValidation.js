@@ -1,4 +1,6 @@
+
 const Joi = require('joi');
+
 const { errosName } = require('../../errors');
 
 module.exports = async (req, res, next) => {
