@@ -41,7 +41,6 @@ module.exports = async (req, res, next) => {
 
     let { error } = await peopleSchema.validate(req.body, { abortEarly: false });
     if (error) {
-      console.log(error);
       error = error.details.map((details) => ({
         description: details.context.label,
         name: details.message

@@ -7,8 +7,7 @@ class HandleErrors {
       status = 401;
     } else if (error.description === 'NotFound') {
       status = 404;
-    }
-    if (error.description === 'Conflict') {
+    } else if (error.description === 'Conflict') {
       status = 409;
     }
     return status;
