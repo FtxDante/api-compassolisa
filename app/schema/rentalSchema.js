@@ -15,7 +15,7 @@ const rentalSchema = mongoose.Schema(
       type: String,
       required: true
     },
-    enderecos: {
+    endereco: {
       type: [Object],
       required: true
     }
