@@ -1,8 +1,8 @@
 class AuthInvalid extends Error {
   constructor() {
-    super('email or password invalid');
-    this.name = 'AuthInvalid';
-    this.idError = '004';
+    super();
+    this.description = 'Unauthorized';
+    this.name = 'Email or password invalid';
   }
 }
 module.exports = AuthInvalid;

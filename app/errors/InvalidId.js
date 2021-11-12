@@ -1,9 +1,8 @@
 class InvalidId extends Error {
   constructor() {
-    super('Invalid ID');
-    this.name = 'InvalidId';
-    this.idError = '001';
-    this.errorStatus = 400;
+    super();
+    this.description = 'BadRequest';
+    this.name = 'Invalid ID';
   }
 }
 module.exports = InvalidId;

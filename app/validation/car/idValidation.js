@@ -4,13 +4,23 @@ module.exports = async (req, res, next) => {
   try {
     // eslint-disable-next-line new-cap
     const idParam = new Joi.object({
-      id: Joi.string().regex(/^[0-9a-fA-F]{24}$/)
+      id: Joi.string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .messages({
+          'string.pattern.base': 'invalid id format'
+        })
     });
 
-    const { error } = await idParam.validate(req.params, { abortEarly: false });
-    if (error) throw error;
+    let { error } = await idParam.validate(req.params, { abortEarly: false });
+    if (error) {
+      error = error.details.map((details) => ({
+        description: details.context.label,
+        name: details.message
+      }));
+      throw error;
+    }
     return next();
   } catch (error) {
-    return res.status(400).json({ message: error.message });
+    return res.status(400).json(error);
   }
 };
