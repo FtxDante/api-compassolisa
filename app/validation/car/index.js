@@ -1,9 +1,11 @@
 const allRequiredCarValidation = require('./allRequired');
-const findValidation = require('./find');
+const findCarValidation = require('./find');
 const idValidation = require('./idValidation');
+const pathValidation = require('./path');
 
 module.exports = {
   allRequiredCarValidation,
-  findCarValidation: findValidation,
-  idValidation
+  findCarValidation,
+  idValidation,
+  pathValidation
 };

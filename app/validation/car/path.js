@@ -3,15 +3,7 @@ const Joi = require('joi');
 module.exports = async (req, res, next) => {
   try {
     const carSchema = Joi.object({
-      acessorios: Joi.array()
-        .items(
-          Joi.object({
-            descricao: Joi.string().trim().required()
-          }).unknown(true)
-        )
-        .unique((a, b) => a.descricao === b.descricao)
-        .min(1)
-        .required()
+      descricao: Joi.string().trim().required()
     });
 
     let { error } = await carSchema.validate(req.body, { abortEarly: false });

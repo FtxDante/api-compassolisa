@@ -55,15 +55,13 @@ class CarService {
 
   async updateAcessory(req) {
     const { id, idAcess } = req.params;
-    await this.findById(id);
-    const updated = await CarRepository.updateOneToAcessories(
-      { 'acessorios._id': idAcess, _id: id },
-      { $set: { 'acessorios.$.descricao': req.body.descricao } }
-    );
+    const where = { 'acessorios._id': idAcess, _id: id };
+    const { descricao } = req.body;
+    const update = { 'acessorios.$.descricao': descricao };
 
-    if (!updated) {
-      throw new NotFound('Acessory');
-    }
+    await this.findById(id);
+
+    const updated = await CarRepository.updateOneToAcessories(where, { $set: update });
 
     return updated;
   }
