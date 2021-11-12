@@ -13,10 +13,23 @@ class rentalController {
       return res.status(status).json({ message: error.message });
     }
   }
-  static async updateOneRental (req, res) {
+  static async updateOneRental(req, res) {
     try {
       const result = await rentalService.updateOneRental(req);
       return res.status(200).json(rentalSerializer(result));
+    } catch (error) {
+      const status = handleErrors.getStatusToError(error);
+      return res.status(status).json({ message: error.message });
+    }
+  }
+
+  static async deleteOneRental(req, res) {
+    const { id } = req.params;
+
+    try {
+      await rentalService.deleteOneRental(id);
+
+      return res.status(204).end();
     } catch (error) {
       const status = handleErrors.getStatusToError(error);
       return res.status(status).json({ message: error.message });

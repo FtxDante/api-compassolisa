@@ -16,6 +16,13 @@ class RentalServices {
     const updatedRental = await RentalRepository.updateOne(req);
     return updatedRental;
   }
+
+  async deleteOneRental(id) {
+    const wasDeleted = await RentalRepository.deleteOne(id);
+    if (!wasDeleted) {
+      throw new NotFound('id');
+    }
+  }
 }
 
 module.exports = new RentalServices();
