@@ -73,6 +73,33 @@
             }
           }
         }
+      },
+      "get": {
+        "description": "Busca todos os carro",
+        "summary": "Busca todos os carro",
+        "tags": ["Cars"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Car"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Id diferente do padrão"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "NotFound"
+          }
+        }
       }
     },
     "/car/{id}": {
@@ -123,7 +150,7 @@
             "required": true
           }
         ],
-                "security": [{ "bearerAuth": {} }],
+        "security": [{ "bearerAuth": {} }],
         "requestBody": {
           "content": {
             "application/json": {
@@ -166,11 +193,32 @@
             }
           }
         }
+        },
+        "delete": {
+        "description": "Apaga de um carro pelo Id",
+        "summary": "Apaga um carro pelo Id",
+        "tags": ["Cars"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id do carro para busca",
+            "required": true
+          }
+        ],
+        "responses": {            
+            "204": {
+            "description": "OK",
+            "content": {}
+            }
+        }
+        }
     }
-    },
+},
 
     "/people": {
       "post": {
+        "tags": ["People"],
         "summary": "Cadastra uma pessoa",
         "responses": {
           "200": {
@@ -186,6 +234,7 @@
         }
       },
       "get": {
+        "tags": ["People"],
         "summary": "Recupera todas as pessoas",
         "responses": {
           "200": {
@@ -201,7 +250,7 @@
         }
       }
     }
-  },
+  ,
 
   "components": {
     "schemas": {
