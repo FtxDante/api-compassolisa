@@ -13,6 +13,55 @@
     }
   ],
   "paths": {
+    "/authenticate": {
+      "post": {
+        "summary": "Autentica uma pessoa",
+        "description": "Essa rota será responsável por autenticar uma pessoa",
+        "tags": ["Authenticate"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Auth"
+              },
+              "examples": {
+                "Authenticate": {
+                  "value": {
+                    "email": "joazinho@email.com",
+                    "senha": "123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "BadRequest"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "NotFound"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Auth"
+                }
+              }
+            }
+          }
+        }
+    }
+    },
     "/car": {
       "post": {
         "summary": "Cadastra um carro",
@@ -216,10 +265,30 @@
           }
         }
     },
-
     "/people": {
       "post": {
         "tags": ["People"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Person"
+              },
+              "examples": {
+                "people": {
+                  "value": {
+                    "nome": "joaozinho ciclano",
+                    "cpf": "131.147.860-49",
+                    "data_nascimento": "03/03/2021",
+                    "email": "joazinho@email.com",
+                    "senha": "123456",
+                    "habilitado": "sim"
+                    }
+                  }
+                }
+              }
+            }
+          },
         "summary": "Cadastra uma pessoa",
         "responses": {
           "200": {
@@ -353,10 +422,21 @@
             }
           }
         }
-    },
-
+    }
+  },
   "components": {
     "schemas": {
+      "Auth": {
+        "type":"object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "senha": {
+            "type": "string"
+          }
+        }
+        },
       "Car": {
         "type": "object",
         "properties": {
@@ -385,13 +465,13 @@
             "type": "number"
           }
         }
-      },
+        },
       "Cars": {
         "type": "array",
         "items": {
           "$ref": "#/components/schemas/Car"
         }
-      },
+        },
       "Person": {
         "type": "object",
         "properties": {
@@ -420,21 +500,46 @@
             "type": "string"
           }
         }
-      },
+        },
       "People": {
         "type": "array",
         "items": {
           "$ref": "#/components/schemas/People"
         }
+        },
+      "Rental": {
+        "type": "object",
+        "properties":   {
+            "nome": {
+              "type": "string"
+            },
+            "cnpj": {
+              "type": "string"
+            },
+            "atividades": {
+              "type": "string"
+            },
+            "endereco": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            }
+          }
+        },
+      "Rentals": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Rentals"
+        }
       }
     },
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer",
-        "bearerFormat": "JWT"
-      }
+  "securitySchemes": {
+    "bearerAuth": {
+      "type": "http",
+      "scheme": "bearer",
+      "bearerFormat": "JWT"
     }
   }
-}
+  }
 }
