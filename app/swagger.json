@@ -107,6 +107,7 @@
         "description": "Busca de um carro pelo Id",
         "summary": "Busca um carro pelo Id",
         "tags": ["Cars"],
+        "security": [{ "bearerAuth": {} }],
         "parameters": [
           {
             "name": "id",
@@ -195,26 +196,26 @@
         }
         },
         "delete": {
-        "description": "Apaga de um carro pelo Id",
-        "summary": "Apaga um carro pelo Id",
-        "tags": ["Cars"],
-        "parameters": [
-          {
-            "name": "id",
-            "in": "path",
-            "description": "Id do carro para busca",
-            "required": true
-          }
-        ],
-        "responses": {            
-            "204": {
-            "description": "OK",
-            "content": {}
+          "description": "Apaga um carro pelo Id",
+          "summary": "Apaga um carro pelo Id",
+          "tags": ["Cars"],
+          "security": [{ "bearerAuth": {} }],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "Id do carro para busca",
+              "required": true
             }
+          ],
+          "responses": {
+            "204": {
+              "description": "OK",
+              "content": {}
+            }
+          }
         }
-        }
-    }
-},
+    },
 
     "/people": {
       "post": {
@@ -238,7 +239,7 @@
         "summary": "Recupera todas as pessoas",
         "responses": {
           "200": {
-            "description": "Sucesso",
+            "description": "OK",
             "content": {
               "application/json": {
                 "schema": {
@@ -249,8 +250,110 @@
           }
         }
       }
-    }
-  ,
+    },
+    "/people/{id}": {
+      "get": {
+        "description": "Busca de uma pessoa pelo Id",
+        "summary": "Busca uma pessoa pelo Id",
+        "tags": ["People"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id de uma pessoa para busca",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Id diferente do padrão"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "NotFound"
+          }
+        }
+      },
+      "put": {
+        "description": "Atualiza as informações de uma pessoa",
+        "summary": "Atualiza as informações de uma pessoa",
+        "tags": ["People"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Atualiza uma pessoa",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Person"
+              },
+              "examples": {
+                "People": {
+                  "value":{
+                    "nome": "joaozinho ciclano",
+                    "cpf": "131.147.860-49",
+                    "data_nascimento": "03/03/2021",
+                    "email": "joazinho@email.com",
+                    "senha": "123456",
+                    "habilitado": "sim"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Car"
+                }
+              }
+            }
+          }
+        }
+        },
+        "delete": {
+          "description": "Apaga uma pessoa pelo Id",
+          "summary": "Apaga uma pessoa pelo Id",
+          "tags": ["People"],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "Id uma pessoa para busca",
+              "required": true
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "OK",
+              "content": {}
+            }
+          }
+        }
+    },
 
   "components": {
     "schemas": {
@@ -333,4 +436,5 @@
       }
     }
   }
+}
 }
