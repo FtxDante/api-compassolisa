@@ -6,8 +6,8 @@ module.exports = async (req, res, next) => {
     const rentalSchema = Joi.object({
       nome: Joi.string().trim().required(),
 
-      cnpj: Joi.document()
-        .cnpj()
+      cnpj: Joi.string(),
+      /* .cnpj()
         .required()
         // .min(18)
         // .max(18)
@@ -15,7 +15,7 @@ module.exports = async (req, res, next) => {
         .messages({
           'document.cnpj': `CNPJ ${req.body.cnpj} is invalid `,
           'string.pattern.base': `CNPJ ${req.body.cnpj} format is invalid `
-        }),
+        }), */
 
       atividades: Joi.string().trim().required(),
 
