@@ -422,6 +422,170 @@
             }
           }
         }
+    },
+    "/rental":{
+      "post": {
+        "tags": ["Rental"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Rental"
+              },
+              "examples": {
+                "rental": {
+                  "value": {
+                    "nome": "Localiza Rent a Car",
+                    "cnpj": "16.670.085/0001-55",
+                    "atividades": "Aluguel de Carros E Gestão de Frotas",
+                    "endereco": [{
+                      "cep": "96200-200",
+                      "number":"1234",
+                      "isFilial": false
+                    }]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Cadastra uma locadora",
+        "responses": {
+          "200": {
+            "description": "Locadora cadastrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Rental"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Rental"],
+        "summary": "Recupera todas as locadoras",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Rentals"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rental/{id}": {
+      "get": {
+        "description": "Busca de uma locadora pelo Id",
+        "summary": "Busca uma locadora pelo Id",
+        "tags": ["Rental"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id de uma locadora para busca",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Rental"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Id diferente do padrão"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "NotFound"
+          }
+        }
+      },
+      "put": {
+        "description": "Atualiza as informações de uma locadora",
+        "summary": "Atualiza as informações de uma locadora",
+        "tags": ["Rental"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Atualiza uma locadora",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Rental"
+              },
+              "examples": {
+                "Rental": {
+                  "value": {
+                    "nome": "Localiza Rent a Car",
+                    "cnpj": "16.670.085/0001-55",
+                    "atividades": "Aluguel de Carros E Gestão de Frotas",
+                    "endereco": [
+                      {
+                        "cep": "96200-200",
+                        "number": "1234",
+                        "isFilial": false
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Rental"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Apaga uma locadora pelo Id",
+        "summary": "Apaga uma locadora pelo Id",
+        "tags": ["Rental"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id uma locadora para busca",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "OK",
+            "content": {}
+          }
+        }
+      }
     }
   },
   "components": {
