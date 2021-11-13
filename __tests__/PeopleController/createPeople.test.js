@@ -4,6 +4,7 @@ const app = require('../../app');
 const request = supertest(app);
 
 describe('Post /People', () => {
+  jest.setTimeout(30000);
   test('Post a People with success', async () => {
     const people = {
       nome: 'JESTivaldo Junior',

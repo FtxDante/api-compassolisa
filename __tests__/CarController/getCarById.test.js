@@ -5,6 +5,7 @@ const app = require('../../app');
 const request = supertest(app);
 
 describe('Get /car/id', () => {
+  jest.setTimeout(30000);
   test('Get one car', async () => {
     const id = '618d9361f29b23a22cd62966';
     const response = await request.get(`/api/v1/car/${id}`);

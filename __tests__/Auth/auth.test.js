@@ -2,8 +2,8 @@ const supertest = require('supertest');
 const app = require('../../app');
 
 const request = supertest(app);
-
 describe('Post /authenticate', () => {
+  jest.setTimeout(300000);
   test('authenticate with sucess', async () => {
     const auth = {
       email: 'testezinhotestando@email.com',

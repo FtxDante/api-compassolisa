@@ -5,6 +5,7 @@ const app = require('../../app');
 const request = supertest(app);
 
 describe('POST /car', () => {
+  jest.setTimeout(30000);
   test('Create a car with success', async () => {
     const car = {
       modelo: 'Fiat teste',

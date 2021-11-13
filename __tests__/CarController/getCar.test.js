@@ -4,6 +4,7 @@ const app = require('../../app');
 const request = supertest(app);
 
 describe('Get /car', () => {
+  jest.setTimeout(30000);
   test('Get all cars', async () => {
     const response = await request.get('/api/v1/car');
     const { body, status } = response;
