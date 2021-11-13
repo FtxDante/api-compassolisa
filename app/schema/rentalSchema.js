@@ -19,9 +19,13 @@ const rentalSchema = mongoose.Schema(
       type: [
         {
           cep: { type: String, required: true },
+          logradouro: { type: String },
+          complemento: { type: String },
+          bairro: { type: String },
           number: { type: String, required: true },
+          localidade: { type: String, required: true },
+          uf: { type: String},
           isFilial: { type: Boolean, required: true },
-          complemento: { type: String }
         }
       ],
       required: true
