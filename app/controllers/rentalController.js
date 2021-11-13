@@ -10,7 +10,7 @@ class rentalController {
       return res.status(200).json(rentalSerializer(result));
     } catch (error) {
       const status = handleErrors.getStatusToError(error);
-      return res.status(status).json({ message: error.message });
+      return res.status(status).json(error);
     }
   }
 }
