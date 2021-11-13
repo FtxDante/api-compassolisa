@@ -1,1 +1,161 @@
-{}
+{
+    "openapi": "3.0.3",
+    "info": {
+
+        "title": "API Compassolisa",
+        "description": "API para aluguel de carros",
+        "contact": "compasso@compassolisa.com.br"
+    },
+    "version": "v1",
+    "servers": [
+        {
+        "url": "http://localhost:3000/api/v1/",
+        "description": "API de teste"
+        }
+    ],
+    "paths": {
+        "/cars": {
+            "post": {
+                "summary": "Cadastra um carro",
+                "description": "Essa rota será responsável por cadastrar um novo carro",
+                "tags": ["Cars"],
+                "security": [ { "bearerAuth": {} } ],
+                "requestBody": {
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Car"
+                            },
+                            "examples":{
+                                "car":{
+                                    "value" :{
+                                        "modelo": "GM S10 2.8",
+                                        "cor": "branco",
+                                        "ano": "2021",
+                                        "acessorios": [
+                                            { "descricao": "Ar-condicionado" },
+                                            { "descricao": "Dir. Hidráulica" },
+                                            { "descricao": "Cabine Dupla" },
+                                            { "descricao": "Tração 4x4" },
+                                            { "descricao": "4 portas" },
+                                            { "descricao": "Diesel" },
+                                            { "descricao": "Air bag" },
+                                            { "descricao": "ABS" }
+                                        ],
+                                        "quantidadePassageiros": 5
+                                    }
+                                }
+                            }
+                        }   
+                    }
+                }, 
+                "responses":{
+                "400": {
+                    "description": "BadRequest"
+                  },
+                  "401": {
+                    "description": "Unauthorized"
+                  },
+                  "404": {
+                    "description": "NotFound"
+                  },
+                  "409": {
+                    "description": "Conflict"
+                  },
+                  "200" : {
+                      "description": "OK", 
+                      "content":{
+                          "application/json": {
+                                "schema": {
+                                  "type": "object",
+                                  "$ref": "#/components/schemas/Car"
+                                }
+                            } 
+                        }
+                    }
+                }         
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+        "Car": {
+            "type": "object",
+            "properties": {
+            "_id": {
+                "type": "integer"
+            },
+            "descricao": {
+                "type": "string"
+            },
+            "Modelo": {
+                "type": "string"
+            },
+            "Cor": {
+                "type": "string"
+            },
+            "Ano": {
+                "type": "number"
+            },
+            "Acessorios": {
+                "type": "array",
+                "items": {
+                "type": "object"
+                }
+            },
+            "Quantidade de passageiros": {
+                "type": "number"
+            }
+            }
+        },
+        "Cars": {
+            "type": "array",
+            "items": {
+            "$ref": "#/components/schemas/Car"
+            }
+        },
+        "Person": {
+            "type": "object",
+            "properties": {
+            "_id": {
+                "type": "integer"
+            },
+            "nome": {
+                "type": "string"
+            },
+            "cpf": {
+                "type": "string"
+            },
+            "data_nascimento": {
+                "type": "string",
+                "format": "date-time"
+            },
+            "email": {
+                "type": "string",
+                "format": "email"
+            },
+            "senha": {
+                "type": "string",
+                "format": "password"
+            },
+            "habilitado": {
+                "type": "string"
+            }
+            }
+        },
+        "People": {
+            "type": "array",
+            "items": {
+            "$ref": "#/components/schemas/People"
+            }
+        }
+        },
+        "securitySchemes": {
+            "bearerAuth":{
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        }
+    }
+}
