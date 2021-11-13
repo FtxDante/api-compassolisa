@@ -16,7 +16,14 @@ const rentalSchema = mongoose.Schema(
       required: true
     },
     endereco: {
-      type: [Object],
+      type: [
+        {
+          cep: { type: String, required: true },
+          number: { type: String, required: true },
+          isFilial: { type: Boolean, required: true },
+          complemento: { type: String }
+        }
+      ],
       required: true
     }
   },
