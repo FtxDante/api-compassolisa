@@ -6,16 +6,16 @@ module.exports = async (req, res, next) => {
     const rentalSchema = Joi.object({
       nome: Joi.string().trim().required(),
 
-      cnpj: Joi.string(),
-      /* .cnpj()
+      cnpj: Joi.document()
+        .cnpj()
         .required()
-        // .min(18)
-        // .max(18)
+        // .min(18),
+        // .max(18),
         .regex(/^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/)
         .messages({
           'document.cnpj': `CNPJ ${req.body.cnpj} is invalid `,
           'string.pattern.base': `CNPJ ${req.body.cnpj} format is invalid `
-        }), */
+        }),
 
       atividades: Joi.string().trim().required(),
 
