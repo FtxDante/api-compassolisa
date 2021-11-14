@@ -1,5 +1,6 @@
 const CarRepository = require('../repository/carRepository');
 const { NotFound } = require('../errors');
+const carRepository = require('../repository/carRepository');
 
 class CarService {
   filter(req) {
@@ -51,6 +52,26 @@ class CarService {
     if (!wasDeleted) {
       throw new NotFound('id');
     }
+  }
+
+  async updateAcessory(req) {
+    const { id, idAcess } = req.params;
+    const { descricao } = req.body;
+    let update = { $set: { 'acessorios.$.descricao': descricao } };
+    const where = { 'acessorios._id': idAcess, _id: id };
+    const found = await carRepository.findAcessory({ 'acessorios._id': idAcess });
+
+    if (found) {
+      found.acessorios.forEach((item) => {
+        const condition = item.descricao === descricao;
+        if (condition) update = { $pull: { acessorios: { _id: idAcess } } };
+      });
+    }
+
+    await this.findById(id);
+    const updated = await CarRepository.updateOneToAcessories(where, update);
+
+    return updated;
   }
 }
 
