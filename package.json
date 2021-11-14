@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/FtxDante/api-compassolisa#readme",
   "dependencies": {
+    "axios": "^0.24.0",
     "bcryptjs": "^2.4.3",
     "cpf-cnpj-validator": "^1.0.3",
     "dotenv": "^10.0.0",
