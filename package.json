@@ -4,7 +4,8 @@
   "description": "A compasso entrou em um novo ramo de mercado, a compassolisa um seguimento carros para alugar de luxo e semi luxo.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npx jest --coverage",
+    "test:watch": "npx jest --watch",
     "start": "node server.js",
     "dev": "nodemon server.js",
     "lint": "npx eslint . --fix"
@@ -34,13 +35,16 @@
     "swagger-ui-express": "^4.1.6"
   },
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "eslint": "^7.32.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-plugin": "^1.0.11",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-prettier": "^4.0.0",
+    "jest": "^27.3.1",
     "nodemon": "^2.0.14",
-    "prettier": "^2.4.1"
+    "prettier": "^2.4.1",
+    "supertest": "^6.1.6"
   }
 }

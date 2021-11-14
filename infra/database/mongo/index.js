@@ -11,8 +11,11 @@ class Database {
 
   connect() {
     mongoose.Promise = global.Promise;
+    console.log('MongoDB is running');
+
     return mongoose.connect(
       `mongodb:mongodb+srv://${config.user}:${config.pass}@${config.host}/${config.name}?retryWrites=true&w=majority`
+      // 'mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&directConnection=true&ssl=false'
     );
   }
 }
