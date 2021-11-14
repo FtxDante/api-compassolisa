@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 const bcrypt = require('bcryptjs');
 
 // eslint-disable-next-line new-cap
@@ -38,15 +39,18 @@ const peopleSchema = mongoose.Schema(
   { collection: 'people' }
 );
 
-peopleSchema.pre('save', async function (next) {
+peopleSchema.pre('save', async function preSave(next) {
+
   if (!this.isModified('senha')) {
-    return next();
+    next();
   }
   const salt = await bcrypt.genSalt(10);
   this.senha = await bcrypt.hash(this.senha, salt);
+  return next();
 });
 
-peopleSchema.pre('updateOne', async function (next) {
+peopleSchema.pre('findOneAndUpdate', async function preUpdate(next) {
+
   const data = this.getUpdate();
   if (data.senha) {
     const salt = await bcrypt.genSalt(10);
@@ -55,6 +59,7 @@ peopleSchema.pre('updateOne', async function (next) {
   return next();
 });
 
+peopleSchema.plugin(mongoosePaginate);
 const People = mongoose.model('People', peopleSchema);
 
 module.exports = People;

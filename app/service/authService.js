@@ -9,7 +9,8 @@ const PeopleRepository = require('../repository/peopleRepository');
 class AuthService {
   async authenticate(req) {
     const user = await this.verifyCredentials(req.body);
-    return await this.generateToken(user);
+    const authenticate = await this.generateToken(user);
+    return authenticate;
   }
 
   async verifyCredentials({ email, senha }) {

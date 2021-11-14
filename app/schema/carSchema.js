@@ -1,7 +1,8 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 
 // eslint-disable-next-line new-cap
-const CarSchema = mongoose.Schema(
+const carSchema = mongoose.Schema(
   {
     modelo: {
       type: String,
@@ -17,10 +18,14 @@ const CarSchema = mongoose.Schema(
       min: 1950,
       max: 2022
     },
-    acessorios: {
-      type: [Object],
-      required: true
-    },
+    acessorios: [
+      {
+        descricao: {
+          type: String,
+          required: true
+        }
+      }
+    ],
     quantidadePassageiros: {
       type: Number,
       required: true,
@@ -30,6 +35,7 @@ const CarSchema = mongoose.Schema(
   { collection: 'cars' }
 );
 
-const Car = mongoose.model('Car', CarSchema);
+carSchema.plugin(mongoosePaginate);
+const Car = mongoose.model('Car', carSchema);
 
 module.exports = Car;

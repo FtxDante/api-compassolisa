@@ -11,7 +11,6 @@ class Database {
 
   connect() {
     mongoose.Promise = global.Promise;
-    console.log('MongoDB is running');
     return mongoose.connect(
       `mongodb:mongodb+srv://${config.user}:${config.pass}@${config.host}/${config.name}?retryWrites=true&w=majority`
     );
