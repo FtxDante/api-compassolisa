@@ -8,6 +8,11 @@ module.exports = async (req, res, next) => {
         .regex(/^[0-9a-fA-F]{24}$/)
         .messages({
           'string.pattern.base': 'invalid id format'
+        }),
+      idAcess: Joi.string()
+        .regex(/^[0-9a-fA-F]{24}$/)
+        .messages({
+          'string.pattern.base': 'invalid id format'
         })
     });
 
