@@ -1,0 +1,709 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API Compassolisa",
+    "description": "API para aluguel de carros",
+    "contact": "compasso@compassolisa.com.br"
+  },
+  "version": "v1",
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1/",
+      "description": "API de teste"
+    }
+  ],
+  "paths": {
+    "/authenticate": {
+      "post": {
+        "summary": "Autentica uma pessoa",
+        "description": "Essa rota será responsável por autenticar uma pessoa",
+        "tags": ["Authenticate"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Auth"
+              },
+              "examples": {
+                "Authenticate": {
+                  "value": {
+                    "email": "joazinho@email.com",
+                    "senha": "123456"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "BadRequest"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "NotFound"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Auth"
+                }
+              }
+            }
+          }
+        }
+    }
+    },
+    "/car": {
+      "post": {
+        "summary": "Cadastra um carro",
+        "description": "Essa rota será responsável por cadastrar um novo carro",
+        "tags": ["Cars"],
+        "security": [{ "bearerAuth": {} }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Car"
+              },
+              "examples": {
+                "car": {
+                  "value": {
+                    "modelo": "GM S10 2.8",
+                    "cor": "branco",
+                    "ano": "2021",
+                    "acessorios": [
+                      { "descricao": "Ar-condicionado" },
+                      { "descricao": "Dir. Hidráulica" },
+                      { "descricao": "Cabine Dupla" },
+                      { "descricao": "Tração 4x4" },
+                      { "descricao": "4 portas" },
+                      { "descricao": "Diesel" },
+                      { "descricao": "Air bag" },
+                      { "descricao": "ABS" }
+                    ],
+                    "quantidadePassageiros": 5
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "400": {
+            "description": "BadRequest"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "NotFound"
+          },
+          "409": {
+            "description": "Conflict"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Car"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "description": "Busca todos os carro",
+        "summary": "Busca todos os carro",
+        "tags": ["Cars"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Car"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Id diferente do padrão"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "NotFound"
+          }
+        }
+      }
+    },
+    "/car/{id}": {
+      "get": {
+        "description": "Busca de um carro pelo Id",
+        "summary": "Busca um carro pelo Id",
+        "tags": ["Cars"],
+        "security": [{ "bearerAuth": {} }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id do carro para busca",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Car"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Id diferente do padrão"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "NotFound"
+          }
+        }
+      },
+      "put": {
+        "description": "Atualiza as informações de um carro",
+        "summary": "Atualiza as informações de um carro",
+        "tags": ["Cars"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Atualiza um carro",
+            "required": true
+          }
+        ],
+        "security": [{ "bearerAuth": {} }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Car"
+              },
+              "examples": {
+                "car": {
+                  "value": {
+                    "modelo": "GM S10 2.8",
+                    "cor": "branco",
+                    "ano": "2021",
+                    "acessorios": [
+                      { "descricao": "Ar-condicionado" },
+                      { "descricao": "Dir. Hidráulica" },
+                      { "descricao": "Cabine Dupla" },
+                      { "descricao": "Tração 4x4" },
+                      { "descricao": "4 portas" },
+                      { "descricao": "Diesel" },
+                      { "descricao": "Air bag" },
+                      { "descricao": "ABS" }
+                    ],
+                    "quantidadePassageiros": 5
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Car"
+                }
+              }
+            }
+          }
+        }
+        },
+        "delete": {
+          "description": "Apaga um carro pelo Id",
+          "summary": "Apaga um carro pelo Id",
+          "tags": ["Cars"],
+          "security": [{ "bearerAuth": {} }],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "Id do carro para busca",
+              "required": true
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "OK",
+              "content": {}
+            }
+          }
+        }
+    },
+    "/people": {
+      "post": {
+        "tags": ["People"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Person"
+              },
+              "examples": {
+                "people": {
+                  "value": {
+                    "nome": "joaozinho ciclano",
+                    "cpf": "131.147.860-49",
+                    "data_nascimento": "03/03/2021",
+                    "email": "joazinho@email.com",
+                    "senha": "123456",
+                    "habilitado": "sim"
+                    }
+                  }
+                }
+              }
+            }
+          },
+        "summary": "Cadastra uma pessoa",
+        "responses": {
+          "200": {
+            "description": "Pessoa cadastrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["People"],
+        "summary": "Recupera todas as pessoas",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/People"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/people/{id}": {
+      "get": {
+        "description": "Busca de uma pessoa pelo Id",
+        "summary": "Busca uma pessoa pelo Id",
+        "tags": ["People"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id de uma pessoa para busca",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Id diferente do padrão"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "NotFound"
+          }
+        }
+      },
+      "put": {
+        "description": "Atualiza as informações de uma pessoa",
+        "summary": "Atualiza as informações de uma pessoa",
+        "tags": ["People"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Atualiza uma pessoa",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Person"
+              },
+              "examples": {
+                "People": {
+                  "value":{
+                    "nome": "joaozinho ciclano",
+                    "cpf": "131.147.860-49",
+                    "data_nascimento": "03/03/2021",
+                    "email": "joazinho@email.com",
+                    "senha": "123456",
+                    "habilitado": "sim"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Car"
+                }
+              }
+            }
+          }
+        }
+        },
+        "delete": {
+          "description": "Apaga uma pessoa pelo Id",
+          "summary": "Apaga uma pessoa pelo Id",
+          "tags": ["People"],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "description": "Id uma pessoa para busca",
+              "required": true
+            }
+          ],
+          "responses": {
+            "204": {
+              "description": "OK",
+              "content": {}
+            }
+          }
+        }
+    },
+    "/rental":{
+      "post": {
+        "tags": ["Rental"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Rental"
+              },
+              "examples": {
+                "rental": {
+                  "value": {
+                    "nome": "Localiza Rent a Car",
+                    "cnpj": "16.670.085/0001-55",
+                    "atividades": "Aluguel de Carros E Gestão de Frotas",
+                    "endereco": [{
+                      "cep": "96200-200",
+                      "number":"1234",
+                      "isFilial": false
+                    }]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "Cadastra uma locadora",
+        "responses": {
+          "200": {
+            "description": "Locadora cadastrada",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Rental"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Rental"],
+        "summary": "Recupera todas as locadoras",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Rentals"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/rental/{id}": {
+      "get": {
+        "description": "Busca de uma locadora pelo Id",
+        "summary": "Busca uma locadora pelo Id",
+        "tags": ["Rental"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id de uma locadora para busca",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Rental"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Id diferente do padrão"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "NotFound"
+          }
+        }
+      },
+      "put": {
+        "description": "Atualiza as informações de uma locadora",
+        "summary": "Atualiza as informações de uma locadora",
+        "tags": ["Rental"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Atualiza uma locadora",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Rental"
+              },
+              "examples": {
+                "Rental": {
+                  "value": {
+                    "nome": "Localiza Rent a Car",
+                    "cnpj": "16.670.085/0001-55",
+                    "atividades": "Aluguel de Carros E Gestão de Frotas",
+                    "endereco": [
+                      {
+                        "cep": "96200-200",
+                        "number": "1234",
+                        "isFilial": false
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Rental"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "Apaga uma locadora pelo Id",
+        "summary": "Apaga uma locadora pelo Id",
+        "tags": ["Rental"],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Id uma locadora para busca",
+            "required": true
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "OK",
+            "content": {}
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Auth": {
+        "type":"object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "senha": {
+            "type": "string"
+          }
+        }
+        },
+      "Car": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "descricao": {
+            "type": "string"
+          },
+          "Modelo": {
+            "type": "string"
+          },
+          "Cor": {
+            "type": "string"
+          },
+          "Ano": {
+            "type": "number"
+          },
+          "Acessorios": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "Quantidade de passageiros": {
+            "type": "number"
+          }
+        }
+        },
+      "Cars": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Car"
+        }
+        },
+      "Person": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "integer"
+          },
+          "nome": {
+            "type": "string"
+          },
+          "cpf": {
+            "type": "string"
+          },
+          "data_nascimento": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "senha": {
+            "type": "string",
+            "format": "password"
+          },
+          "habilitado": {
+            "type": "string"
+          }
+        }
+        },
+      "People": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/People"
+        }
+        },
+      "Rental": {
+        "type": "object",
+        "properties":   {
+            "nome": {
+              "type": "string"
+            },
+            "cnpj": {
+              "type": "string"
+            },
+            "atividades": {
+              "type": "string"
+            },
+            "endereco": {
+              "type": "array",
+              "items": {
+                "type": "object"
+              }
+            }
+          }
+        },
+      "Rentals": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Rentals"
+        }
+      }
+    },
+  "securitySchemes": {
+    "bearerAuth": {
+      "type": "http",
+      "scheme": "bearer",
+      "bearerFormat": "JWT"
+    }
+  }
+  }
+}
