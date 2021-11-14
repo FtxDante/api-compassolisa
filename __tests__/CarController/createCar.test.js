@@ -42,7 +42,7 @@ describe('POST /car', () => {
 
   test('cant create a car without all fields', async () => {
     const car = {};
-    const response = await request.post('/api/v1/car').send(car);
+    const response = await request.post('/api/v1/car').send(car).set('Authorization', `Bearer ${token}`);
     const { status } = response;
     expect(status).toBe(400);
   });

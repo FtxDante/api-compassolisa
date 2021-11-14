@@ -2,12 +2,12 @@ const supertest = require('supertest');
 const app = require('../../app');
 
 const request = supertest(app);
-
+const id = '6190389713a3eb7a25a0cb50';
 describe('Get /rental', () => {
   jest.setTimeout(30000);
 
   test('Get a Rental With Sucess', async () => {
-    const response = await request.get('/api/v1/rental/618c09496e34ed17186c9c5d');
+    const response = await request.get(`/api/v1/rental/${id}`);
     const { body, status } = response;
     expect(status).toBe(200);
 
@@ -22,7 +22,7 @@ describe('Get /rental', () => {
   });
 
   test('Get a Rental With Sucess, with filial', async () => {
-    const response = await request.get('/api/v1/rental/618c09496e34ed17186c9c5d');
+    const response = await request.get(`/api/v1/rental/${id}`);
     const { body, status } = response;
     expect(status).toBe(200);
 
