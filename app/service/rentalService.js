@@ -1,5 +1,5 @@
 const RentalRepository = require('../repository/rentalRepository');
-const { NotFound } = require('../errors');
+const { NotFound, UserRegistered } = require('../errors');
 
 class RentalServices {
   async findById(id) {
@@ -8,6 +8,13 @@ class RentalServices {
       throw new NotFound('id');
     }
     return rental;
+  }
+
+  async updateOneRental(req) {
+    const { id } = req.params;
+    await this.findById(id);
+    const updatedRental = await RentalRepository.updateOne(req);
+    return updatedRental;
   }
 }
 

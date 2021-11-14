@@ -13,6 +13,15 @@ class rentalController {
       return res.status(status).json({ message: error.message });
     }
   }
+  static async updateOneRental (req, res) {
+    try {
+      const result = await rentalService.updateOneRental(req);
+      return res.status(200).json(rentalSerializer(result));
+    } catch (error) {
+      const status = handleErrors.getStatusToError(error);
+      return res.status(status).json({ message: error.message });
+    }
+  }
 }
 
 module.exports = rentalController;

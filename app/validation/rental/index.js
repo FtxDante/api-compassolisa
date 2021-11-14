@@ -1,7 +1,7 @@
-const allRequired = require('./allRequired');
+const AllRequired = require('./allRequired');
 const IdValidation = require('./idValidation');
 
 module.exports = {
-  allRequired,
+  AllRequired,
   IdValidation
 };

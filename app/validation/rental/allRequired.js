@@ -1,8 +1,9 @@
-const Joi = require('joi');
+const { validator } = require('cpf-cnpj-validator');
+const Joi = require('joi').extend(validator);
 
 module.exports = async (req, res, next) => {
   try {
-    const carSchema = Joi.object({
+    const RentalSchema = Joi.object({
       nome: Joi.string().trim().required(),
 
       cnpj: Joi.string().trim().required(),
@@ -22,7 +23,7 @@ module.exports = async (req, res, next) => {
         .min(1)
         .required()
     });
-    const { error } = await carSchema.validate(req.body, { abortEarly: false });
+    const { error } = await RentalSchema.validate(req.body, { abortEarly: false });
     if (error) throw error;
     return next();
   } catch (error) {
