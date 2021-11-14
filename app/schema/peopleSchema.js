@@ -40,7 +40,6 @@ const peopleSchema = mongoose.Schema(
 );
 
 peopleSchema.pre('save', async function preSave(next) {
-
   if (!this.isModified('senha')) {
     next();
   }
@@ -50,7 +49,6 @@ peopleSchema.pre('save', async function preSave(next) {
 });
 
 peopleSchema.pre('findOneAndUpdate', async function preUpdate(next) {
-
   const data = this.getUpdate();
   if (data.senha) {
     const salt = await bcrypt.genSalt(10);

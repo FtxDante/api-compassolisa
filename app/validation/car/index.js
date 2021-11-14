@@ -1,6 +1,7 @@
 const allRequiredCarValidation = require('./allRequired');
+
 const findCarValidation = require('./find');
-const idValidation = require('./idValidation');
+const idValidation = require('../__validationsCommons/idValidation');
 const pathValidation = require('./path');
 
 module.exports = {

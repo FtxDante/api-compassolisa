@@ -1,16 +1,15 @@
-/* eslint-disable require-jsdoc */
 require('dotenv').config();
+/* eslint-disable require-jsdoc */
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
-const { AuthInvalid } = require('../errors');
-
 const PeopleRepository = require('../repository/peopleRepository');
+const { AuthInvalid } = require('../errors');
 
 class AuthService {
   async authenticate(req) {
     const user = await this.verifyCredentials(req.body);
-    const authenticate = await this.generateToken(user);
-    return authenticate;
+    const token = await this.generateToken(user);
+    return token;
   }
 
   async verifyCredentials({ email, senha }) {

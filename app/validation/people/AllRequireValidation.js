@@ -13,8 +13,8 @@ module.exports = async (req, res, next) => {
         .max(14)
         .regex(/[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}/)
         .messages({
-          'document.cpf': `CPF ${req.body.cpf} is invalid `,
-          'string.pattern.base': `CPF ${req.body.cpf} format is invalid `
+          'document.cpf': `CPF ${req.body.cpf} is invalid`,
+          'string.pattern.base': `CPF ${req.body.cpf} format is invalid`
         }),
       data_nascimento: Joi.date()
         .required()
@@ -29,7 +29,7 @@ module.exports = async (req, res, next) => {
         .email()
         .required()
         .messages({
-          'string.email': `Email ${req.body.email} is invalid `
+          'string.email': `Email ${req.body.email} is invalid`
         }),
 
       senha: Joi.string().min(6).required(),

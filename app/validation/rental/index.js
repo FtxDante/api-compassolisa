@@ -1,5 +1,5 @@
 const allRequired = require('./allRequired');
-const IdValidation = require('./idValidation');
+const IdValidation = require('../__validationsCommons/idValidation');
 
 module.exports = {
   allRequired,
