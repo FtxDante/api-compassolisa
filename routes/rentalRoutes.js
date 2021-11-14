@@ -1,7 +1,11 @@
 const rentalController = require('../app/controllers/rentalController');
-const { AllRequiredValidation } = require('../app/validation/rental');
+const { IdValidation, allRequired } = require('../app/validation/rental');
 
 module.exports = (server, routes, prefix = '/api/v1') => {
-  routes.post('/rental', AllRequiredValidation, rentalController.createRental);
+  routes.get('/rental/:id', IdValidation, rentalController.getOneRental);
+  routes.post('/rental', allRequired, rentalController.createRental);
+  routes.put('/rental/:id', IdValidation, allRequired, rentalController.updateOneRental);
+  routes.delete('/rental/:id', IdValidation, rentalController.deleteOneRental);
   server.use(prefix, routes);
+  routes.get('/rental/:id', IdValidation, rentalController.getOneRental);
 };

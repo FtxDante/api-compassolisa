@@ -1,5 +1,5 @@
 const { handleErrors } = require('../errors');
-/* eslint-disable require-jsdoc */
+const { rentalSerializer } = require('../serialize/RentalSerializer');
 const rentalService = require('../service/rentalService');
 
 class RentalController {
@@ -9,7 +9,41 @@ class RentalController {
       return res.status(201).json(result);
     } catch (error) {
       const status = handleErrors.getStatusToError(error);
-      return res.status(status).json({ message: error.message });
+      return res.status(status).json(error);
+    }
+  }
+
+  static async getOneRental(req, res) {
+    try {
+      const { id } = req.params;
+      const result = await rentalService.findById(id);
+      return res.status(200).json(rentalSerializer(result));
+    } catch (error) {
+      const status = handleErrors.getStatusToError(error);
+      return res.status(status).json(error);
+    }
+  }
+
+  static async updateOneRental(req, res) {
+    try {
+      const result = await rentalService.updateOneRental(req);
+      return res.status(200).json(rentalSerializer(result));
+    } catch (error) {
+      const status = handleErrors.getStatusToError(error);
+      return res.status(status).json(error);
+    }
+  }
+
+  static async deleteOneRental(req, res) {
+    const { id } = req.params;
+
+    try {
+      await rentalService.deleteOneRental(id);
+
+      return res.status(204).end();
+    } catch (error) {
+      const status = handleErrors.getStatusToError(error);
+      return res.status(status).json(error);
     }
   }
 }

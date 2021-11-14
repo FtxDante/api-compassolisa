@@ -1,5 +1,5 @@
 const PeopleRepository = require('../repository/peopleRepository');
-const { UserRegistered, NotFound } = require('../errors');
+const { CpfInUse, EmailInUse, NotFound } = require('../errors');
 
 class PeopleService {
   async createPeople(peopleData, req) {
@@ -18,7 +18,8 @@ class PeopleService {
 
   async findAll(req) {
     const searchParams = this.createWhere(req.query);
-    return await PeopleRepository.formatOfPagination(req, searchParams);
+    const people = await PeopleRepository.pagination(req, searchParams);
+    return people;
   }
 
   async findById(id) {
@@ -34,7 +35,8 @@ class PeopleService {
     const { id } = req.params;
     await this.findById(id);
     await this.searchUnique(req);
-    return await PeopleRepository.updateOne(req);
+    const updateOnePerson = await PeopleRepository.updateOne(req);
+    return updateOnePerson;
   }
 
   async searchUnique(req) {
@@ -42,8 +44,12 @@ class PeopleService {
 
     const searchemail = await PeopleRepository.findOne({ email });
     const searchcpf = await PeopleRepository.findOne({ cpf });
-    if (searchemail || searchcpf) {
-      throw new UserRegistered();
+    if (searchemail) {
+      throw new EmailInUse(email);
+    }
+
+    if(searchcpf){
+      throw new CpfInUse(cpf);
     }
   }
 
@@ -58,7 +64,6 @@ class PeopleService {
   createWhere(params) {
     const where = { ...params };
     delete where.senha;
-    delete where._id;
     delete where.id;
     delete where.page;
     delete where.limit;

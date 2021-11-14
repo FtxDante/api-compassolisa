@@ -1,7 +1,7 @@
 const RentalRepository = require('../repository/rentalRepository');
-const { UserRegistered } = require('../errors');
+const { NotFound, CnpjInUse } = require('../errors');
 
-class RentalService {
+class RentalServices {
   async create(req) {
     await this.searchUnique(req);
     const { nome, cnpj, atividades, endereco } = await RentalRepository.create(req.body);
@@ -20,9 +20,31 @@ class RentalService {
     const searchCnpj = await RentalRepository.findOne({ cnpj });
 
     if (searchCnpj) {
-      throw new UserRegistered();
+      throw new CnpjInUse(cnpj);
+    }
+  }
+
+  async findById(id) {
+    const rental = await RentalRepository.findById(id);
+    if (!rental) {
+      throw new NotFound('id');
+    }
+    return rental;
+  }
+
+  async updateOneRental(req) {
+    const { id } = req.params;
+    await this.findById(id);
+    const updatedRental = await RentalRepository.updateOne(req);
+    return updatedRental;
+  }
+
+  async deleteOneRental(id) {
+    const wasDeleted = await RentalRepository.deleteOne(id);
+    if (!wasDeleted) {
+      throw new NotFound('id');
     }
   }
 }
 
-module.exports = new RentalService();
+module.exports = new RentalServices();

@@ -1,18 +1,29 @@
-/* eslint-disable require-jsdoc */
 const CarRepository = require('../repository/carRepository');
 const { NotFound } = require('../errors');
+const carRepository = require('../repository/carRepository');
 
 class CarService {
-  async updateOneCar(req, res) {
+  filter(req) {
+    const params = { ...req.query };
+    if (params.descricao) {
+      params['acessorios.descricao'] = params.descricao;
+      delete params.descricao;
+    }
+    return params;
+  }
+
+  async updateOneCar(req) {
     const { id } = req.params;
     await this.findById(id);
-    return await CarRepository.updateOne(req);
+    const updateOneCar = await CarRepository.updateOne(req);
+    return updateOneCar;
   }
 
   async create(dataCar) {
-    const { modelo, cor, ano, acessorios, quantidadePassageiros } = await CarRepository.create(dataCar);
+    const { _id, modelo, cor, ano, acessorios, quantidadePassageiros } = await CarRepository.create(dataCar);
 
     return {
+      _id,
       modelo,
       cor,
       ano,
@@ -21,15 +32,15 @@ class CarService {
     };
   }
 
-  async findAll(req, res) {
-    const where = await filter(req);
-    const cars = await CarRepository.formatOfPagination(req, where);
+  async findAll(req) {
+    const where = this.filter(req);
+    const cars = await CarRepository.pagination(req, where);
     return cars;
   }
 
   async findById(id) {
     const car = await CarRepository.findById(id);
-    if (car === null) {
+    if (!car) {
       throw new NotFound('id');
     }
     return car;
@@ -42,18 +53,26 @@ class CarService {
       throw new NotFound('id');
     }
   }
-}
 
-function filter(req) {
-  const params = { ...req.query };
+  async updateAcessory(req) {
+    const { id, idAcess } = req.params;
+    const { descricao } = req.body;
+    let update = { $set: { 'acessorios.$.descricao': descricao } };
+    const where = { 'acessorios._id': idAcess, _id: id };
+    const found = await carRepository.findAcessory({ 'acessorios._id': idAcess });
 
-  const value = params.acessorios;
-  if (params.acessorios) {
-    params.acessorios = { descricao: value };
+    if (found) {
+      found.acessorios.forEach((item) => {
+        const condition = item.descricao === descricao;
+        if (condition) update = { $pull: { acessorios: { _id: idAcess } } };
+      });
+    }
+
+    await this.findById(id);
+    const updated = await CarRepository.updateOneToAcessories(where, update);
+
+    return updated;
   }
-
-  const where = params;
-  return where;
 }
 
 module.exports = new CarService();

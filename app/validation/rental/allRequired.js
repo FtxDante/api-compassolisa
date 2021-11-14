@@ -9,8 +9,6 @@ module.exports = async (req, res, next) => {
       cnpj: Joi.document()
         .cnpj()
         .required()
-        // .min(18),
-        // .max(18),
         .regex(/^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/)
         .messages({
           'document.cnpj': `CNPJ ${req.body.cnpj} is invalid `,
@@ -46,10 +44,17 @@ module.exports = async (req, res, next) => {
         .required()
     });
 
-    const { error } = await rentalSchema.validate(req.body, { abortEarly: false });
-    if (error) throw error;
+    let { error } = await rentalSchema.validate(req.body, { abortEarly: false });
+
+    if (error) {
+      error = error.details.map((details) => ({
+        description: details.context.label,
+        name: details.message
+      }));
+      throw error;
+    }
     return next();
   } catch (error) {
-    return res.status(400).json({ message: error.message });
+    return res.status(400).json(error);
   }
 };

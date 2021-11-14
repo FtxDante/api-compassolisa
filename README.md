@@ -7,8 +7,8 @@
 ### Como baixar e configurar
 
 - Requisitos: NPM e Node.js
-- Porta padrão: 3000
-- Colocar seus dados referentes ao banco de dados em um arquivo .env, seguindo o exemplo que consta no arquivo .env.example.
+- Porta padrão: **3000**
+- **Coloque** seus **dados** referentes ao banco de dados em um **arquivo .env**, seguindo o **exemplo** que consta no arquivo **.env.example**.
 
 **Passo a passo - no terminal: **🏃
 
@@ -23,7 +23,7 @@
    ```
    npm install
    ```
- 3. Após clonar e instalar as dependências:
+3. Após clonar e instalar as dependências:
 
    ```
    npm start
@@ -31,21 +31,29 @@
 
 Agora o servidor está ouvindo a portal 3000 do localhost.
 
----
+### Como usar o servidor: 
 
-### Como usar o servidor
+## ❑ Autenticação :closed_lock_with_key:
 
-Todos os endPoints começam com: http://localhost:3000/api/v1/
+:white_circle:**POST** /authenticate:
 
-As rotas estão divididas por *features*: [carros](#carros), [pessoas](#pessoas) e [autenticação](#autenticação).
+ Nesta rota o cliente conseguirá obter o token que garante sua identidade. Token será necessário para acesso em algumas outras rotas da API. Cliente deverá passar no body um json contendo e-mail e senha previamente cadastrados na rota POST /people.
 
----
+**Obs:** O token será recebido no header da resposta.
+
+Na rota `localhost:3000/api/v1/authenticate` passe o e-mail e senha cadastrado.
+
+```js
+//Exemplo:
+{
+"email": "joazinho@email.com",
+"senha": "123456"
+}
+```
 
 
 
-## ❑ **Car** :car:
-
-##### carros
+## ❑ Car :car:
 
 :large_blue_circle: **POST /car:** 
 
@@ -82,7 +90,35 @@ Na rota `localhost:3000/api/v1/car` :
 
 Na rota `localhost:3000/api/v1/car` :
 
-``` Exemplo: car/?cor=azul``` irá retornar todos os carros com a cor azul. 
+**OBS: **Token necessário
+
+Existe **paginação**, você pode controlar dessa maneira: ```car?page=10&&limit=50```
+
+``` Exemplo: car?cor=azul``` irá retornar todos os carros com a cor azul. 
+
+```json
+{
+  "cars": [
+    {
+      "_id": "618d8157ff8f027ddecfe182",
+      "modelo": "Corsa",
+      "cor": "azul",
+      "ano": 2018,
+      "acessorios": [
+        {
+          "_id": "61916ecbc07c7dab0d9b41f7",
+          "descricao": "painel-solar"
+        }
+      ],
+      "quantidadePassageiros": 5
+    }
+  ],
+  "total": 999,
+  "limit": 1,
+  "offset": 1,
+  "offsets": 999
+}
+```
 
 
 
@@ -92,13 +128,19 @@ Na rota `localhost:3000/api/v1/car` :
 
 Na rota `localhost:3000/api/v1/car/:id` :
 
+**OBS: Token necessário**
+
 Em caso de sucesso o resultado será body vazio com status 204.
 
-
+```json
+// Nada será retornado
+```
 
 :large_blue_circle: **PUT/car/{id}**  
 
- Nesta rota o cliente poderá editar as informações cadastradas em um carro. 
+ Nesta rota o cliente poderá editar as informações cadastradas em um carro.
+
+**OBS: Token necessário** 
 
 Na rota `localhost:3000/api/v1/car/:id` :
 
@@ -123,6 +165,8 @@ Na rota `localhost:3000/api/v1/car/:id` :
 
  Nesta rota o cliente poderá ver as informações cadastradas do carro com id passado no parâmetro. 
 
+**OBS: Token necessário**
+
 Na rota `localhost:3000/api/v1/car/:id` :
 
 ```js
@@ -144,15 +188,13 @@ Na rota `localhost:3000/api/v1/car/:id` :
 
 
 
-## ❑ **People** (pessoas) :couple:
-
-##### pessoas
+## ❑ People :couple:
 
 :red_circle: **POST /people**
 
  Nesta rota o cliente poderá cadastrar uma pessoa com as seguintes informações: nome, cpf, data de nascimento, e-mail, senha, habilitado.
 
- :warning:**Atenção:** 
+ :warning: **Atenção:** 
 
 * todos os campos devem ser preenchidos,
 * a pessoa deverá ter no mínimo 18 anos a partir da data de cadastro,
@@ -183,7 +225,28 @@ Na rota `localhost:3000/api/v1/people` :
 
 Na rota `localhost:3000/api/v1/people` :
 
-``` Exemplo: people/?habilitado=nao``` irá retornar todos as pessoas não habilitadas. 
+Existe **paginação**, você pode controlar dessa maneira: ```people?page=10&&limit=50```
+
+``` Exemplo: people?habilitado=nao``` irá retornar todos as pessoas não habilitadas. 
+
+```json
+{
+  "people": [
+    {
+      "_id": "6182b7f03e2927bb76db0778",
+      "nome": "joaozinho ciclan2o",
+      "cpf": "101.892.220-26",
+      "data_nascimento": "2001-03-03T03:00:00.000Z",
+      "email": "joazinho4@email992223.com",
+      "habilitado": "sim"
+    }
+  ],
+  "total": 999,
+  "limit": 100,
+  "offset": 1,
+  "offsets": 999
+}
+```
 
 
 
@@ -195,11 +258,17 @@ Na rota `localhost:3000/api/v1/people/:id` :
 
 Em caso de sucesso o resultado será body vazio com status 204.
 
+```json
+// Nada será retornado
+```
+
 
 
 :red_circle: **PUT/people/{id}**  
 
  Nesta rota o cliente poderá editar as informações de uma pessoa cadastrada. 
+
+**Obs: ** É necessário passar todos os campos.
 
 Na rota `localhost:3000/api/v1/people/:id`:
 
@@ -236,30 +305,6 @@ Na rota `localhost:3000/api/v1/people/:id` :
 }
 ```
 
----
 
 
-
-## ❑ **Autenticação** :no_entry:
-
-##### autenticação
-
-:white_circle:**POST** /authenticate:
-
- Nesta rota o cliente conseguirá obter o token que garante sua identidade. Token será necessário para acesso em algumas outras rotas da API. Cliente deverá passar no body um json contendo e-mail e senha previamente cadastrados na rota POST /people.
-
-Na rota `localhost:3000/api/v1/authenticate` passe o e-mail e senha cadastrado.
-
-```js
-//Exemplo:
-{
-"email": "joazinho@email.com",
-"senha": "123456"
-}
-```
-
----
-
-
-
-# Esperamos que a API lhe seja útil.
+##### Esperamos que a API lhe seja útil.
