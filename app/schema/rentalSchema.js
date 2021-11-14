@@ -1,5 +1,6 @@
 /* eslint-disable no-await-in-loop */
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate-v2');
 const getCepData = require('../../infra/database/axios/getCepData');
 
 // eslint-disable-next-line new-cap
@@ -50,7 +51,7 @@ RentalSchema.pre('save', async function getExternalData(next) {
 
   return next();
 });
-
+RentalSchema.plugin(mongoosePaginate);
 const Rental = mongoose.model('Rental', RentalSchema);
 
 module.exports = Rental;

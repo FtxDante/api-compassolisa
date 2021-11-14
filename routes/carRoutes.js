@@ -1,6 +1,6 @@
 const carController = require('../app/controllers/carController');
 
-const { allRequiredCarValidation, findCarValidation, idValidation } = require('../app/validation/car');
+const { allRequiredCarValidation, findCarValidation, idValidation, pathValidation } = require('../app/validation/car');
 const { tokenValidation } = require('../app/validation/auth');
 
 module.exports = (server, routes, prefix = '/api/v1') => {
@@ -9,5 +9,12 @@ module.exports = (server, routes, prefix = '/api/v1') => {
   routes.get('/car?', findCarValidation, tokenValidation, carController.getAllCars);
   routes.get('/car/:id', idValidation, tokenValidation, carController.getOneCar);
   routes.delete('/car/:id', idValidation, tokenValidation, carController.deleteOne);
+  routes.patch(
+    '/car/:id/acessorios/:idAcess',
+    idValidation,
+    tokenValidation,
+    pathValidation,
+    carController.updateAcessory
+  );
   server.use(prefix, routes);
 };

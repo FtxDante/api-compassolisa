@@ -8,7 +8,6 @@ const { AuthInvalid } = require('../errors');
 class AuthService {
   async authenticate(req) {
     const user = await this.verifyCredentials(req.body);
-    console.log('user');
     const token = await this.generateToken(user);
     return token;
   }
