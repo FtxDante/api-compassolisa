@@ -9,7 +9,7 @@ class PeopleController {
       return res.status(201).json(peopleSerializer(result));
     } catch (error) {
       const status = handleErrors.getStatusToError(error);
-      return res.status(status).json({ message: error.message });
+      return res.status(status).json(error);
     }
   }
 
@@ -19,7 +19,7 @@ class PeopleController {
       return res.status(200).json(peoplePaginateSerializer(result));
     } catch (error) {
       const status = handleErrors.getStatusToError(error);
-      return res.status(status).json({ message: error.message });
+      return res.status(status).json(error);
     }
   }
 
@@ -30,7 +30,7 @@ class PeopleController {
       return res.status(200).json(peopleSerializer(result));
     } catch (error) {
       const status = handleErrors.getStatusToError(error);
-      return res.status(status).json({ message: error.message });
+      return res.status(status).json(error);
     }
   }
 
@@ -40,7 +40,7 @@ class PeopleController {
       return res.status(200).json(peopleSerializer(result));
     } catch (error) {
       const status = handleErrors.getStatusToError(error);
-      return res.status(status).json({ message: error.message });
+      return res.status(status).json(error);
     }
   }
 
@@ -53,7 +53,7 @@ class PeopleController {
       return res.status(204).end();
     } catch (error) {
       const status = handleErrors.getStatusToError(error);
-      return res.status(status).json({ message: error.message });
+      return res.status(status).json(error);
     }
   }
 }

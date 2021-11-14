@@ -39,15 +39,16 @@ const peopleSchema = mongoose.Schema(
   { collection: 'people' }
 );
 
-peopleSchema.pre('save', async function senha(next) {
+peopleSchema.pre('save', async function preSave(next) {
   if (!this.isModified('senha')) {
     next();
   }
   const salt = await bcrypt.genSalt(10);
   this.senha = await bcrypt.hash(this.senha, salt);
+  return next();
 });
 
-peopleSchema.pre('updateOne', async function senhaUpdate(next) {
+peopleSchema.pre('findOneAndUpdate', async function preUpdate(next) {
   const data = this.getUpdate();
   if (data.senha) {
     const salt = await bcrypt.genSalt(10);

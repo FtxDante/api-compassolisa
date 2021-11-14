@@ -1,5 +1,5 @@
-const rentalSerializer = ({ _id, nome, cnpj, atividades, endereco }) => ({
-  _id,
+const rentalSerializer = ({ id, nome, cnpj, atividades, endereco }) => ({
+  id,
   nome,
   cnpj,
   atividades,
@@ -7,7 +7,7 @@ const rentalSerializer = ({ _id, nome, cnpj, atividades, endereco }) => ({
 });
 
 const rentalPaginateSerializer = ({ docs, totalDocs, limit, pagingCounter, totalPages }) => ({
-  locadoras: docs.map(rentalSerializer),
+  rental: docs.map(rentalSerializer),
   total: totalDocs,
   limit,
   offset: pagingCounter,
