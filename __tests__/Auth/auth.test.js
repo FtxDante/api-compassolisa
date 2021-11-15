@@ -13,7 +13,6 @@ describe('Post /authenticate', () => {
     const response = await request.post('/api/v1/authenticate').send(auth);
 
     const { headers, status } = response;
-    console.log(response);
     expect(status).toBe(200);
     expect(headers).toHaveProperty('access-control-expose-headers');
   });
