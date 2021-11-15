@@ -1,8 +1,8 @@
 class AuthInvalid extends Error {
-  constructor(input) {
+  constructor() {
     super();
     this.description = 'Unauthorized';
-    this.name = `${input}  invalid`;
+    this.name = `Email or password invalid`;
   }
 }
 module.exports = AuthInvalid;
