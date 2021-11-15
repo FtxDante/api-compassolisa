@@ -2,26 +2,30 @@ const supertest = require('supertest');
 const app = require('../../app');
 
 const request = supertest(app);
-const id = '6190389713a3eb7a25a0cb50';
+const id = '6191b1ae658cbd2617c67b15';
 describe('Get /rental', () => {
   jest.setTimeout(30000);
 
-  test('Get a Rental With Sucess', async () => {
-    const response = await request.get(`/api/v1/rental/${id}`);
+  test('Get all Rentals With Sucess', async () => {
+    const response = await request.get(`/api/v1/rental`);
     const { body, status } = response;
     expect(status).toBe(200);
-
-    expect(body).toHaveProperty('nome');
-    expect(body).toHaveProperty('cnpj');
-    expect(body).toHaveProperty('atividades');
-    expect(body).toHaveProperty('endereco');
-    expect(body.endereco[0]).toHaveProperty('cep');
-    expect(body.endereco[0]).toHaveProperty('number');
-    expect(body.endereco[0]).toHaveProperty('isFilial');
-    expect(body.endereco[0].isFilial).toBe(false);
+    body.rental.forEach((rental) => {
+      expect(rental).toHaveProperty('nome');
+      expect(rental).toHaveProperty('cnpj');
+      expect(rental).toHaveProperty('atividades');
+      expect(rental).toHaveProperty('endereco');
+      expect(rental.endereco[0]).toHaveProperty('cep');
+      expect(rental.endereco[0]).toHaveProperty('number');
+      expect(rental.endereco[0]).toHaveProperty('isFilial');
+      expect(rental.endereco[0]).toHaveProperty('logradouro');
+      expect(rental.endereco[0]).toHaveProperty('bairro');
+      expect(rental.endereco[0]).toHaveProperty('localidade');
+      expect(rental.endereco[0]).toHaveProperty('uf');
+    });
   });
 
-  test('Get a Rental With Sucess, with filial', async () => {
+  test('Get a Rental With Sucess with id', async () => {
     const response = await request.get(`/api/v1/rental/${id}`);
     const { body, status } = response;
     expect(status).toBe(200);
@@ -30,11 +34,15 @@ describe('Get /rental', () => {
     expect(body).toHaveProperty('cnpj');
     expect(body).toHaveProperty('atividades');
     expect(body).toHaveProperty('endereco');
-    expect(body.endereco[0]).toHaveProperty('cep');
-    expect(body.endereco[0]).toHaveProperty('number');
-    expect(body.endereco[0]).toHaveProperty('isFilial');
-
-    expect(body.endereco[0].isFilial).toBe(false);
+    body.endereco.forEach((address) => {
+      expect(address).toHaveProperty('cep');
+      expect(address).toHaveProperty('number');
+      expect(address).toHaveProperty('isFilial');
+      expect(address).toHaveProperty('logradouro');
+      expect(address).toHaveProperty('bairro');
+      expect(address).toHaveProperty('localidade');
+      expect(address).toHaveProperty('uf');
+    });
   });
 
   test('Get a Rental with bad format ID', async () => {

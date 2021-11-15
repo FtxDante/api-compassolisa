@@ -126,4 +126,9 @@ describe('POST /car', () => {
     expect(body[0].description).toBe('acessorios[1]');
     expect(body[0].name).toBe('"acessorios[1]" contains a duplicate value');
   });
+  test('Gets unauthorized tryng to post a car without token', async () => {
+    const response = await request.post('/api/v1/car');
+    const { status } = response;
+    expect(status).toBe(401);
+  });
 });

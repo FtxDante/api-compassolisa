@@ -48,4 +48,9 @@ describe('Get /car/id', () => {
     expect(body[0].description).toBe('id');
     expect(body[0].name).toBe('invalid id format');
   });
+  test('Gets unauthorized tryng to get a car without token', async () => {
+    const response = await request.get('/api/v1/car/618d9361f29b23a22cd62966');
+    const { status } = response;
+    expect(status).toBe(401);
+  });
 });

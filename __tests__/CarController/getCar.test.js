@@ -23,4 +23,9 @@ describe('Get /car', () => {
       expect(value.acessorios[0]).toHaveProperty('_id');
     });
   });
+  test('Gets unauthorized tryng to get all cars without token', async () => {
+    const response = await request.get('/api/v1/car');
+    const { status } = response;
+    expect(status).toBe(401);
+  });
 });
