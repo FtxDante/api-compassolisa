@@ -33,7 +33,6 @@ class Repository {
     // eslint-disable-next-line prefer-const
     let { page = 0, limit = 100 } = req.query;
 
-    if (page > 0) page -= 1;
     const data = await this.schema.paginate(where, { page, limit });
     return data;
   }
