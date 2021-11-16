@@ -1,7 +1,24 @@
 const supertest = require('supertest');
 const app = require('../../app');
+const { PeopleSchema } = require('../../app/schema');
 
 const request = supertest(app);
+
+beforeAll(async () => {
+  await PeopleSchema.deleteMany({
+    nome: /JESTivaldo/
+  });
+});
+beforeEach(async () => {
+  await PeopleSchema.deleteMany({
+    nome: /JESTivaldo/
+  });
+});
+afterAll(async () => {
+  await PeopleSchema.deleteMany({
+    nome: /JESTivaldo/
+  });
+});
 
 describe('Post /People', () => {
   jest.setTimeout(30000);
@@ -139,7 +156,7 @@ describe('Post /People', () => {
   test('cpf must be unique', async () => {
     const people = {
       nome: 'joaozinho shippuden',
-      cpf: '485.277.440-40',
+      cpf: '604.568.983-60',
       data_nascimento: '03/03/2001',
       email: 'joaozinhoshippuden@email.com',
       senha: '123456',
