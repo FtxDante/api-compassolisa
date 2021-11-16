@@ -1,0 +1,4 @@
+# 2010
+*.txt -lf
+# 2020
+*.txt text eol=lf
