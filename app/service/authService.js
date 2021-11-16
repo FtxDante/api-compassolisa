@@ -23,7 +23,7 @@ class AuthService {
   }
 
   async generateToken(user) {
-    return jwt.sign({ email: user.email, habilitado: user.habilitado }, process.env.SECRET, { expiresIn: '10h' });
+    return jwt.sign({ email: user.email, habilitado: user.habilitado }, process.env.SECRET, { expiresIn: '24h' });
   }
 }
 module.exports = new AuthService();
