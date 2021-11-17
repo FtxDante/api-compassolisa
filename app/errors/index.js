@@ -1,5 +1,4 @@
 const AuthInvalid = require('./AuthInvalid');
-const InvalidId = require('./InvalidId');
 const NotFound = require('./NotFound');
 const CpfInUse = require('./CpfInUse');
 const EmailInUse = require('./EmailInUse');
@@ -9,7 +8,6 @@ const HandleErrors = require('./HandleErrors');
 
 module.exports = {
   AuthInvalid,
-  InvalidId,
   NotFound,
   CpfInUse,
   EmailInUse,

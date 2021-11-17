@@ -14,13 +14,8 @@ class PeopleController {
   }
 
   static async getAllPeople(req, res) {
-    try {
-      const result = await peopleService.findAll(req, res);
-      return res.status(200).json(peoplePaginateSerializer(result));
-    } catch (error) {
-      const status = handleErrors.getStatusToError(error);
-      return res.status(status).json(error);
-    }
+    const result = await peopleService.findAll(req, res);
+    return res.status(200).json(peoplePaginateSerializer(result));
   }
 
   static async getOnePerson(req, res) {
