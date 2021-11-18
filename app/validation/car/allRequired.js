@@ -19,7 +19,7 @@ module.exports = async (req, res, next) => {
         .min(1)
         .required(),
 
-      quantidadePassageiros: Joi.number().min(2).required()
+      quantidadePassageiros: Joi.number().min(2).max(20).required()
     });
     let { error } = await carSchema.validate(req.body, { abortEarly: false });
 

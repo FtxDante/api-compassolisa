@@ -9,7 +9,7 @@ module.exports = async (req, res, next) => {
 
     jwtService.verify(token, process.env.SECRET, (err, userInfo) => {
       if (err) {
-        res.status(403).end({ message: 'invalid token' });
+        res.status(403).send({ message: 'invalid token' });
       } else {
         req.userToken = userInfo;
       }
