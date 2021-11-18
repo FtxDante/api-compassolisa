@@ -6,13 +6,19 @@ const { PeopleSchema } = require('../../app/schema');
 const request = supertest(app);
 
 beforeAll(async () => {
-  await PeopleSchema.deleteMany({});
+  await PeopleSchema.deleteMany({
+    nome: /JESTivaldo Junior/
+  });
 });
 beforeEach(async () => {
-  await PeopleSchema.deleteMany({});
+  await PeopleSchema.deleteMany({
+    nome: /JESTivaldo Junior/
+  });
 });
 afterAll(async () => {
-  await PeopleSchema.deleteMany({});
+  await PeopleSchema.deleteMany({
+    nome: /JESTivaldo Junior/
+  });
 });
 
 describe('People routes', () => {
