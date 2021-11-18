@@ -38,9 +38,6 @@ const RentalSchema = mongoose.Schema(
 );
 
 RentalSchema.pre('save', async function getExternalData(next) {
-  if (!this.isModified('endereco.cep')) {
-    return next();
-  }
   for (let i = 0; i < this.endereco.length; i++) {
     const { logradouro, bairro, localidade, uf } = await getCepData.getData(this.endereco[i].cep);
     this.endereco[i].logradouro = logradouro;

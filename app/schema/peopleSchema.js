@@ -40,9 +40,6 @@ const peopleSchema = mongoose.Schema(
 );
 
 peopleSchema.pre('save', async function preSave(next) {
-  if (!this.isModified('senha')) {
-    next();
-  }
   const salt = await bcrypt.genSalt(10);
   this.senha = await bcrypt.hash(this.senha, salt);
   return next();
