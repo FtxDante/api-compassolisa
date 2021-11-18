@@ -48,6 +48,19 @@ RentalSchema.pre('save', async function getExternalData(next) {
 
   return next();
 });
+
+RentalSchema.pre('findOneAndUpdate', async function getExternalData(next) {
+  const data = this.getUpdate();
+  for (let i = 0; i < data.endereco.length; i++) {
+    const { logradouro, bairro, localidade, uf } = await getCepData.getData(data.endereco[i].cep);
+    data.endereco[i].logradouro = logradouro;
+    data.endereco[i].bairro = bairro;
+    data.endereco[i].localidade = localidade;
+    data.endereco[i].uf = uf;
+  }
+
+  return next();
+});
 RentalSchema.plugin(mongoosePaginate);
 const Rental = mongoose.model('Rental', RentalSchema);
 

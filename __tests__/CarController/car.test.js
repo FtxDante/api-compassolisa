@@ -188,8 +188,7 @@ describe('car route', () => {
     const response = await request
       .get('/api/v1/car?acessorios=Ar Condicionado')
       .set('Authorization', `Bearer ${token}`);
-    const { body, status } = response;
-    console.log(body, status);
+    const { status } = response;
 
     expect(status).toBe(500);
   });
@@ -198,7 +197,27 @@ describe('car route', () => {
     const token = await createAuserAndGetToken();
     const response = await request.get('/api/v1/car').set('Authorization', `Bearer ${token}`);
     const { body, status } = response;
-    console.log(body, status);
+
+    expect(status).toBe(200);
+    body.cars.forEach((value) => {
+      expect(value).toHaveProperty('_id');
+      expect(value).toHaveProperty('modelo');
+      expect(value).toHaveProperty('cor');
+      expect(value).toHaveProperty('ano');
+      expect(value).toHaveProperty('acessorios');
+      expect(value).toHaveProperty('quantidadePassageiros');
+      expect(value.acessorios[0]).toHaveProperty('descricao');
+      expect(value.acessorios[0]).toHaveProperty('_id');
+    });
+  });
+
+  test('Get all cars with query params of acessorios', async () => {
+    const token = await createAuserAndGetToken();
+    const response = await request
+      .get('/api/v1/car')
+      .set('Authorization', `Bearer ${token}`)
+      .query({ descricao: 'Ar' });
+    const { body, status } = response;
 
     expect(status).toBe(200);
     body.cars.forEach((value) => {

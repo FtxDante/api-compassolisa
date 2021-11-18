@@ -5,13 +5,8 @@ const carService = require('../service/carService');
 
 class CarController {
   static async createCar(req, res) {
-    try {
-      const result = await carService.create(req.body);
-      return res.status(201).json(carSerializer(result));
-    } catch (error) {
-      const status = handleErrors.getStatusToError(error);
-      return res.status(status).json(error);
-    }
+    const result = await carService.create(req.body);
+    return res.status(201).json(carSerializer(result));
   }
 
   static async deleteOne(req, res) {

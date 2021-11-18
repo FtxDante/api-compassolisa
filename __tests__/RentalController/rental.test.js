@@ -185,6 +185,32 @@ describe('Post Rental', () => {
       expect(rental.endereco[0]).toHaveProperty('uf');
     });
   });
+  test('Get all Rentals With Sucess e param working', async () => {
+    const response = await request.get(`/api/v1/rental`).query({
+      cep: '60714-320',
+      logradouro: 'logradouro',
+      complemento: 'a',
+      bairro: 'Qualquer',
+      number: '100',
+      localidade: 'Fortaleza',
+      uf: 'CE'
+    });
+    const { body, status } = response;
+    expect(status).toBe(200);
+    body.rental.forEach((rental) => {
+      expect(rental).toHaveProperty('nome');
+      expect(rental).toHaveProperty('cnpj');
+      expect(rental).toHaveProperty('atividades');
+      expect(rental).toHaveProperty('endereco');
+      expect(rental.endereco[0]).toHaveProperty('cep');
+      expect(rental.endereco[0]).toHaveProperty('number');
+      expect(rental.endereco[0]).toHaveProperty('isFilial');
+      expect(rental.endereco[0]).toHaveProperty('logradouro');
+      expect(rental.endereco[0]).toHaveProperty('bairro');
+      expect(rental.endereco[0]).toHaveProperty('localidade');
+      expect(rental.endereco[0]).toHaveProperty('uf');
+    });
+  });
 
   test('Get a Rental With Sucess with id', async () => {
     const rental1 = {
