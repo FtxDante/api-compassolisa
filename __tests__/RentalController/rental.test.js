@@ -207,7 +207,6 @@ describe('Post Rental', () => {
 
     const response = await request.get(`/api/v1/rental/${id}`);
     const { body, status } = response;
-    console.log(body);
     expect(status).toBe(200);
 
     expect(body).toHaveProperty('nome');
