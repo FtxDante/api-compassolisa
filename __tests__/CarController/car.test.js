@@ -52,6 +52,7 @@ const createAuserAndGetToken = async () => {
 };
 
 describe('car route', () => {
+  jest.setTimeout(30000);
   test('Create a car with success', async () => {
     const token = await createAuserAndGetToken();
     const car = {
@@ -264,5 +265,200 @@ describe('car route', () => {
     const response = await request.get('/api/v1/car/618d9361f29b23a22cd62966');
     const { status } = response;
     expect(status).toBe(401);
+  });
+
+  test('Put a car with success', async () => {
+    const car = {
+      modelo: 'Fiat teste',
+      cor: 'Prata',
+      ano: 2018,
+      acessorios: [
+        {
+          descricao: 'Ar Condicionado'
+        }
+      ],
+      quantidadePassageiros: 3
+    };
+    const token = await createAuserAndGetToken();
+    await request.post('/api/v1/car').send(car).set('Authorization', `Bearer ${token}`);
+    const getId = await request.get('/api/v1/car').set('Authorization', `Bearer ${token}`);
+    const id = getId.body.cars[0]._id;
+
+    const carToEdit = {
+      modelo: 'Fiat teste 2',
+      cor: 'Azul',
+      ano: 2019,
+      acessorios: [
+        {
+          descricao: 'Ar Condicionado Show'
+        }
+      ],
+      quantidadePassageiros: 4
+    };
+
+    const { body, status } = await request
+      .put(`/api/v1/car/${id}`)
+      .send(carToEdit)
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(status).toBe(200);
+    expect(body).toHaveProperty('_id');
+    expect(body).toHaveProperty('modelo');
+    expect(body).toHaveProperty('cor');
+    expect(body).toHaveProperty('ano');
+    expect(body).toHaveProperty('acessorios');
+    expect(body).toHaveProperty('quantidadePassageiros');
+    body.acessorios.forEach((value) => {
+      expect(value).toHaveProperty('_id');
+      expect(value).toHaveProperty('descricao');
+    });
+    expect(body.modelo).toBe(carToEdit.modelo);
+    expect(body.cor).toBe(carToEdit.cor);
+    expect(body.ano).toBe(carToEdit.ano);
+    expect(body.quantidadePassageiros).toBe(carToEdit.quantidadePassageiros);
+    let i = 0;
+    body.acessorios.forEach((value) => {
+      expect(value.descricao).toBe(carToEdit.acessorios[i].descricao);
+      i += 1;
+    });
+  });
+
+  test('Put a car with a id that doesnt exist', async () => {
+    const car = {
+      modelo: 'Fiat teste 2',
+      cor: 'Azul',
+      ano: 2019,
+      acessorios: [
+        {
+          descricao: 'Ar Condicionado Show'
+        }
+      ],
+      quantidadePassageiros: 4
+    };
+    const token = await createAuserAndGetToken();
+    const response = await request
+      .put(`/api/v1/car/619539c8c476a837d38c0e89`)
+      .send(car)
+      .set('Authorization', `Bearer ${token}`);
+    const { body, status } = response;
+    expect(status).toBe(404);
+    expect(body).toHaveProperty('description');
+    expect(body).toHaveProperty('name');
+    expect(body.description).toBe('NotFound');
+    expect(body.name).toBe('id not found');
+  });
+  test('Put a car with a invalid id', async () => {
+    const car = {
+      modelo: 'Fiat teste 2',
+      cor: 'Azul',
+      ano: 2019,
+      acessorios: [
+        {
+          descricao: 'Ar Condicionado Show'
+        }
+      ],
+      quantidadePassageiros: 4
+    };
+    const token = await createAuserAndGetToken();
+    const response = await request.put(`/api/v1/car/aaaa`).send(car).set('Authorization', `Bearer ${token}`);
+    const { body, status } = response;
+    expect(status).toBe(400);
+    expect(body[0]).toHaveProperty('description');
+    expect(body[0]).toHaveProperty('name');
+    expect(body[0].description).toBe('id');
+    expect(body[0].name).toBe('invalid id format');
+  });
+
+  test('Delete one car', async () => {
+    const car = {
+      modelo: 'Fiat teste 2',
+      cor: 'Azul',
+      ano: 2019,
+      acessorios: [
+        {
+          descricao: 'Ar Condicionado Show'
+        }
+      ],
+      quantidadePassageiros: 4
+    };
+    const token = await createAuserAndGetToken();
+    await request.post('/api/v1/car').send(car).set('Authorization', `Bearer ${token}`);
+    const getId = await request.get('/api/v1/car').set('Authorization', `Bearer ${token}`);
+    const id = getId.body.cars[0]._id;
+    const response = await request.delete(`/api/v1/car/${id}`).set('Authorization', `Bearer ${token}`);
+    const { body, status } = response;
+
+    expect(status).toBe(204);
+    expect(body).toMatchObject({});
+  });
+
+  test('try to delete one car with a id that doesnt exist', async () => {
+    const token = await createAuserAndGetToken();
+    const response = await request
+      .delete(`/api/v1/car/619539c8c476a837d38c0e89`)
+      .set('Authorization', `Bearer ${token}`);
+    const { body, status } = response;
+
+    expect(status).toBe(404);
+    expect(body).toHaveProperty('description');
+    expect(body).toHaveProperty('name');
+    expect(body.description).toBe('NotFound');
+    expect(body.name).toBe('id not found');
+  });
+
+  test('try to delete one car with a id that doesnt exist', async () => {
+    const token = await createAuserAndGetToken();
+    const response = await request.delete(`/api/v1/car/aaa`).set('Authorization', `Bearer ${token}`);
+    const { body, status } = response;
+
+    expect(status).toBe(400);
+    expect(body[0]).toHaveProperty('description');
+    expect(body[0]).toHaveProperty('name');
+    expect(body[0].description).toBe('id');
+    expect(body[0].name).toBe('invalid id format');
+  });
+
+  test('Patch a car with success', async () => {
+    const car = {
+      modelo: 'Fiat teste',
+      cor: 'Prata',
+      ano: 2018,
+      acessorios: [
+        {
+          descricao: 'Ar Condicionado'
+        }
+      ],
+      quantidadePassageiros: 3
+    };
+    const token = await createAuserAndGetToken();
+    await request.post('/api/v1/car').send(car).set('Authorization', `Bearer ${token}`);
+    const getId = await request.get('/api/v1/car').set('Authorization', `Bearer ${token}`);
+    const id = getId.body.cars[0]._id;
+    const idA = getId.body.cars[0].acessorios[0]._id;
+    const carAcessories = { descricao: 'Ar Condicionado Show' };
+
+    const { body, status } = await request
+      .patch(`/api/v1/car/${id}/acessorios/${idA}`)
+      .send(carAcessories)
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(status).toBe(200);
+    expect(body).toHaveProperty('_id');
+    expect(body).toHaveProperty('modelo');
+    expect(body).toHaveProperty('cor');
+    expect(body).toHaveProperty('ano');
+    expect(body).toHaveProperty('acessorios');
+    expect(body).toHaveProperty('quantidadePassageiros');
+    body.acessorios.forEach((value) => {
+      expect(value).toHaveProperty('_id');
+      expect(value).toHaveProperty('descricao');
+    });
+    expect(body.modelo).toBe(car.modelo);
+    expect(body.cor).toBe(car.cor);
+    expect(body.ano).toBe(car.ano);
+    expect(body.quantidadePassageiros).toBe(car.quantidadePassageiros);
+    body.acessorios.forEach((value) => {
+      expect(value.descricao).toBe(carAcessories.descricao);
+    });
   });
 });
