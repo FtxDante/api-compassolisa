@@ -1,14 +1,39 @@
 const supertest = require('supertest');
 const app = require('../../app');
+const { CarSchema } = require('../../app/schema');
 
 const request = supertest(app);
-const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RlemluaG90ZXN0YW5kb0BlbWFpbC5jb20iLCJoYWJpbGl0YWRvIjoic2ltIiwiaWF0IjoxNjM2OTA3MjQ0LCJleHAiOjE2MzY5NDMyNDR9.rTmeFBNJ3JZCucYnSYz01gCzHqy8qhZSVwzRFdb_J6c';
+
+beforeAll(async () => {
+  await CarSchema.deleteMany({});
+});
+beforeEach(async () => {
+  await CarSchema.deleteMany({});
+});
+afterAll(async () => {
+  await CarSchema.deleteMany({});
+});
+
+const person = {
+  nome: 'Paulo Sérgio',
+  cpf: '094.273.780-69',
+  data_nascimento: '2000-03-03T03:00:00.000Z',
+  email: 'grand2077d@chase.com',
+  habilitado: 'sim',
+  senha: '40028922'
+};
+
+const login = {
+  email: 'grand2077d@chase.com',
+  senha: '40028922'
+};
 
 describe('Get /car', () => {
   jest.setTimeout(30000);
   test('Get all cars', async () => {
-    const response = await request.get('/api/v1/car').set('Authorization', `Bearer ${token}`);
+    await request.post('/api/v1/people').send(person);
+    const { header } = await request.post('/api/v1/authenticate').send(login);
+    const response = await request.get('/api/v1/car').set('Authorization', `Bearer ${header.token}`);
     const { body, status } = response;
 
     expect(status).toBe(200);
