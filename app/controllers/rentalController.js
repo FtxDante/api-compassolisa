@@ -39,7 +39,6 @@ class RentalController {
       const result = await rentalService.updateOneRental(req);
       return res.status(200).json(rentalSerializer(result));
     } catch (error) {
-      console.log(error);
       const status = handleErrors.getStatusToError(error);
       return res.status(status).json(error);
     }
