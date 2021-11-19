@@ -271,4 +271,79 @@ describe('Post Rental', () => {
     expect(body.description).toBe('NotFound');
     expect(body.name).toBe('id not found');
   });
+
+  test('Delete one rental', async () => {
+    const rental1 = {
+      nome: 'Localiza Rent a Car',
+      cnpj: '42.134.716/0001-21',
+      atividades: 'Aluguel de Carros E Gestão de Frotas',
+      endereco: [
+        {
+          cep: '60714-320',
+          number: '3212',
+          isFilial: 'false'
+        }
+      ]
+    };
+
+    await request.post('/api/v1/rental').send(rental1);
+
+    const getId = await request.get('/api/v1/rental');
+    const { id } = getId.body.rental[0];
+
+    const response = await request.delete(`/api/v1/rental/${id}`);
+    const { body, status } = response;
+
+    expect(status).toBe(204);
+    expect(body).toMatchObject({});
+  });
+
+  test('try to delete one rental with a id that doesnt exist', async () => {
+    const rental = {
+      nome: 'Localiza Rent a Car',
+      cnpj: '42.134.716/0001-21',
+      atividades: 'Aluguel de Carros E Gestão de Frotas',
+      endereco: [
+        {
+          cep: '60714-320',
+          number: '3212',
+          isFilial: 'false'
+        }
+      ]
+    };
+
+    await request.post('/api/v1/rental').send(rental);
+    const response = await request.delete(`/api/v1/rental/619539c8c476a837d38c0e89`);
+    const { body, status } = response;
+
+    expect(status).toBe(404);
+    expect(body).toHaveProperty('description');
+    expect(body).toHaveProperty('name');
+    expect(body.description).toBe('NotFound');
+    expect(body.name).toBe('id not found');
+  });
+
+  test('try to delete one rental with a invalid id', async () => {
+    const rental = {
+      nome: 'Localiza Rent a Car',
+      cnpj: '42.134.716/0001-21',
+      atividades: 'Aluguel de Carros E Gestão de Frotas',
+      endereco: [
+        {
+          cep: '60714-320',
+          number: '3212',
+          isFilial: 'false'
+        }
+      ]
+    };
+    await request.post('/api/v1/rental').send(rental);
+    const response = await request.delete(`/api/v1/rental/aaaa`);
+    const { body, status } = response;
+
+    expect(status).toBe(400);
+    expect(body[0]).toHaveProperty('description');
+    expect(body[0]).toHaveProperty('name');
+    expect(body[0].description).toBe('id');
+    expect(body[0].name).toBe('invalid id format');
+  });
 });
