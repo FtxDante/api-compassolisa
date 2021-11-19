@@ -38,15 +38,25 @@ const RentalSchema = mongoose.Schema(
 );
 
 RentalSchema.pre('save', async function getExternalData(next) {
-  if (!this.isModified('endereco.cep')) {
-    return next();
-  }
   for (let i = 0; i < this.endereco.length; i++) {
     const { logradouro, bairro, localidade, uf } = await getCepData.getData(this.endereco[i].cep);
     this.endereco[i].logradouro = logradouro;
     this.endereco[i].bairro = bairro;
     this.endereco[i].localidade = localidade;
     this.endereco[i].uf = uf;
+  }
+
+  return next();
+});
+
+RentalSchema.pre('findOneAndUpdate', async function getExternalData(next) {
+  const data = this.getUpdate();
+  for (let i = 0; i < data.endereco.length; i++) {
+    const { logradouro, bairro, localidade, uf } = await getCepData.getData(data.endereco[i].cep);
+    data.endereco[i].logradouro = logradouro;
+    data.endereco[i].bairro = bairro;
+    data.endereco[i].localidade = localidade;
+    data.endereco[i].uf = uf;
   }
 
   return next();

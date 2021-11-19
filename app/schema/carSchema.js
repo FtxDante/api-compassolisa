@@ -29,7 +29,8 @@ const carSchema = mongoose.Schema(
     quantidadePassageiros: {
       type: Number,
       required: true,
-      min: 1
+      min: 1,
+      max: 20
     }
   },
   { collection: 'cars' }
