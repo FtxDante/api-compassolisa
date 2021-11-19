@@ -563,4 +563,31 @@ describe('car route', () => {
 
     expect(status).toBe(404);
   });
+
+  test('try Patch a car without send a description', async () => {
+    const car = {
+      modelo: 'Fiat teste',
+      cor: 'Prata',
+      ano: 2018,
+      acessorios: [
+        {
+          descricao: 'Ar Condicionado'
+        }
+      ],
+      quantidadePassageiros: 3
+    };
+    const token = await createAuserAndGetToken();
+    await request.post('/api/v1/car').send(car).set('Authorization', `Bearer ${token}`);
+    const getId = await request.get('/api/v1/car').set('Authorization', `Bearer ${token}`);
+    const id = getId.body.cars[0]._id;
+    const idA = getId.body.cars[0].acessorios[0]._id;
+    const carAcessories = {};
+
+    const { status } = await request
+      .patch(`/api/v1/car/${id}/acessorios/${idA}`)
+      .send(carAcessories)
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(status).toBe(400);
+  });
 });
