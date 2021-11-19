@@ -81,10 +81,6 @@ class RentalServices {
     return params;
   }
 
-  teste() {
-    console.log('Service Working');
-  }
-
   async findAll(req) {
     const where = this.filter(req);
     const rentals = await RentalRepository.pagination(req, where);

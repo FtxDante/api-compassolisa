@@ -4,13 +4,8 @@ const rentalService = require('../service/rentalService');
 
 class RentalController {
   static async getRental(req, res) {
-    try {
-      const result = await rentalService.findAll(req, res);
-      return res.status(200).json(rentalPaginateSerializer(result));
-    } catch (error) {
-      const status = handleErrors.getStatusToError(error);
-      return res.status(status).json(error);
-    }
+    const result = await rentalService.findAll(req, res);
+    return res.status(200).json(rentalPaginateSerializer(result));
   }
 
   static async createRental(req, res) {
