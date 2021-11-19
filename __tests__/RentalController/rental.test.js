@@ -346,4 +346,99 @@ describe('Post Rental', () => {
     expect(body[0].description).toBe('id');
     expect(body[0].name).toBe('invalid id format');
   });
+
+  test('Put a rental with success', async () => {
+    const rental1 = {
+      nome: 'Localiza Rent a Car',
+      cnpj: '42.134.716/0001-21',
+      atividades: 'Aluguel de Carros E Gestão de Frotas',
+      endereco: [
+        {
+          cep: '60714-320',
+          number: '3212',
+          isFilial: 'false'
+        }
+      ]
+    };
+
+    await request.post('/api/v1/rental').send(rental1);
+
+    const getId = await request.get('/api/v1/rental');
+    const { id } = getId.body.rental[0];
+
+    const rentalToEdit = {
+      nome: 'Localiza Rent',
+      cnpj: '50.737.089/0001-41',
+      atividades: 'Aluguel de Carros de Luxo',
+      endereco: [
+        {
+          cep: '60411-280',
+          number: '32122',
+          isFilial: 'false'
+        }
+      ]
+    };
+
+    const response = await request.put(`/api/v1/rental/${id}`).send(rentalToEdit);
+    const { body, status } = response;
+    expect(status).toBe(200);
+    expect(body).toHaveProperty('id');
+    expect(body).toHaveProperty('nome');
+    expect(body).toHaveProperty('cnpj');
+    expect(body).toHaveProperty('atividades');
+    expect(body).toHaveProperty('endereco');
+    body.endereco.forEach((address) => {
+      expect(address).toHaveProperty('cep');
+      expect(address).toHaveProperty('number');
+      expect(address).toHaveProperty('isFilial');
+      expect(address).toHaveProperty('logradouro');
+      expect(address).toHaveProperty('bairro');
+      expect(address).toHaveProperty('localidade');
+      expect(address).toHaveProperty('uf');
+    });
+  });
+
+  test('Put a rental with a id that doesnt exist', async () => {
+    const rentalToEdit = {
+      nome: 'Localiza Rent',
+      cnpj: '50.737.089/0001-41',
+      atividades: 'Aluguel de Carros de Luxo',
+      endereco: [
+        {
+          cep: '60411-280',
+          number: '32122',
+          isFilial: 'false'
+        }
+      ]
+    };
+    const response = await request.put(`/api/v1/rental/619539c8c476a837d38c0e89`).send(rentalToEdit);
+    const { body, status } = response;
+    expect(status).toBe(404);
+    expect(body).toHaveProperty('description');
+    expect(body).toHaveProperty('name');
+    expect(body.description).toBe('NotFound');
+    expect(body.name).toBe('id not found');
+  });
+
+  test('Put a rental with a invalid id', async () => {
+    const rentalToEdit = {
+      nome: 'Localiza Rent',
+      cnpj: '50.737.089/0001-41',
+      atividades: 'Aluguel de Carros de Luxo',
+      endereco: [
+        {
+          cep: '60411-280',
+          number: '32122',
+          isFilial: 'false'
+        }
+      ]
+    };
+    const response = await request.put(`/api/v1/rental/aaaa`).send(rentalToEdit);
+    const { body, status } = response;
+    expect(status).toBe(400);
+    expect(body[0]).toHaveProperty('description');
+    expect(body[0]).toHaveProperty('name');
+    expect(body[0].description).toBe('id');
+    expect(body[0].name).toBe('invalid id format');
+  });
 });
