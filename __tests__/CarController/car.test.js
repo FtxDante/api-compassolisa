@@ -537,4 +537,30 @@ describe('car route', () => {
     expect(body.quantidadePassageiros).toBe(car.quantidadePassageiros);
     expect(body.acessorios.length).toBe(car.acessorios.length - 1);
   });
+
+  test('try to Patch a car with a not found id ', async () => {
+    const car = {
+      modelo: 'Fiat teste',
+      cor: 'Prata',
+      ano: 2018,
+      acessorios: [
+        {
+          descricao: 'Ar Condicionado'
+        }
+      ],
+      quantidadePassageiros: 3
+    };
+    const token = await createAuserAndGetToken();
+    await request.post('/api/v1/car').send(car).set('Authorization', `Bearer ${token}`);
+    const getId = await request.get('/api/v1/car').set('Authorization', `Bearer ${token}`);
+    const id = getId.body.cars[0]._id;
+    const carAcessories = { descricao: 'Ar Condicionado Show' };
+
+    const { status } = await request
+      .patch(`/api/v1/car/${id}/acessorios/6196f20aab088f6533eaa306`)
+      .send(carAcessories)
+      .set('Authorization', `Bearer ${token}`);
+
+    expect(status).toBe(404);
+  });
 });

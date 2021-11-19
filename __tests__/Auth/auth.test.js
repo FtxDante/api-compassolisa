@@ -43,4 +43,16 @@ describe('Post /authenticate', () => {
     expect(body.description).toBe('Unauthorized');
     expect(body.name).toBe('Email or password invalid');
   });
+
+  test('login with invalid email', async () => {
+    const auth = {
+      email: 'testezinhotestando2email',
+      senha: '123456789'
+    };
+
+    const response = await request.post('/api/v1/authenticate').send(auth);
+
+    const { status } = response;
+    expect(status).toBe(400);
+  });
 });
