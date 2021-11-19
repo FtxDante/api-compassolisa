@@ -14,7 +14,7 @@ class CarRepository extends Repository {
     return updated;
   }
 
-  async findAcessory(where = {}) {
+  async findAcessory(where) {
     const found = await CarSchema.findOne(where);
     return found;
   }

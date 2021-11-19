@@ -7,6 +7,8 @@ class HandleErrors {
       status = 404;
     } else if (error.description === 'Conflict') {
       status = 409;
+    } else if (error.description === 'Forbidden') {
+      status = 403;
     }
     return status;
   }

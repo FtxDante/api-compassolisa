@@ -237,6 +237,12 @@ describe('car route', () => {
     expect(status).toBe(401);
   });
 
+  test('Gets Forbidden tryng to get all cars with invalid token', async () => {
+    const response = await request.get('/api/v1/car').set('Authorization', `Bearer 545665265265`);
+    const { status } = response;
+    expect(status).toBe(403);
+  });
+
   test('Get one car', async () => {
     const token = await createAuserAndGetToken();
     const car = {

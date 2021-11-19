@@ -1,4 +1,5 @@
 const AuthInvalid = require('./AuthInvalid');
+const InvalidToken = require('./InvalidToken');
 const NotFound = require('./NotFound');
 const CpfInUse = require('./CpfInUse');
 const EmailInUse = require('./EmailInUse');
@@ -12,6 +13,7 @@ module.exports = {
   CpfInUse,
   EmailInUse,
   CnpjInUse,
+  InvalidToken,
   errosName,
   handleErrors: HandleErrors
 };

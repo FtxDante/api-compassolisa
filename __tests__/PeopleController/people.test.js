@@ -16,9 +16,7 @@ beforeEach(async () => {
   });
 });
 afterAll(async () => {
-  await PeopleSchema.deleteMany({
-    nome: /JESTivaldo Junior/
-  });
+  await PeopleSchema.deleteMany({});
 });
 
 describe('People routes', () => {

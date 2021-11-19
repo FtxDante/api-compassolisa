@@ -29,7 +29,7 @@ class Repository {
     return findById;
   }
 
-  async pagination(req, where = {}) {
+  async pagination(req, where) {
     // eslint-disable-next-line prefer-const
     let { page = 0, limit = 100 } = req.query;
 
